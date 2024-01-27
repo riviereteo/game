@@ -1,4 +1,5 @@
 function start (url) {
+    alert('start');
     let href = window.location.href;
     let index = href.indexOf('game/');
     if (index !== -1) {
