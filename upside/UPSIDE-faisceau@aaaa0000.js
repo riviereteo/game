@@ -224,6 +224,7 @@ window.onload = function () {
                             result.appendChild(restartbutton);
                             restartbutton.setAttribute('onclick', 'window.location.reload();');
                             document.body.innerHTML += '<div class="dark:bg-gray-800" style="bottom: 25px; position: fixed; z-index: 1002; animation: fonduendbuttosn 2s forwards;"><div class="text-center w-full mx-auto lg:px-8 z-20"><div class="lg:mt-0 lg:flex-shrink-0"><div class="mt-6 inline-flex rounded-md shadow"><button type="button" class="py-4 px-6  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg " style="padding: 10px 15px;"">Back to home</button></div></div></div></div>';
+                            document.getElementsByClassName('dark:bg-gray-800')[0].setAttribute('onclick', 'window.location.href = "../index.html";');
                             for (let i = 1; i < 999999; i++) {
                                 window.clearInterval(i);
                             }
