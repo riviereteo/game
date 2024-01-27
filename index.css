@@ -17,7 +17,7 @@ body {
     justify-content: flex-start;
 }
 
-#gameContainer{
+#gameContainer {
     width: 100%;
     height: fit-content;
     display: flex;
@@ -26,19 +26,84 @@ body {
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 10px;
+    margin-top: 75px;
 }
 
-.game{
-    color: white;
-    font-size: 1.5rem;
-    font-family: 'Roboto', sans-serif;
+.game {
     padding: 5px 10px;
-    border: 1px solid white;
-    border-radius: 5px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    gap: 10px;
 }
 
-.game:hover{
+.game:hover {
+    background-color: white;
+    cursor: pointer;
+}
+
+.game:hover>.titreGame {
+    color: black;
+}
+
+.game:hover>.imgGame {
+    border: 1px solid black;
+}
+
+.titreGame {
+    color: white;
+    font-size: 1.2rem;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+
+.imgGame {
+    width: 75px;
+    height: 75px;
+    border-radius: 10px;
+    border: 1px solid white;
+}
+
+.commit {
+    color: white;
+    font-size: 1.2rem;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+}
+
+.menu {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.itemMenu{
+    color: white;
+    padding: 3px 6px;
+    border-radius: 5px;
+    border: 1px solid white;
+    cursor: pointer;
+}
+.itemMenu>span{
+    font-size: 1.7rem;
+}
+
+.itemMenu:hover{
     background-color: white;
     color: black;
-    cursor: pointer;
 }

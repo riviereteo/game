@@ -1,8 +1,153 @@
-function start (url) {
+const games = [
+    ['hum/monster.html', 'img/hum.png', 'Hum', 'exp'],
+    ['lag/ball.html', 'img/lag.png', 'Lag', 'exp'],
+    ['lify/index.html', 'img/lify.png', 'Lify', 'exp'],
+    ['snake/index.html', 'img/snake.png', 'Snake', 'game'],
+    ['upside/UPSIDE.html', 'img/upside.png', 'UPSIDE', 'game']
+];
+
+let params = {
+    mode: 'game',
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const username = 'riviereteo';
+    const repository = 'game';
+
+    const apiUrl = `https://api.github.com/repos/${username}/${repository}/commits`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(commits => {
+            commits.forEach(commit => {
+                const listItem = document.createElement('p');
+                listItem.textContent = commit.commit.message;
+                listItem.className = 'commit';
+                listItem.dataset.type = 'commit';
+                document.getElementById('gameContainer').appendChild(listItem);
+            });
+            checkup();
+        })
+        .catch(error => console.error('Erreur lors de la récupération des commits:', error));
+    make();
+});
+
+function start(url) {
     let href = window.location.href;
     let index = href.indexOf('game/');
     if (index !== -1) {
         href = href.substring(0, index + 5);
     }
     window.location.href = href + url;
+}
+
+function make() {
+    const gameBigparent = document.createElement('div');
+    gameBigparent.id = 'gameBigparent';
+    document.body.appendChild(gameBigparent);
+    const menu = document.createElement('div');
+    menu.className = 'menu';
+    const itemMenuGame = document.createElement('div');
+    itemMenuGame.className = 'itemMenu';
+    itemMenuGame.innerHTML = '<span class="material-symbols-outlined">stadia_controller</span>';
+    const itemMenuExp = document.createElement('div');
+    itemMenuExp.className = 'itemMenu';
+    itemMenuExp.innerHTML = '<span class="material-symbols-outlined">experiment</span>';
+    const itemMenuNews = document.createElement('div');
+    itemMenuNews.className = 'itemMenu';
+    itemMenuNews.innerHTML = '<span class="material-symbols-outlined">newspaper</span>';
+    itemMenuGame.addEventListener('click', () => {
+        params.mode = 'game';
+        checkup();
+    });
+    itemMenuExp.addEventListener('click', () => {
+        params.mode = 'exp';
+        checkup();
+    });
+    itemMenuNews.addEventListener('click', () => {
+        params.mode = 'news';
+        checkup();
+    });
+    menu.appendChild(itemMenuGame);
+    menu.appendChild(itemMenuExp);
+    menu.appendChild(itemMenuNews);
+    document.getElementById('gameBigparent').appendChild(menu);
+    const gameContainer = document.createElement('div');
+    gameContainer.id = 'gameContainer';
+    document.getElementById('gameBigparent').appendChild(gameContainer);
+    games.forEach(game => {
+        const jeux = document.createElement('div');
+        jeux.className = 'game';
+        const img = document.createElement('img');
+        img.src = game[1];
+        img.alt = game[2];
+        img.className = 'imgGame';
+        const name = document.createElement('p');
+        name.textContent = game[2];
+        name.className = 'titreGame';
+        jeux.appendChild(img);
+        jeux.appendChild(name);
+        jeux.addEventListener('click', () => start(game[0]));
+        jeux.dataset.type = game[3];
+        document.getElementById('gameContainer').appendChild(jeux);
+    });
+}
+
+function checkup() {
+    const games = document.getElementsByClassName('game');
+    const commits = document.getElementsByClassName('commit');
+    let gamepluscommits = [];
+    for (let i = 0; i < games.length; i++) {
+        gamepluscommits.push(games[i]);
+    }
+    for (let i = 0; i < commits.length; i++) {
+        gamepluscommits.push(commits[i]);
+    }
+    switch(params.mode) {
+        case 'game':
+            document.getElementsByClassName('itemMenu')[0].style.backgroundColor = '#fff';
+            document.getElementsByClassName('itemMenu')[0].style.color = '#000';
+            document.getElementsByClassName('itemMenu')[1].style.backgroundColor = 'transparent';
+            document.getElementsByClassName('itemMenu')[1].style.color = '#fff';
+            document.getElementsByClassName('itemMenu')[2].style.backgroundColor = 'transparent';
+            document.getElementsByClassName('itemMenu')[2].style.color = '#fff';
+            gamepluscommits.forEach(game => {
+                if (game.dataset.type === 'game') {
+                    game.style.display = 'flex';
+                } else {
+                    game.style.display = 'none';
+                }
+            });
+            break;
+        case 'exp':
+            document.getElementsByClassName('itemMenu')[0].style.backgroundColor = 'transparent';
+            document.getElementsByClassName('itemMenu')[0].style.color = '#fff';
+            document.getElementsByClassName('itemMenu')[1].style.backgroundColor = '#fff';
+            document.getElementsByClassName('itemMenu')[1].style.color = '#000';
+            document.getElementsByClassName('itemMenu')[2].style.backgroundColor = 'transparent';
+            document.getElementsByClassName('itemMenu')[2].style.color = '#fff';
+            gamepluscommits.forEach(game => {
+                if (game.dataset.type === 'exp') {
+                    game.style.display = 'flex';
+                } else {
+                    game.style.display = 'none';
+                }
+            });
+            break;
+        case 'news':
+            document.getElementsByClassName('itemMenu')[0].style.backgroundColor = 'transparent';
+            document.getElementsByClassName('itemMenu')[0].style.color = '#fff';
+            document.getElementsByClassName('itemMenu')[1].style.backgroundColor = 'transparent';
+            document.getElementsByClassName('itemMenu')[1].style.color = '#fff';
+            document.getElementsByClassName('itemMenu')[2].style.backgroundColor = '#fff';
+            document.getElementsByClassName('itemMenu')[2].style.color = '#000';
+            gamepluscommits.forEach(game => {
+                if (game.dataset.type === 'commit') {
+                    game.style.display = 'flex';
+                } else {
+                    game.style.display = 'none';
+                }
+            });
+            break;
+    }
 }
