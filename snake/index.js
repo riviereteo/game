@@ -33,6 +33,11 @@ function setup() {
     if (oldOnload) {
         oldOnload();
     }
+    
+    const backtohome = document.getElementById('backtohome');
+    backtohome.addEventListener('click', () => {
+        document.location.href = '../index.html';
+    });
 
     makeGrid();
     makeCase();
