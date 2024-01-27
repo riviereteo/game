@@ -26,3 +26,31 @@ body {
     padding: 0;
     margin: 0;
 }
+
+#backtohome {
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 100;
+    cursor: pointer;
+    border: 2px solid rgb(160, 208, 210);
+    transition: all 0.3s ease-in-out;
+}
+
+#backtohome>span {
+    color: rgb(160, 208, 210);
+    font-size: 1.5rem;
+}
+
+#backtohome:hover {
+    background-color: rgb(160, 208, 210);
+    scale: 1.1;
+}
+
+#backtohome:hover>span {
+    color: white;
+}
