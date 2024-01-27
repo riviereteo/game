@@ -4,6 +4,10 @@ var height = document.body.clientHeight / 2;
 document.addEventListener('DOMContentLoaded', main);
 
 function main() {
+    const backtohome = document.getElementById('backtohome');
+    backtohome.addEventListener('click', () => {
+        window.location.href = "../index.html";
+    });
     const params = formulaire();
     if (params.nb == 'aleatoire') {
         var nb = Math.floor(Math.random() * 20) + 3;

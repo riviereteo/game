@@ -6,14 +6,44 @@ body {
     margin: 0;
 }
 
-body{
+body {
     background-color: rgb(32, 32, 43);
+    overflow: hidden;
 }
 
-.accroche{
+.accroche {
     background-color: rgb(100, 196, 199);
     width: 7px;
     height: 7px;
     border-radius: 50%;
     z-index: 100;
+}
+
+#backtohome {
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px 10px;
+    background-color: rgb(32, 32, 43);
+    border-radius: 5px;
+    z-index: 100;
+    cursor: pointer;
+    border: 1px solid rgb(100, 196, 199);
+    transition: all 0.3s ease-in-out;
+}
+
+#backtohome>span {
+    color: rgb(100, 196, 199);
+    font-size: 1.5rem;
+}
+
+#backtohome:hover {
+    background-color: rgb(100, 196, 199);
+    scale: 1.1;
+}
+
+#backtohome:hover>span {
+    color: rgb(32, 32, 43);
 }
