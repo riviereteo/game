@@ -108,6 +108,7 @@ function makeBanner() {
     let pauseButton = createElement('div', 'button', '<span class="material-symbols-outlined">pause</span>', banner, 'color: royalBlue;');
     let resetButton = createElement('div', 'button', '<span class="material-symbols-outlined">stop</span>', banner);
     let params = createElement('div', 'button', '<span class="material-symbols-outlined">settings</span>', banner);
+    let home = createElement('div', 'button', '<span class="material-symbols-outlined">home</span>', banner);
     let open = true;
     opencloseButton.addEventListener('click', () => {
         open = !open;
@@ -116,11 +117,13 @@ function makeBanner() {
             banner.appendChild(pauseButton);
             banner.appendChild(resetButton);
             banner.appendChild(params);
+            banner.appendChild(home);
         } else {
             banner.removeChild(playButton);
             banner.removeChild(pauseButton);
             banner.removeChild(resetButton);
             banner.removeChild(params);
+            banner.removeChild(home);
         }
         opencloseButton.style.transform = `rotate(${open ? 0 : 180}deg) translateY(${open ? 0 : 4}px)`;
     });
@@ -165,5 +168,8 @@ function makeBanner() {
                 setColor(cell);
             });
         });
+    });
+    home.addEventListener('click', () => {
+        window.location.href = '../index.html';
     });
 }
