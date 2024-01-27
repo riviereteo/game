@@ -72,6 +72,7 @@ body {
 #toolsimg {
     height: 60%;
     padding-right: 3%;
+    margin-left: 10px;
 }
 
 #toolsWindow {
@@ -152,4 +153,31 @@ body {
     width: 70px;
     margin-top: 12px;
     margin-left: 10px;
+}
+
+#backtohome {
+    margin-top : 10px;
+    margin-right: 15px;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 100;
+    cursor: pointer;
+    border: 1px solid white;
+    transition: all 0.3s ease-in-out;
+}
+
+#backtohome>span {
+    color: rgb(6, 170, 156);
+    font-size: 1.5rem;
+}
+
+#backtohome:hover {
+    background-color: rgba(6, 170, 156, 0.147);
+    border: 1px solid rgba(6, 170, 156, 0.5);
+}
+
+#backtohome:hover>span {
+    color: white;
 }

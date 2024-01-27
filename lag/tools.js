@@ -19,12 +19,19 @@ function creatTools() {
     var toolsimg = document.createElement("img");
     toolsimg.src = "./tools.png";
     toolsimg.id = "toolsimg";
+    var backtohome = document.createElement("div");
+    backtohome.id = "backtohome";
+    backtohome.innerHTML = '<span class="material-symbols-outlined">home</span>';
+    backtohome.addEventListener("click", function () {
+        window.location.href = "../index.html";
+    });
     jaugebarContainer.appendChild(jaugeBar);
     jauge.appendChild(imgbefore);
     jauge.appendChild(jaugebarContainer);
     jauge.appendChild(imgafter);
     tools.appendChild(jauge);
     tools.appendChild(toolsimg);
+    tools.appendChild(backtohome);
     document.body.appendChild(tools);
     jauge.style.marginTop = (tools.offsetHeight - jauge.offsetHeight) / 2 + "px";
     toolsimg.style.marginTop = (tools.offsetHeight - jauge.offsetHeight) / 2 + "px";
