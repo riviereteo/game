@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lify</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+
+<body>
+    <canvas id="canvas" style="display:none;"></canvas>
+
+    <script>
+        var base64Image = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB4AAAAB1CAYAAACvWvziAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAcHSURBVHhe7dntbhs3EAVQu+//zqmpNTOzq0CWxLJoL84JQnPnw9LmV4D7+fHx8evr77fPrz/TceuVeupT8947VbufvK/M2rl/3j3OqtRTn5r3td3r2bvV6ZWau57XyeOsSj31qXnvnXnWXD1V7dFu71anKtf+nJj+md/dp+Z9bfd69m51eqXmrud18jirUk99at57Z541V09Ve7Tbu9WpSj3dn+fJ2alKPfWpZ/t9ck5VpZ761Lz3TtX65HH2Ss1dz+vkcValnvrUvK/tXs/erU6v1Nz1vE4eZ1XqqU/Ne+/Ms+bqqWqPdofH/f7bX/3d593jrEo99al5X9u9nr1bnV6puet5nTzOqtRTn5r33plnzdVT1R7t9m51qlJP9+d58tl+VeqpT8372u717N3q9ErNXc/r5HFWpZ761Lz3zjxrrp6q9mi3d6tTlXq6P8+Ts1OVeupT89478xw/538B238Fv++ff6hVbzjXDr8uvaHmjt5wv1uf9+LuV+PR7o73GN7dPXpD2/0uvvsew+u7wxvf9dvd592G39y9Oe6P3vP8Xc9z775H9b9qvwef293xHsPyv8FT7zEc90efN+x4z3NvqLlb73a8uXtzv/tvv8dovrt79Ib73XffY3j5PW/FPd91ZXfHewx/3L3Z82/w0nv8/pDZn72hzX35+T2G+/6733V4avf24ee5n7/ruTZ/PnqP6r++++N7/F4+z50/b/4cZv++9szulveoxUN//q/dh5X93fdhZX/3fVjZ330fVvZ334eV/d33YWV/931Y2d99H1b2d9+Hlf3d92Flf/d9WNnffR9W9nffh5X93fdhZX/3fVjZ33D/6/snAAAAAAAAAP9zAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACAEAJgAAAAAAAAgBACYAAAAAAAAIAQAmAAAAAAAACACB8ffwMEvALTT2WpSQAAAABJRU5ErkJggg==";
+
+        var img = new Image();
+        img.src = base64Image;
+        let colors = [];
+
+        img.onload = function () {
+            var canvas = document.getElementById('canvas');
+            var ctx = canvas.getContext('2d');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+
+            var firstRowColors = [];
+
+            for (var x = 0; x < img.width; x++) {
+                var pixelData = ctx.getImageData(x, 0, 1, 1).data;
+                var color = 'rgb(' + pixelData[0] + ',' + pixelData[1] + ',' + pixelData[2] + ')';
+                if (!firstRowColors.includes(color)) {
+                    firstRowColors.push(color);
+                }
+            }
+            colors = firstRowColors;
+        };
+    </script>
+    <script src="make.js"></script>
+    <script src="megabouncyfisureunivers.js"></script>
+    <script src="purplewater.js"></script>
+    <script src="bouncecho.js"></script>
+    <script src="tvglitch.js"></script>
+    <script src="cerebral.js"></script>
+    <script src="square.js"></script>
+    <script src="gameoflife.js"></script>
+    <script src="thermalgradient.js"></script>
+    <script src="smoothcolor.js"></script>
+    <script src="blob.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
