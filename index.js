@@ -1,9 +1,9 @@
 const games = [
-    ['hum/monster.html', 'img/hum.png', 'Hum', 'exp'],
-    ['lag/ball.html', 'img/lag.png', 'Lag', 'exp'],
-    ['lify/index.html', 'img/lify.png', 'Lify', 'exp'],
-    ['snake/index.html', 'img/snake.png', 'Snake', 'game'],
-    ['upside/UPSIDE.html', 'img/upside.png', 'UPSIDE', 'game']
+    ['hum/monster.html', 'img/hum.png', 'Hum', 'exp', '01/10/2023'],
+    ['lag/ball.html', 'img/lag.png', 'Lag', 'exp', '01/11/2023'],
+    ['lify/index.html', 'img/lify.png', 'Lify', 'exp', '25/01/2024'],
+    ['snake/index.html', 'img/snake.png', 'Snake', 'game', '01/12/2023'],
+    ['upside/UPSIDE.html', 'img/upside.png', 'UPSIDE', 'game', '01/07/2023'],
 ];
 
 let params = {
@@ -20,11 +20,20 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(commits => {
             commits.forEach(commit => {
+                const commitparent = document.createElement('div');
+                commitparent.className = 'commitparent';
                 const listItem = document.createElement('p');
                 listItem.textContent = commit.commit.message;
                 listItem.className = 'commit';
-                listItem.dataset.type = 'commit';
-                document.getElementById('gameContainer').appendChild(listItem);
+                commitparent.dataset.type = 'commit';
+                const date = document.createElement('p');
+                let thedate = commit.commit.author.date;
+                thedate = thedate.substring(8, 10) + '/' + thedate.substring(5, 7) + '/' + thedate.substring(0, 4);
+                date.textContent = thedate;
+                date.className = 'dateGame';                
+                commitparent.appendChild(listItem);
+                commitparent.appendChild(date);
+                document.getElementById('gameContainer').appendChild(commitparent);
             });
             checkup();
         })
@@ -82,11 +91,18 @@ function make() {
         img.src = game[1];
         img.alt = game[2];
         img.className = 'imgGame';
+        const parentGameOnLeftImg = document.createElement('div');
+        parentGameOnLeftImg.className = 'parentGameOnLeftImg';
         const name = document.createElement('p');
         name.textContent = game[2];
         name.className = 'titreGame';
+        const date = document.createElement('p');
+        date.textContent = game[4];
+        date.className = 'dateGame';
         jeux.appendChild(img);
-        jeux.appendChild(name);
+        parentGameOnLeftImg.appendChild(name);
+        parentGameOnLeftImg.appendChild(date);
+        jeux.appendChild(parentGameOnLeftImg);
         jeux.addEventListener('click', () => start(game[0]));
         jeux.dataset.type = game[3];
         document.getElementById('gameContainer').appendChild(jeux);
@@ -95,7 +111,7 @@ function make() {
 
 function checkup() {
     const games = document.getElementsByClassName('game');
-    const commits = document.getElementsByClassName('commit');
+    const commits = document.getElementsByClassName('commitparent');
     let gamepluscommits = [];
     for (let i = 0; i < games.length; i++) {
         gamepluscommits.push(games[i]);
