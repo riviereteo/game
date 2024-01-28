@@ -54,3 +54,19 @@ body {
 #backtohome:hover>span {
     color: white;
 }
+
+#start{
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(160, 208, 210);
+    color: rgb(109, 145, 146);
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}

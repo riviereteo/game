@@ -22,7 +22,7 @@ for (let i = 0; i < size; i++) {
 let apple = [Math.floor(size / 2), Math.floor((size / 3) * 2)];
 let snake = [[Math.floor(size / 2), 2, 'right'], [Math.floor(size / 2), 3, 'right'], [Math.floor(size / 2), 4, 'right']];
 let direction = 'right';
-let speed = 100;
+let speed = 115;
 let start = true;
 let nbTour = 0;
 let toursuivant = null;
@@ -42,8 +42,13 @@ function setup() {
     makeGrid();
     makeCase();
     makeWorld();
+    const startdiv = document.createElement('div');
+    startdiv.id = 'start';
+    startdiv.innerHTML = 'Press space to start,<br>Use arrow keys to move';
+    document.body.appendChild(startdiv);
     document.addEventListener('keydown', event => {
         if (event.code == 'Space' && start) {
+            document.body.removeChild(startdiv);
             start = false;
             document.addEventListener('keydown', event => {
                 directionSuivante(event);
@@ -111,7 +116,7 @@ function makeWorld() {
             tmp = true;
             nbOfApple++;
             if (nbOfApple % 3 == 1) {
-                speed--;
+                speed--;0
             }
         }
         if (bug) world[snake[i][0]][snake[i][1]] = 1;
