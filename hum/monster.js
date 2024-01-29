@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', main);
 function main() {
     const backtohome = document.getElementById('backtohome');
     backtohome.addEventListener('click', () => {
-        window.location.href = "../index.html";
+        window.location.href = "../index.php";
     });
     const params = formulaire();
     if (params.nb == 'aleatoire') {

@@ -23,7 +23,7 @@ function creatTools() {
     backtohome.id = "backtohome";
     backtohome.innerHTML = '<span class="material-symbols-outlined">home</span>';
     backtohome.addEventListener("click", function () {
-        window.location.href = "../index.html";
+        window.location.href = "../index.php";
     });
     jaugebarContainer.appendChild(jaugeBar);
     jauge.appendChild(imgbefore);

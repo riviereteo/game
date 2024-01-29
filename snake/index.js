@@ -36,7 +36,7 @@ function setup() {
     
     const backtohome = document.getElementById('backtohome');
     backtohome.addEventListener('click', () => {
-        document.location.href = '../index.html';
+        document.location.href = '../index.php';
     });
 
     makeGrid();
