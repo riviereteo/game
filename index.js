@@ -9,6 +9,9 @@ const games = [
 let params = {
     mode: 'game',
 }
+
+let search = () => {};
+
 document.addEventListener("DOMContentLoaded", function () {
     const username = 'riviereteo';
     const repository = 'game';
@@ -61,7 +64,7 @@ function make() {
             searchBar.id = 'searchBar';
             searchBar.type = 'text';
             searchBar.placeholder = 'Search';
-            searchBar.addEventListener('input', () => {
+            search = () => {
                 switch(params.mode){
                     case 'game':
                         searchGame(searchBar.value);
@@ -73,7 +76,8 @@ function make() {
                         searchNews(searchBar.value);
                         break;
                 }
-            });
+            }
+            searchBar.addEventListener('input', search);
             menuRight.insertBefore(searchBar, searchButton);
             searchBar.focus();
         }else{
@@ -81,6 +85,9 @@ function make() {
             setTimeout(() => {
                 document.getElementById('searchBar').remove();
             }, 500);
+            document.getElementById('searchBar').value = '';
+            search();
+            search = () => {};
         }
     });
     menuRight.appendChild(searchButton);
@@ -98,14 +105,17 @@ function make() {
     itemMenuGame.addEventListener('click', () => {
         params.mode = 'game';
         checkup();
+        search();
     });
     itemMenuExp.addEventListener('click', () => {
         params.mode = 'exp';
         checkup();
+        search();
     });
     itemMenuNews.addEventListener('click', () => {
         params.mode = 'news';
         checkup();
+        search();
     });
     menu.appendChild(itemMenuGame);
     menu.appendChild(itemMenuExp);
