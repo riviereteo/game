@@ -9,7 +9,6 @@ const games = [
 let params = {
     mode: 'game',
 }
-
 document.addEventListener("DOMContentLoaded", function () {
     const username = 'riviereteo';
     const repository = 'game';
@@ -30,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 let thedate = commit.commit.author.date;
                 thedate = thedate.substring(8, 10) + '/' + thedate.substring(5, 7) + '/' + thedate.substring(0, 4);
                 date.textContent = thedate;
-                date.className = 'dateGame';                
+                date.className = 'dateGame';
                 commitparent.appendChild(listItem);
                 commitparent.appendChild(date);
                 document.getElementById('gameContainer').appendChild(commitparent);
@@ -54,6 +53,40 @@ function make() {
     const gameBigparent = document.createElement('div');
     gameBigparent.id = 'gameBigparent';
     document.body.appendChild(gameBigparent);
+    const menuRight = document.createElement('div');
+    menuRight.id = 'menuRight';
+    const searchButton = document.createElement('button');
+    searchButton.id = 'searchButton';
+    searchButton.innerHTML = '<span class="material-symbols-outlined">search</span>';
+    searchButton.addEventListener('click', () => {
+        if (!document.getElementById('searchBar')) {
+            const searchBar = document.createElement('input');
+            searchBar.id = 'searchBar';
+            searchBar.type = 'text';
+            searchBar.placeholder = 'Search';
+            searchBar.addEventListener('input', () => {
+                switch(params.mode){
+                    case 'game':
+                        searchGame(searchBar.value);
+                        break;
+                    case 'exp':
+                        searchExp(searchBar.value);
+                        break;
+                    case 'news':
+                        searchNews(searchBar.value);
+                        break;
+                }
+            });
+            menuRight.insertBefore(searchBar, searchButton);
+            searchBar.focus();
+        }else{
+            document.getElementById('searchBar').style.animation = 'searchBarDisappear 0.5s ease-in-out forwards';
+            setTimeout(() => {
+                document.getElementById('searchBar').remove();
+            }, 500);
+        }
+    });
+    menuRight.appendChild(searchButton);
     const menu = document.createElement('div');
     menu.className = 'menu';
     const itemMenuGame = document.createElement('div');
@@ -81,6 +114,7 @@ function make() {
     menu.appendChild(itemMenuExp);
     menu.appendChild(itemMenuNews);
     document.getElementById('gameBigparent').appendChild(menu);
+    document.getElementById('gameBigparent').appendChild(menuRight);
     const gameContainer = document.createElement('div');
     gameContainer.id = 'gameContainer';
     document.getElementById('gameBigparent').appendChild(gameContainer);
@@ -119,7 +153,7 @@ function checkup() {
     for (let i = 0; i < commits.length; i++) {
         gamepluscommits.push(commits[i]);
     }
-    switch(params.mode) {
+    switch (params.mode) {
         case 'game':
             document.getElementsByClassName('itemMenu')[0].style.backgroundColor = '#fff';
             document.getElementsByClassName('itemMenu')[0].style.color = '#000';
@@ -165,5 +199,56 @@ function checkup() {
                 }
             });
             break;
+    }
+}
+
+function searchGame(value) {
+    const games = document.getElementsByClassName('game');
+    for (let i = 0; i < games.length; i++) {
+        if (games[i].children[1].children[0].textContent.toLowerCase().includes(value.toLowerCase()) && games[i].dataset.type === 'game') {
+            games[i].style.display = 'flex';
+            games[i].querySelectorAll('.titreGame').forEach(titre => {
+                titre.innerHTML = titre.textContent;
+            });
+            games[i].querySelectorAll('.titreGame').forEach(titre => {
+                titre.innerHTML = titre.textContent.replace(new RegExp(value, 'gi'), (match) => `<span class="highlight">${match}</span>`);
+            });
+        } else {
+            games[i].style.display = 'none';
+        }
+    }
+}
+
+function searchExp(value) {
+    const games = document.getElementsByClassName('game');
+    for (let i = 0; i < games.length; i++) {
+        if (games[i].children[1].children[0].textContent.toLowerCase().includes(value.toLowerCase()) && games[i].dataset.type === 'exp') {
+            games[i].style.display = 'flex';
+            games[i].querySelectorAll('.titreGame').forEach(titre => {
+                titre.innerHTML = titre.textContent;
+            });
+            games[i].querySelectorAll('.titreGame').forEach(titre => {
+                titre.innerHTML = titre.textContent.replace(new RegExp(value, 'gi'), (match) => `<span class="highlight">${match}</span>`);
+            });
+        } else {
+            games[i].style.display = 'none';
+        }
+    }
+}
+
+function searchNews(value) {
+    const games = document.getElementsByClassName('commitparent');
+    for (let i = 0; i < games.length; i++) {
+        if (games[i].children[0].textContent.toLowerCase().includes(value.toLowerCase()) && games[i].dataset.type === 'commit') {
+            games[i].style.display = 'flex';
+            games[i].querySelectorAll('.commit').forEach(titre => {
+                titre.innerHTML = titre.textContent;
+            });
+            games[i].querySelectorAll('.commit').forEach(titre => {
+                titre.innerHTML = titre.textContent.replace(new RegExp(value, 'gi'), (match) => `<span class="highlight">${match}</span>`);
+            });
+        } else {
+            games[i].style.display = 'none';
+        }
     }
 }
