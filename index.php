@@ -12,15 +12,26 @@
 <body>
     <!-- php -S 127.0.0.1:8080 -->
     <?php
-    /*$dsn = "mysql:dbname=u611830779_game;host=89.116.147.52";
+    $dsn = "mysql:dbname=u611830779_game;host=89.116.147.52";
     $user = 'u611830779_game';
     $password = 'Gameteoriviere33';
     $pdo = new PDO($dsn, $user, $password);
-    $sql = "SELECT `Test`.`testString`FROM `Test`;";
+    $sql = "SELECT * FROM `Game`;";
     $query = $pdo->query($sql);
+    $array = array();
+
     foreach ($query as $row) {
-        echo 'Nom : ' . $row['testString'] . "\n";
-    }*/
+        $array[$row['id']] = array(
+            "titre" => $row['titre'],
+            "Date" => $row['Date'],
+            "img" => $row['img'],
+            "link" => $row['link'],
+            "type" => $row['type']
+        );
+    }
+
+    $json = json_encode($array);
+    file_put_contents("games.json", $json);
     ?>
     <script src="index.js"></script>
 </body>
