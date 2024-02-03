@@ -204,8 +204,7 @@ function checkup() {
 function searchGame(value) {
     const games = document.getElementsByClassName('game');
     for (let i = 0; i < games.length; i++) {
-        const gameData = Object.values(games[i].dataset);
-        if (gameData.includes('game') && gameData.includes(value.toLowerCase())) {
+        if (games[i].children[1].children[0].textContent.toLowerCase().includes(value.toLowerCase()) && games[i].dataset.type === 'game') {
             games[i].style.display = 'flex';
             games[i].querySelectorAll('.titreGame').forEach(titre => {
                 titre.innerHTML = titre.textContent;
@@ -222,8 +221,7 @@ function searchGame(value) {
 function searchExp(value) {
     const games = document.getElementsByClassName('game');
     for (let i = 0; i < games.length; i++) {
-        const gameData = Object.values(games[i].dataset);
-        if (gameData.includes('exp') && gameData.includes(value.toLowerCase())) {
+        if (games[i].children[1].children[0].textContent.toLowerCase().includes(value.toLowerCase()) && games[i].dataset.type === 'exp') {
             games[i].style.display = 'flex';
             games[i].querySelectorAll('.titreGame').forEach(titre => {
                 titre.innerHTML = titre.textContent;
@@ -240,8 +238,7 @@ function searchExp(value) {
 function searchNews(value) {
     const games = document.getElementsByClassName('commitparent');
     for (let i = 0; i < games.length; i++) {
-        const commitData = Object.values(games[i].dataset);
-        if (commitData.includes('commit') && games[i].children[0].textContent.toLowerCase().includes(value.toLowerCase())) {
+        if (games[i].children[0].textContent.toLowerCase().includes(value.toLowerCase()) && games[i].dataset.type === 'commit') {
             games[i].style.display = 'flex';
             games[i].querySelectorAll('.commit').forEach(titre => {
                 titre.innerHTML = titre.textContent;
