@@ -1,4 +1,3 @@
-alert(games);
 let params = {
     mode: 'game',
 }
@@ -118,29 +117,29 @@ function make() {
     const gameContainer = document.createElement('div');
     gameContainer.id = 'gameContainer';
     document.getElementById('gameBigparent').appendChild(gameContainer);
-    games.forEach(game => {
+    Object.values(games).forEach(game => {
         const jeux = document.createElement('div');
         jeux.className = 'game';
         const img = document.createElement('img');
-        img.src = game[1];
-        img.alt = game[2];
+        img.src = game.img;
+        img.alt = game.titre;
         img.className = 'imgGame';
         const parentGameOnLeftImg = document.createElement('div');
         parentGameOnLeftImg.className = 'parentGameOnLeftImg';
         const name = document.createElement('p');
-        name.textContent = game[2];
+        name.textContent = game.titre;
         name.className = 'titreGame';
         const date = document.createElement('p');
-        date.textContent = game[4];
+        date.textContent = game.Date;
         date.className = 'dateGame';
         jeux.appendChild(img);
         parentGameOnLeftImg.appendChild(name);
         parentGameOnLeftImg.appendChild(date);
         jeux.appendChild(parentGameOnLeftImg);
-        jeux.addEventListener('click', () => start(game[0]));
-        jeux.dataset.type = game[3];
+        jeux.addEventListener('click', () => start(game.link));
+        jeux.dataset.type = game.type;
         document.getElementById('gameContainer').appendChild(jeux);
-    });
+    });    
 }
 
 function checkup() {
@@ -205,7 +204,8 @@ function checkup() {
 function searchGame(value) {
     const games = document.getElementsByClassName('game');
     for (let i = 0; i < games.length; i++) {
-        if (games[i].children[1].children[0].textContent.toLowerCase().includes(value.toLowerCase()) && games[i].dataset.type === 'game') {
+        const gameData = Object.values(games[i].dataset);
+        if (gameData.includes('game') && gameData.includes(value.toLowerCase())) {
             games[i].style.display = 'flex';
             games[i].querySelectorAll('.titreGame').forEach(titre => {
                 titre.innerHTML = titre.textContent;
@@ -222,7 +222,8 @@ function searchGame(value) {
 function searchExp(value) {
     const games = document.getElementsByClassName('game');
     for (let i = 0; i < games.length; i++) {
-        if (games[i].children[1].children[0].textContent.toLowerCase().includes(value.toLowerCase()) && games[i].dataset.type === 'exp') {
+        const gameData = Object.values(games[i].dataset);
+        if (gameData.includes('exp') && gameData.includes(value.toLowerCase())) {
             games[i].style.display = 'flex';
             games[i].querySelectorAll('.titreGame').forEach(titre => {
                 titre.innerHTML = titre.textContent;
@@ -239,7 +240,8 @@ function searchExp(value) {
 function searchNews(value) {
     const games = document.getElementsByClassName('commitparent');
     for (let i = 0; i < games.length; i++) {
-        if (games[i].children[0].textContent.toLowerCase().includes(value.toLowerCase()) && games[i].dataset.type === 'commit') {
+        const commitData = Object.values(games[i].dataset);
+        if (commitData.includes('commit') && games[i].children[0].textContent.toLowerCase().includes(value.toLowerCase())) {
             games[i].style.display = 'flex';
             games[i].querySelectorAll('.commit').forEach(titre => {
                 titre.innerHTML = titre.textContent;
