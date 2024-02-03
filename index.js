@@ -1,11 +1,4 @@
-const games = [
-    ['hum/monster.html', 'img/hum.png', 'Hum', 'exp', '01/10/2023'],
-    ['lag/ball.html', 'img/lag.png', 'Lag', 'exp', '01/11/2023'],
-    ['lify/index.html', 'img/lify.png', 'Lify', 'exp', '25/01/2024'],
-    ['snake/index.html', 'img/snake.png', 'Snake', 'game', '01/12/2023'],
-    ['upside/UPSIDE.html', 'img/upside.png', 'UPSIDE', 'game', '01/07/2023'],
-];
-
+alert(games);
 let params = {
     mode: 'game',
 }

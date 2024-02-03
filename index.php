@@ -31,7 +31,7 @@
     }
 
     $json = json_encode($array);
-    file_put_contents("games.json", $json);
+    echo "<script>let games = " . $json . ";</script>";
     ?>
     <script src="index.js"></script>
 </body>
