@@ -1,4 +1,4 @@
-const startMake = function (cell) {
+const startParty = function (cell) {
     let multiplier;
     
     if (cell.value < 0.1) {

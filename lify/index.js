@@ -3,7 +3,7 @@
 /************/
 
 let games = [
-    [startMake, 'test', 1],
+    //[startMake, 'test', 1],
     [startThermalGradient, 'thermique fase colors', 1],
     [startSmooth, 'smooth color reduce', 0],
     [startBlob, 'game of blob', 0],
@@ -13,7 +13,8 @@ let games = [
     [startGlitchTV, 'glitch tv', 1],
     [startBounceEcho, 'bounce echo', 1],
     [startPurpleWater, 'purple water', 1],
-    [startMegaBounceFisureUnivers, 'mega bounce qui fissure l\'univers', 1]
+    [startMegaBounceFisureUnivers, 'mega bounce qui fissure l\'univers', 1],
+    [startParty, 'party', 1],
 ];
 let theGame = [games[0][0], games[0][2]];
 let body = document.body;
