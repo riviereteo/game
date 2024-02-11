@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+html,
+body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    flex-direction: column;
+    gap : 50px;
+}
+
+#form{
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+#board{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.cell{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-size: 22px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    width: 30px;
+    height: 30px;
+    cursor: default;
+}
+
+.flag {
+    height: 24px;
+    animation: flag 0.15s forwards ease-out;
+}
+
+@keyframes flag {
+    from {
+        width: 0px;
+        margin-right: 27px;
+    }
+    to {
+        width: 24px;
+        margin-right: 0px;
+    }
+}
+
+.center{
+    width : 16px;
+    height : 16px;
+    border-radius: 50%;
+}
+
+.overlay{
+    position: absolute;
+    z-index: 100;
+    animation: overlay 0.4s forwards ease-in;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(255, 255, 255);
+}
+
+@keyframes overlay {
+    0%{
+        opacity: 0.5;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+#timingsPlusFlags{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+    align-items: end;
+}
+
+#timingsPlusFlags > p{
+    margin: 0;
+    height: fit-content;
+}
