@@ -36,78 +36,78 @@ window.onload = function () {
             alocolorcoin.style.backgroundColor = 'yellow';
         }
         document.body.style.backgroundColor = 'rgba(255, 255, 0, 0.2)';
-        //attendre 30s de plus avant la suite
+        //attendre 23s de plus avant la suite
         setTimeout(function () {
             laserContainer.classList.replace('laser-container-active-10', 'laser-container-active-20');
             for (alocolorcoin of alocolorcoins) {
                 alocolorcoin.style.backgroundColor = 'red';
             }
             document.body.style.backgroundColor = 'rgba(255, 0, 0, 0.1)';
-            //attendre 25s de plus avant la suite
+            //attendre 18s de plus avant la suite
             setTimeout(function () {
                 laserContainer.classList.replace('laser-container-active-20', 'laser-container-active-30');
                 for (alocolorcoin of alocolorcoins) {
                     alocolorcoin.style.backgroundColor = 'blue';
                 }
                 document.body.style.backgroundColor = 'rgba(0, 0, 255, 0.1)';
-                //attendre 20s de plus avant la suite
+                //attendre 14s de plus avant la suite
                 setTimeout(function () {
                     laserContainer.classList.replace('laser-container-active-30', 'laser-container-active-40');
                     for (alocolorcoin of alocolorcoins) {
                         alocolorcoin.style.backgroundColor = 'green';
                     }
                     document.body.style.backgroundColor = 'rgba(0, 255, 0, 0.1)';
-                    //attendre 15s de plus avant la suite
+                    //attendre 11s de plus avant la suite
                     setTimeout(function () {
                         laserContainer.classList.replace('laser-container-active-40', 'laser-container-active-50');
                         for (alocolorcoin of alocolorcoins) {
                             alocolorcoin.style.backgroundColor = 'purple';
                         }
                         document.body.style.backgroundColor = 'rgba(255, 0, 255, 0.1)';
-                        //attendre 10s de plus avant la suite
+                        //attendre 8s de plus avant la suite
                         setTimeout(function () {
                             laserContainer.classList.replace('laser-container-active-50', 'laser-container-active-60');
                             for (alocolorcoin of alocolorcoins) {
                                 alocolorcoin.style.backgroundColor = 'orange';
                             }
                             document.body.style.backgroundColor = 'rgba(255, 165, 0, 0.1)';
-                            //attendre 8s de plus avant la suite
+                            //attendre 6s de plus avant la suite
                             setTimeout(function () {
                                 laserContainer.classList.replace('laser-container-active-60', 'laser-container-active-70');
                                 for (alocolorcoin of alocolorcoins) {
                                     alocolorcoin.style.backgroundColor = 'pink';
                                 }
                                 document.body.style.backgroundColor = 'rgba(255, 192, 203, 0.1)';
-                                //attendre 6s de plus avant la suite
+                                //attendre 5s de plus avant la suite
                                 setTimeout(function () {
                                     laserContainer.classList.replace('laser-container-active-70', 'laser-container-active-80');
                                     for (alocolorcoin of alocolorcoins) {
                                         alocolorcoin.style.backgroundColor = 'rgb(0, 255, 217)';
                                     }
                                     document.body.style.backgroundColor = 'rgba(0, 255, 217, 0.1)';
-                                    //attendre 5s de plus avant la suite
+                                    //attendre 4s de plus avant la suite
                                     setTimeout(function () {
                                         laserContainer.classList.replace('laser-container-active-80', 'laser-container-active-90');
                                         for (alocolorcoin of alocolorcoins) {
                                             alocolorcoin.style.backgroundColor = 'rgb(0, 255, 132)';
                                         }
                                         document.body.style.backgroundColor = 'rgba(0, 255, 132, 0.1)';
-                                        //attendre 4s de plus avant la suite
+                                        //attendre 3s de plus avant la suite
                                         setTimeout(function () {
                                             laserContainer.classList.replace('laser-container-active-90', 'laser-container-active-100');
                                             for (alocolorcoin of alocolorcoins) {
                                                 alocolorcoin.style.backgroundColor = 'orangered';
                                             }
                                             document.body.style.backgroundColor = 'rgba(255, 69, 0, 0.1)';
-                                        }, 4000);
-                                    }, 5000);
-                                }, 6000);
-                            }, 8000);
-                        }, 10000);
-                    }, 15000);
-                }, 20000);
-            }, 25000);
-        }, 30000);
+                                        }, 3000);
+                                    }, 4000);
+                                }, 5000);
+                            }, 6000);
+                        }, 8000);
+                    }, 11000);
+                }, 14000);
+            }, 18000);
+        }, 23000);
     }, 3000);
 
     var onreload = false;

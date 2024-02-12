@@ -97,7 +97,7 @@ html {
 
 /**/
 .laser-container-active-10 {
-    animation: laser-container-animation-10 30s linear;
+    animation: laser-container-animation-10 23s linear;
 }
 
 .laser-container-active-10>#laser {
@@ -133,7 +133,7 @@ html {
 }
 
 .laser-container-active-20 {
-    animation: laser-container-animation-20 25s linear;
+    animation: laser-container-animation-20 18s linear;
 }
 
 .laser-container-active-20>#laser {
@@ -169,7 +169,7 @@ html {
 }
 
 .laser-container-active-30 {
-    animation: laser-container-animation-30 20s linear;
+    animation: laser-container-animation-30 14s linear;
 }
 
 .laser-container-active-30>#laser {
@@ -205,7 +205,7 @@ html {
 }
 
 .laser-container-active-40 {
-    animation: laser-container-animation-40 15s linear;
+    animation: laser-container-animation-40 11s linear;
 }
 
 .laser-container-active-40>#laser {
@@ -241,7 +241,7 @@ html {
 }
 
 .laser-container-active-50 {
-    animation: laser-container-animation-50 10s linear;
+    animation: laser-container-animation-50 8s linear;
 }
 
 .laser-container-active-50>#laser {
@@ -277,7 +277,7 @@ html {
 }
 
 .laser-container-active-60 {
-    animation: laser-container-animation-60 8s linear;
+    animation: laser-container-animation-60 6s linear;
 }
 
 .laser-container-active-60>#laser {
@@ -313,7 +313,7 @@ html {
 }
 
 .laser-container-active-70 {
-    animation: laser-container-animation-70 6s linear;
+    animation: laser-container-animation-70 5s linear;
 }
 
 .laser-container-active-70>#laser {
@@ -349,7 +349,7 @@ html {
 }
 
 .laser-container-active-80 {
-    animation: laser-container-animation-80 5s linear;
+    animation: laser-container-animation-80 4s linear;
 }
 
 .laser-container-active-80>#laser {
@@ -385,7 +385,7 @@ html {
 }
 
 .laser-container-active-90 {
-    animation: laser-container-animation-90 4s linear;
+    animation: laser-container-animation-90 3s linear;
 }
 
 .laser-container-active-90>#laser {
@@ -421,7 +421,7 @@ html {
 }
 
 .laser-container-active-100 {
-    animation: laser-container-animation-100 3s linear;
+    animation: laser-container-animation-100 2s linear;
 }
 
 .laser-container-active-100>#laser {
@@ -786,7 +786,7 @@ html {
     animation: fonduendbuttosn 2s forwards;
 }
 
-#numberresultpiècesauvées{
+#numberresultpiècesauvées {
     margin: 0 2rem;
 }
 
@@ -796,22 +796,22 @@ html {
     animation: fonduendbuttosn 2s forwards;
 }
 
-#imgresultlongueureparcourus{
+#imgresultlongueureparcourus {
     height: 13rem;
     margin-top: 0.6rem;
     animation: fonduendbuttosn 2s forwards;
 }
 
-#restartbutton{
+#restartbutton {
     margin-top: 2rem;
     width: 4rem;
     animation: fonduendbuttosn 2s forwards;
+    cursor: pointer;
 }
 
-#restartbutton:hover{
-    cursor: pointer;
-    animation: tremblement 1s infinite;
-    width: 5rem;
+#restartbutton:hover {
+    filter: brightness(1.3);
+    scale: 1.1;
 }
 
 @keyframes fonduendbuttosn {

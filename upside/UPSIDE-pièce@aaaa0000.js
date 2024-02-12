@@ -1,7 +1,7 @@
 var ancienneFonction2 = window.onload;
-var minlargeurPièces = 50;
-var maxlargeurPièces = 110;
-var marginPiècesRight = 25;
+var minlargeurPièces = 70;
+var maxlargeurPièces = 120;
+var marginPiècesRight = 30;
 let alll8888;
 let allcolorsPièces = [['#38bd8a', '#cd89a3', '#ba5e82', '#56957d', '#2c3a35'],
 ['#ecc068', '#7a9bdc', '#5a82d3', '#9e8147', '#554c3a'],
@@ -41,7 +41,7 @@ window.onload = function () {
         pièce = document.createElement('div');
         pièce.classList.add('pièce');
         pièce.style.width = widthofallpièces[i] + 'px';
-        height = Math.floor(Math.random() * (document.body.clientHeight / 2.5 - document.body.clientHeight / 8.5 + 1)) + document.body.clientHeight / 4;
+        height = Math.floor(Math.random() * (document.body.clientHeight / 2.5 - document.body.clientHeight / 8.5 + 1)) + document.body.clientHeight / 3;
         pièce.style.height = height + 'px';
         pièce.style.borderRadius = widthofallpièces[i] / 7 + 'px';
         pièce.dataset.ischao = 'true';
