@@ -111,3 +111,31 @@ body{
     background-color: #87af3a;
     z-index: 100;
 }
+
+#backtohome {
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 100;
+    cursor: pointer;
+    border: 2px solid #87af3a;
+    transition: all 0.3s ease-in-out;
+}
+
+#backtohome>span {
+    color: #87af3a;
+    font-size: 1.5rem;
+}
+
+#backtohome:hover {
+    background-color: #87af3a;
+    scale: 1.1;
+}
+
+#backtohome:hover>span {
+    color: white;
+}

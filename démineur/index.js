@@ -1,5 +1,9 @@
 let play = false;
 let Theboard;
+const backtohome = document.getElementById('backtohome');
+backtohome.addEventListener('click', () => {
+    document.location.href = '../index.php';
+});
 document.getElementById('difficulty').addEventListener('change', function () {
     if (document.getElementById('difficulty').value == 'custom') {
         if (!document.getElementById('width')) {
