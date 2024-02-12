@@ -92,3 +92,21 @@ body{
     margin: 0;
     height: fit-content;
 }
+
+.borderTop,
+.borderBottom{
+    width: 30px;
+    height: 2px;
+    position: absolute;
+    background-color: #87af3a;
+    z-index: 100;
+}
+
+.borderLeft,
+.borderRight{
+    width: 2px;
+    height: 30px;
+    position: absolute;
+    background-color: #87af3a;
+    z-index: 100;
+}

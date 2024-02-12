@@ -1,4 +1,5 @@
 let play = true;
+let Theboard;
 function startGame() {
     play = true;
     var game = new Game();
@@ -93,6 +94,55 @@ function shuffleArray(array) {
     return newArray;
 }
 
+function makeBorder(cells) {
+    for (i = 0; i < cells.length; i++) {
+        const cell = cells[i];
+        if (cell.classList.contains('revealed') && !cell.classList.contains('mine')) {
+            let x = parseInt(cell.id.split('-')[1]);
+            let y = parseInt(cell.id.split('-')[0].split('cell')[1]);
+            var enfantsASupprimer = cell.querySelectorAll('.borderTop, .borderBottom, .borderLeft, .borderRight');
+            enfantsASupprimer.forEach(function(enfant) {
+                enfant.remove();
+            });
+            if (document.getElementById('cell' + (y - 1) + '-' + x)) {
+                if (!document.getElementById('cell' + (y - 1) + '-' + x).classList.contains('revealed')) {
+                    const borderTop = document.createElement('div');
+                    borderTop.classList.add('borderTop');
+                    borderTop.style.top = cell.offsetTop + 'px';
+                    cell.appendChild(borderTop);
+                }
+            }
+            if (document.getElementById('cell' + (y + 1) + '-' + x)) {
+                if (!document.getElementById('cell' + (y + 1) + '-' + x).classList.contains('revealed')) {
+                    const borderBottom = document.createElement('div');
+                    borderBottom.classList.add('borderBottom');
+                    borderBottom.style.top = (cell.offsetTop + 28) + 'px';
+                    cell.appendChild(borderBottom);
+                }
+            }
+            if (document.getElementById('cell' + y + '-' + (x - 1))) {
+                if (!document.getElementById('cell' + y + '-' + (x - 1)).classList.contains('revealed')) {
+                    const borderLeft = document.createElement('div');
+                    borderLeft.classList.add('borderLeft');
+                    borderLeft.style.left = cell.offsetLeft + 'px';
+                    cell.appendChild(borderLeft);
+                }
+            }
+            if (document.getElementById('cell' + y + '-' + (x + 1))) {
+                if (!document.getElementById('cell' + y + '-' + (x + 1)).classList.contains('revealed')) {
+                    const borderRight = document.createElement('div');
+                    borderRight.classList.add('borderRight');
+                    borderRight.style.left = (cell.offsetLeft + 28) + 'px';
+                    cell.appendChild(borderRight);
+                }
+            }
+        }
+    }
+}
+
+
+
+
 class Game {
     constructor() {
         if (document.getElementById('timingsPlusFlags')) {
@@ -105,6 +155,7 @@ class Game {
         this.flagsCounter = document.createElement('p');
         this.flagsCounter.setAttribute('id', 'flagsCounter');
         this.board = new Board();
+        Theboard = this.board;
     }
 
     start() {
@@ -133,10 +184,10 @@ class Board {
         this.mines = document.getElementById('mines').value;
         this.theBoard.style.width = this.width * 30 + 'px';
         this.createCells();
-        this.createMines();
     }
 
     createCells() {
+        let firstClick = true;
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
                 let cell = document.createElement('div');
@@ -150,8 +201,13 @@ class Board {
                     if (!cell.classList.contains('revealed')) cell.style.backgroundColor = j % 2 == 0 ? i % 2 == 0 ? '#aad751' : '#a2d149' : i % 2 == 0 ? '#a2d149' : '#aad751';
                 });
                 cell.addEventListener('click', function () {
-                    reveal(i, j);
+                    if (firstClick) {
+                        firstClick = false;
+                        Theboard.createMines(cell);
+                    }
+                    if (!cell.classList.contains('flagCell')) reveal(i, j);
                     const cells = document.getElementsByClassName('cell');
+                    makeBorder(cells);
                     let win = true;
                     for (let i = 0; i < cells.length; i++) {
                         if (!cells[i].classList.contains('revealed') && !cells[i].classList.contains('mine')) {
@@ -165,7 +221,6 @@ class Board {
                             cells[i].style.pointerEvents = 'none';
                         }
                     }
-
                 });
                 cell.addEventListener('contextmenu', function (e) {
                     e.preventDefault();
@@ -189,16 +244,27 @@ class Board {
         }
     }
 
-    createMines() {
+    createMines(theCell) {
         for (let i = 0; i < this.mines; i++) {
             let x = Math.floor(Math.random() * this.width);
             let y = Math.floor(Math.random() * this.height);
             let cell = document.getElementById('cell' + y + '-' + x);
-            if (cell.classList.contains('mine')) {
+            if (cell.classList.contains('mine') || this.verifyProximity(theCell, cell)) {
                 i--;
             } else {
                 cell.classList.add('mine');
             }
         }
+    }
+
+    verifyProximity(theCell, cell) {
+        let x = theCell.id.split('cell')[1].split('-')[1];
+        let y = theCell.id.split('cell')[1].split('-')[0];
+        let cellX = cell.id.split('cell')[1].split('-')[1];
+        let cellY = cell.id.split('cell')[1].split('-')[0];
+        if (Math.abs(x - cellX) <= 1 && Math.abs(y - cellY) <= 1) {
+            return true;
+        }
+        return false;
     }
 }
