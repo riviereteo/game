@@ -1,7 +1,63 @@
-let play = true;
+let play = false;
 let Theboard;
+document.getElementById('difficulty').addEventListener('change', function () {
+    if (document.getElementById('difficulty').value == 'custom') {
+        if (!document.getElementById('width')) {
+            const widthLabel = document.createElement('label');
+            widthLabel.setAttribute('for', 'width');
+            widthLabel.innerHTML = 'Largeur';
+            const widthInput = document.createElement('input');
+            widthInput.setAttribute('type', 'number');
+            widthInput.setAttribute('id', 'width');
+            widthInput.setAttribute('name', 'width');
+            widthInput.setAttribute('min', '4');
+            widthInput.setAttribute('max', '60');
+            widthInput.setAttribute('value', '18');
+            widthInput.setAttribute('onchange', 'document.getElementById("mines").setAttribute("max", (document.getElementById("width").value * document.getElementById("height").value) - 9)');
+            const heightLabel = document.createElement('label');
+            heightLabel.setAttribute('for', 'height');
+            heightLabel.innerHTML = 'Hauteur';
+            const heightInput = document.createElement('input');
+            heightInput.setAttribute('type', 'number');
+            heightInput.setAttribute('id', 'height');
+            heightInput.setAttribute('name', 'height');
+            heightInput.setAttribute('min', '4');
+            heightInput.setAttribute('max', '60');
+            heightInput.setAttribute('value', '14');
+            heightInput.setAttribute('onchange', 'document.getElementById("mines").setAttribute("max", (document.getElementById("width").value * document.getElementById("height").value) - 9)');
+            const minesLabel = document.createElement('label');
+            minesLabel.setAttribute('for', 'mines');
+            minesLabel.innerHTML = 'Mines';
+            const minesInput = document.createElement('input');
+            minesInput.setAttribute('type', 'number');
+            minesInput.setAttribute('id', 'mines');
+            minesInput.setAttribute('name', 'mines');
+            minesInput.setAttribute('min', '1');
+            minesInput.setAttribute('max', '240');
+            minesInput.setAttribute('value', '40');
+            document.getElementById('form').insertBefore(widthLabel, document.querySelector('#form > button'));
+            document.getElementById('form').insertBefore(widthInput, document.querySelector('#form > button'));
+            document.getElementById('form').insertBefore(heightLabel, document.querySelector('#form > button'));
+            document.getElementById('form').insertBefore(heightInput, document.querySelector('#form > button'));
+            document.getElementById('form').insertBefore(minesLabel, document.querySelector('#form > button'));
+            document.getElementById('form').insertBefore(minesInput, document.querySelector('#form > button'));
+        }
+    }
+    else {
+        if (document.getElementById('width')) {
+            document.getElementById('width').remove();
+            document.getElementById('height').remove();
+            document.getElementById('mines').remove();
+            document.getElementById('form').querySelectorAll('label').forEach(label => label.remove());
+        }
+    }
+});
 function startGame() {
-    play = true;
+    if (document.getElementById('difficulty').value == 'custom') {
+        if ((document.getElementById('width').value * document.getElementById('height').value) < (document.getElementById('mines').value - 9) || document.getElementById('width').value < 4 || document.getElementById('width').value > 60 || document.getElementById('height').value < 4 || document.getElementById('height').value > 60 || document.getElementById('mines').value < 1) {
+            return;
+        }
+    }
     var game = new Game();
     game.start();
 }
@@ -58,7 +114,7 @@ function reveal(y, x) {
         var mines = 0;
         for (let i = y - 1; i <= y + 1; i++) {
             for (let j = x - 1; j <= x + 1; j++) {
-                if (i >= 0 && i < document.getElementById('height').value && j >= 0 && j < document.getElementById('width').value) {
+                if (i >= 0 && i < Theboard.height && j >= 0 && j < Theboard.width) {
                     if (document.getElementById('cell' + i + '-' + j).classList.contains('mine')) {
                         mines++;
                     }
@@ -72,7 +128,7 @@ function reveal(y, x) {
             cell.style.backgroundColor = j % 2 == 0 ? i % 2 == 0 ? '#e5c29f' : '#d7b899' : i % 2 == 0 ? '#d7b899' : '#e5c29f';
             for (let i = y - 1; i <= y + 1; i++) {
                 for (let j = x - 1; j <= x + 1; j++) {
-                    if (i >= 0 && i < document.getElementById('height').value && j >= 0 && j < document.getElementById('width').value) {
+                    if (i >= 0 && i < Theboard.height && j >= 0 && j < Theboard.width) {
                         reveal(i, j);
                     }
                 }
@@ -101,7 +157,7 @@ function makeBorder(cells) {
             let x = parseInt(cell.id.split('-')[1]);
             let y = parseInt(cell.id.split('-')[0].split('cell')[1]);
             var enfantsASupprimer = cell.querySelectorAll('.borderTop, .borderBottom, .borderLeft, .borderRight');
-            enfantsASupprimer.forEach(function(enfant) {
+            enfantsASupprimer.forEach(function (enfant) {
                 enfant.remove();
             });
             if (document.getElementById('cell' + (y - 1) + '-' + x)) {
@@ -176,12 +232,36 @@ class Game {
 
 class Board {
     create() {
+        switch (document.getElementById('difficulty').value) {
+            case 'easy':
+                this.width = 10;
+                this.height = 8;
+                this.mines = 10;
+                break;
+            case 'medium':
+                this.width = 18;
+                this.height = 14;
+                this.mines = 40;
+                break;
+            case 'hard':
+                this.width = 24;
+                this.height = 20;
+                this.mines = 99;
+                break;
+            case 'impossible':
+                this.width = 50;
+                this.height = 30;
+                this.mines = 400;
+                break;
+            case 'custom':
+                this.width = document.getElementById('width').value;
+                this.height = document.getElementById('height').value;
+                this.mines = document.getElementById('mines').value;
+                break;
+        }
         this.theBoard = document.createElement('div');
         this.theBoard.setAttribute('id', 'board');
         document.body.appendChild(this.theBoard);
-        this.width = document.getElementById('width').value;
-        this.height = document.getElementById('height').value;
-        this.mines = document.getElementById('mines').value;
         this.theBoard.style.width = this.width * 30 + 'px';
         this.createCells();
     }
@@ -202,7 +282,14 @@ class Board {
                 });
                 cell.addEventListener('click', function () {
                     if (firstClick) {
+                        play = true;
                         firstClick = false;
+                        const flagCells = document.querySelectorAll('.flagCell');
+                        flagCells.forEach(flagCell => {
+                            flagCell.classList.remove('flagCell');
+                            flagCell.innerHTML = '';
+                        });
+                        document.getElementById('flagsCounter').innerHTML = Theboard.mines + ' 🚩';
                         Theboard.createMines(cell);
                     }
                     if (!cell.classList.contains('flagCell')) reveal(i, j);
@@ -229,7 +316,7 @@ class Board {
                             cell.classList.remove('flagCell');
                             cell.innerHTML = '';
                             document.getElementById('flagsCounter').innerHTML = parseInt(document.getElementById('flagsCounter').innerHTML.split(' ')[0]) + 1 + ' 🚩';
-                        } else {
+                        } else if (document.getElementById('flagsCounter').innerHTML.split(' ')[0] > 0) {
                             cell.classList.add('flagCell');
                             const flag = document.createElement('img');
                             flag.src = 'flag.png';
