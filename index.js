@@ -24,9 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (commits.length > 0) {
                     allCommits = allCommits.concat(commits);
                     page++;
-                    fetchAllCommits(); // Récupérer la page suivante
+                    fetchAllCommits();
                 } else {
-                    // Tous les commits ont été récupérés
                     displayCommits(allCommits);
                 }
             })
@@ -51,10 +50,10 @@ document.addEventListener("DOMContentLoaded", function () {
             commitparent.appendChild(date);
             commitsContainer.appendChild(commitparent);
         });
-        checkup(); // Effectuer les vérifications nécessaires après l'affichage de tous les commits
+        checkup();
     }
 
-    fetchAllCommits(); // Commencer la récupération de tous les commits
+    fetchAllCommits();
 
     make();
 });
