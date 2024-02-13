@@ -2,7 +2,7 @@ let params = {
     mode: 'game',
 }
 
-let search = () => {};
+let search = () => { };
 
 document.addEventListener("DOMContentLoaded", function () {
     const username = 'riviereteo';
@@ -13,25 +13,30 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(apiUrl)
         .then(response => response.json())
         .then(commits => {
-            commits.forEach(commit => {
-                const commitparent = document.createElement('div');
-                commitparent.className = 'commitparent';
-                const listItem = document.createElement('p');
-                listItem.textContent = commit.commit.message;
-                listItem.className = 'commit';
-                commitparent.dataset.type = 'commit';
-                const date = document.createElement('p');
-                let thedate = commit.commit.author.date;
-                thedate = thedate.substring(8, 10) + '/' + thedate.substring(5, 7) + '/' + thedate.substring(0, 4);
-                date.textContent = thedate;
-                date.className = 'dateGame';
-                commitparent.appendChild(listItem);
-                commitparent.appendChild(date);
-                document.getElementById('gameContainer').appendChild(commitparent);
-            });
-            checkup();
+            if (Array.isArray(commits) && commits.length > 0) {
+                commits.forEach(commit => {
+                    const commitparent = document.createElement('div');
+                    commitparent.className = 'commitparent';
+                    const listItem = document.createElement('p');
+                    listItem.textContent = commit.commit.message;
+                    listItem.className = 'commit';
+                    commitparent.dataset.type = 'commit';
+                    const date = document.createElement('p');
+                    let thedate = commit.commit.author.date;
+                    thedate = thedate.substring(8, 10) + '/' + thedate.substring(5, 7) + '/' + thedate.substring(0, 4);
+                    date.textContent = thedate;
+                    date.className = 'dateGame';
+                    commitparent.appendChild(listItem);
+                    commitparent.appendChild(date);
+                    document.getElementById('gameContainer').appendChild(commitparent);
+                });
+                checkup();
+            } else {
+                console.error('Aucun commit trouvé dans la réponse.');
+            }
         })
         .catch(error => console.error('Erreur lors de la récupération des commits:', error));
+
     make();
 });
 
@@ -57,7 +62,7 @@ function make() {
             searchBar.type = 'text';
             searchBar.placeholder = 'Search';
             search = () => {
-                switch(params.mode){
+                switch (params.mode) {
                     case 'game':
                         searchGame(searchBar.value);
                         break;
@@ -72,14 +77,14 @@ function make() {
             searchBar.addEventListener('input', search);
             menuRight.insertBefore(searchBar, searchButton);
             searchBar.focus();
-        }else{
+        } else {
             document.getElementById('searchBar').style.animation = 'searchBarDisappear 0.5s ease-in-out forwards';
             setTimeout(() => {
                 document.getElementById('searchBar').remove();
             }, 500);
             document.getElementById('searchBar').value = '';
             search();
-            search = () => {};
+            search = () => { };
         }
     });
     menuRight.appendChild(searchButton);
@@ -139,7 +144,7 @@ function make() {
         jeux.addEventListener('click', () => start(game.link));
         jeux.dataset.type = game.type;
         document.getElementById('gameContainer').appendChild(jeux);
-    });    
+    });
 }
 
 function checkup() {
