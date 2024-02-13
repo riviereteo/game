@@ -7,35 +7,54 @@ let search = () => { };
 document.addEventListener("DOMContentLoaded", function () {
     const username = 'riviereteo';
     const repository = 'game';
+    let allCommits = [];
+    let page = 1;
 
-    const apiUrl = `https://api.github.com/repos/${username}/${repository}/commits`;
+    function fetchAllCommits() {
+        const apiUrl = `https://api.github.com/repos/${username}/${repository}/commits?page=${page}`;
 
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(commits => {
-            if (Array.isArray(commits) && commits.length > 0) {
-                commits.forEach(commit => {
-                    const commitparent = document.createElement('div');
-                    commitparent.className = 'commitparent';
-                    const listItem = document.createElement('p');
-                    listItem.textContent = commit.commit.message;
-                    listItem.className = 'commit';
-                    commitparent.dataset.type = 'commit';
-                    const date = document.createElement('p');
-                    let thedate = commit.commit.author.date;
-                    thedate = thedate.substring(8, 10) + '/' + thedate.substring(5, 7) + '/' + thedate.substring(0, 4);
-                    date.textContent = thedate;
-                    date.className = 'dateGame';
-                    commitparent.appendChild(listItem);
-                    commitparent.appendChild(date);
-                    document.getElementById('gameContainer').appendChild(commitparent);
-                });
-                checkup();
-            } else {
-                console.error('Aucun commit trouvé dans la réponse.');
-            }
-        })
-        .catch(error => console.error('Erreur lors de la récupération des commits:', error));
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('La requête a échoué');
+                }
+                return response.json();
+            })
+            .then(commits => {
+                if (commits.length > 0) {
+                    allCommits = allCommits.concat(commits);
+                    page++;
+                    fetchAllCommits(); // Récupérer la page suivante
+                } else {
+                    // Tous les commits ont été récupérés
+                    displayCommits(allCommits);
+                }
+            })
+            .catch(error => console.error('Erreur lors de la récupération des commits:', error));
+    }
+
+    function displayCommits(commits) {
+        const commitsContainer = document.getElementById('gameContainer');
+        commits.forEach(commit => {
+            const commitparent = document.createElement('div');
+            commitparent.className = 'commitparent';
+            const listItem = document.createElement('p');
+            listItem.textContent = commit.commit.message;
+            listItem.className = 'commit';
+            commitparent.dataset.type = 'commit';
+            const date = document.createElement('p');
+            let thedate = commit.commit.author.date;
+            thedate = thedate.substring(8, 10) + '/' + thedate.substring(5, 7) + '/' + thedate.substring(0, 4);
+            date.textContent = thedate;
+            date.className = 'dateGame';
+            commitparent.appendChild(listItem);
+            commitparent.appendChild(date);
+            commitsContainer.appendChild(commitparent);
+        });
+        checkup(); // Effectuer les vérifications nécessaires après l'affichage de tous les commits
+    }
+
+    fetchAllCommits(); // Commencer la récupération de tous les commits
 
     make();
 });
