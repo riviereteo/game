@@ -19,7 +19,7 @@ window.onload = () => {
             here = wall;
         }
     });
-    initPonts(here);
+    initPonts(here, walls);
     walker = new Walker(here);
 };
 
@@ -39,7 +39,7 @@ function makeWalls() {
     return walls;
 }
 
-function initPonts(wall) {
+function initPonts(wall, walls) {
     let pont = new Pont(wall);
     let interval;
     let onclick = true;
@@ -56,7 +56,25 @@ function initPonts(wall) {
             onclick = false;
             pont.tomber();
             setTimeout(() => {
-                walker.walk(pont.pont.height + parseInt(pont.pont.style.left) - 25);
+                walker.walk(pont.pont.height + parseInt(pont.pont.style.left) - 25, 350);
+                setTimeout(() => {
+                    let continuer = false;
+                    walls.forEach(theWall => {
+                        if (pont.pont.height + parseInt(pont.pont.style.left) >= theWall.x && pont.pont.height + parseInt(pont.pont.style.left) <= theWall.x + theWall.w) {
+                            theWall.wall.dataset.walkerPosition = 'here';
+                            wall.wall.dataset.walkerPosition = 'notHere';
+                            wall = theWall;
+                            continuer = true
+                        }
+                    });
+                    if (continuer) {
+                        if (walker.skin.style.left < wall.x + wall.w / 2 - 20) {
+                            walker.walk(wall.x + wall.w / 2 - 20, 50);
+                        }
+                    } else {
+                        alert('Perdu');
+                    }
+                }, 350);
             }, 350);
         }
     });
@@ -74,19 +92,19 @@ class Wall {
         this.walkerPosition = walkerPosition;
     }
     show() {
-        const div = document.createElement('div');
-        div.style.position = 'absolute';
-        div.style.left = this.x + 'px';
-        div.style.top = this.y + 'px';
-        div.style.width = this.w + 'px';
-        div.style.height = this.h + 'px';
-        div.style.backgroundColor = 'black';
-        div.dataset.walkerPosition = this.walkerPosition;
-        document.body.appendChild(div);
-        this.makeCenter(div);
+        this.wall = document.createElement('div');
+        this.wall.style.position = 'absolute';
+        this.wall.style.left = this.x + 'px';
+        this.wall.style.top = this.y + 'px';
+        this.wall.style.width = this.w + 'px';
+        this.wall.style.height = this.h + 'px';
+        this.wall.style.backgroundColor = 'black';
+        this.wall.dataset.walkerPosition = this.walkerPosition;
+        document.body.appendChild(this.wall);
+        this.makeCenter();
     }
 
-    makeCenter(div) {
+    makeCenter() {
         this.center = document.createElement('div');
         this.center.style.position = 'absolute';
         this.center.style.width = centerSize + 'px';
@@ -136,7 +154,7 @@ class Pont {
 }
 
 class Walker {
-    constructor(wall){
+    constructor(wall) {
         this.skin = document.createElement('img');
         this.skin.src = 'ninjaSkin.png';
         this.skin.style.position = 'absolute';
@@ -147,7 +165,7 @@ class Walker {
         document.body.appendChild(this.skin);
     }
 
-    walk(x){
+    walk(x, duration) {
         this.skin.animate([
             {
                 left: this.skin.style.left,
@@ -156,7 +174,7 @@ class Walker {
                 left: x + 'px',
             }
         ], {
-            duration: 350,
+            duration: duration,
             easing: 'linear',
             fill: 'forwards'
         });
