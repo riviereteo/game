@@ -2,7 +2,6 @@
 /*VARS*/
 /******/
 let walls;
-const nbWalls = 10;
 const wallHeight = 275;
 const centerSize = 10;
 let walker;
@@ -21,6 +20,8 @@ window.onload = () => {
     });
     initPonts(here, walls);
     walker = new Walker(here);
+    scrollReset();
+    initScore();
 };
 
 /***********/
@@ -29,7 +30,7 @@ window.onload = () => {
 function makeWalls() {
     let walls = [];
     walls.push(new Wall(window.innerWidth / 2, document.body.clientHeight - wallHeight, Math.random() * 60 + 25, wallHeight, 'here'));
-    for (let i = 0; i < nbWalls; i++) {
+    for (let i = 0; i < 3; i++) {
         const gap = Math.random() * 200 + 25;
         const width = Math.random() * 60 + 25;
         const x = walls[i].x + walls[i].w + gap;
@@ -43,41 +44,171 @@ function initPonts(wall, walls) {
     let pont = new Pont(wall);
     let interval;
     let onclick = true;
-    document.body.addEventListener('mousedown', (e) => {
+    document.addEventListener('mousedown', (e) => {
         if (onclick) {
             interval = setInterval(() => {
                 pont.aggrandir();
             }, 1);
         }
     });
-    document.body.addEventListener('mouseup', (e) => {
+    document.addEventListener('mouseup', (e) => {
         if (onclick) {
             clearInterval(interval);
             onclick = false;
             pont.tomber();
             setTimeout(() => {
-                walker.walk(pont.pont.height + parseInt(pont.pont.style.left) - 25, 350);
-                setTimeout(() => {
-                    let continuer = false;
-                    walls.forEach(theWall => {
-                        if (pont.pont.height + parseInt(pont.pont.style.left) >= theWall.x && pont.pont.height + parseInt(pont.pont.style.left) <= theWall.x + theWall.w) {
-                            theWall.wall.dataset.walkerPosition = 'here';
-                            wall.wall.dataset.walkerPosition = 'notHere';
-                            wall = theWall;
-                            continuer = true
+                const firstTiming = ((pont.pont.height + parseInt(pont.pont.style.left) - 25) - parseInt(walker.skin.style.left)) * 2;
+                walker.walk(pont.pont.height + parseInt(pont.pont.style.left) - 25, firstTiming);
+                let continuer = false;
+                let doublePoint = false;
+                walls.forEach(theWall => {
+                    if (pont.pont.height + parseInt(pont.pont.style.left) >= theWall.x - 2 && pont.pont.height + parseInt(pont.pont.style.left) <= theWall.x + theWall.w - 2) {
+                        theWall.wall.dataset.walkerPosition = 'here';
+                        wall.wall.dataset.walkerPosition = 'notHere';
+                        wall = theWall;
+                        continuer = true
+                        if (pont.pont.height + parseInt(pont.pont.style.left) >= parseInt(wall.center.style.left) - 2 && pont.pont.height + parseInt(pont.pont.style.left) <= parseInt(wall.center.style.left) + centerSize - 2) {
+                            wall.allumer();
+                            doublePointAnimation();
+                            doublePoint = true;
                         }
-                    });
-                    if (continuer) {
-                        if (walker.skin.style.left < wall.x + wall.w / 2 - 20) {
-                            walker.walk(wall.x + wall.w / 2 - 20, 50);
-                        }
-                    } else {
-                        alert('Perdu');
                     }
-                }, 350);
+                });
+                setTimeout(() => {
+                    if (continuer) {
+                        let timing = 0;
+                        if (wall.w <= 40) {
+                            if (parseInt(walker.skin.style.left) < (parseInt(wall.wall.style.left) + wall.w - 31)) {
+                                timing = ((parseInt(wall.wall.style.left) + wall.w - 31) - parseInt(walker.skin.style.left)) * 2;
+                                walker.walk(parseInt(wall.wall.style.left) + wall.w - 31, timing);
+                            }
+                        } else {
+                            if (parseInt(walker.skin.style.left) < (parseInt(wall.wall.style.left) + wall.w - 40)) {
+                                timing = ((parseInt(wall.wall.style.left) + wall.w - 40) - parseInt(walker.skin.style.left)) * 2;
+                                walker.walk(parseInt(wall.wall.style.left) + wall.w - 40, timing);
+                            }
+                        }
+                        setTimeout(() => {
+                            déplacerCaméra(wall);
+                            document.getElementById('score').innerHTML = parseInt(document.getElementById('score').innerHTML) + (doublePoint ? 2 : 1);
+                            let nbWalls = 0;
+                            walls.forEach(wall => {
+                                if (parseInt(wall.wall.style.left) > parseInt(walker.skin.style.left)) {
+                                    nbWalls++;
+                                }
+                            });
+                            if (nbWalls < 3) {
+                                for (let i = 0; i < 3 - nbWalls; i++) {
+                                    const gap = Math.random() * 200 + 25;
+                                    const width = Math.random() * 60 + 25;
+                                    const x = walls[walls.length - 1].x + walls[walls.length - 1].w + gap;
+                                    const y = document.body.clientHeight - wallHeight;
+                                    walls.push(new Wall(x, y, width, wallHeight, 'notHere'));
+                                    walls[walls.length - 1].show();
+                                }
+                            }
+                            initPonts(wall, walls);
+                            return;
+                        }, timing);
+                    } else {
+                        pont.breakDown();
+                        walker.tomber();
+                        restart();
+                    }
+                }, firstTiming);
             }, 350);
         }
     });
+}
+
+function déplacerCaméra(wall) {
+    const screenWidth = window.innerWidth;
+    const wallPositionX = parseInt(wall.wall.style.left);
+    const wallWidth = wall.w;
+
+    const newX = wallPositionX - (screenWidth / 2) + (wallWidth / 2);
+
+    window.scrollTo({
+        left: newX,
+        behavior: 'smooth'
+    });
+}
+
+function scrollReset() {
+    window.scrollTo({
+        left: 0,
+        behavior: 'smooth'
+    });
+}
+
+function initScore() {
+    let score = document.createElement('p');
+    score.style.position = 'fixed';
+    score.style.top = '15px';
+    score.style.right = '20px';
+    score.style.color = 'white';
+    score.style.fontSize = '28px';
+    score.style.textShadow = '1px 1px 1px black';
+    score.style.margin = '0';
+    score.innerHTML = '0';
+    score.id = 'score';
+    document.body.appendChild(score);
+}
+
+function doublePointAnimation() {
+    let doublePoint = document.createElement('p');
+    doublePoint.innerHTML = 'Double score!';
+    doublePoint.classList.add('doublePoint');
+    document.body.appendChild(doublePoint);
+    setTimeout(() => {
+        doublePoint.animate([
+            {
+                opacity: 1,
+            },
+            {
+                opacity: 0,
+            }
+        ], {
+            duration: 400,
+            easing: 'linear',
+            fill: 'forwards'
+        });
+        setTimeout(() => {
+            document.body.removeChild(doublePoint);
+        }, 400);
+    }, 800);
+}
+
+function restart() {
+    const restart = document.createElement('div');
+    restart.style.position = 'fixed';
+    restart.innerHTML = '<span class="material-symbols-outlined">replay</span>';
+    restart.style.color = 'white';
+    restart.style.backgroundColor = '#2c4695';
+    restart.style.borderRadius = '50%';
+    restart.style.top = '40%';
+    restart.style.left = '50%';
+    restart.style.transform = 'translate(-50%, -50%)';
+    restart.style.cursor = 'pointer';
+    restart.style.display = 'flex';
+    restart.style.padding = '10px';
+    restart.querySelector('span').style.fontSize = '30px';
+    restart.id = 'restart';
+    restart.onclick = () => {
+        while (document.body.firstChild) {
+            document.body.removeChild(document.body.firstChild);
+        }
+        document.body.style.width = '0';
+        location.reload();
+    };
+    document.body.appendChild(restart);
+    document.getElementById('score').style.top = '32%';
+    document.getElementById('score').style.right = '50%';
+    document.getElementById('score').style.transform = 'translate(50%, -50%)';
+    document.getElementById('score').style.fontSize = '40px';
+    document.getElementById('score').innerHTML = 'Score: ' + document.getElementById('score').innerHTML;
+    document.getElementById('score').style.color = '#2c4695';
+    document.getElementById('score').style.textShadow = '2px 2px 2px white';
 }
 
 /*********/
@@ -114,6 +245,28 @@ class Wall {
         this.center.style.top = this.y + 'px';
         document.body.appendChild(this.center);
     }
+
+    allumer() {
+        this.center.animate([
+            {
+                width: centerSize + 'px',
+                height: centerSize + 'px',
+                left: this.x + this.w / 2 - centerSize / 2 + 'px',
+                top: this.y + 'px',
+            },
+            {
+                width: this.w + 'px',
+                height: this.h + 'px',
+                left: this.x + 'px',
+                top: this.y + 'px',
+            }
+        ], {
+            duration: 150,
+            easing: 'linear',
+            fill: 'forwards'
+        });
+    }
+
 }
 
 class Pont {
@@ -151,6 +304,21 @@ class Pont {
             fill: 'forwards'
         });
     }
+
+    breakDown() {
+        this.pont.animate([
+            {
+                rotate: '90deg',
+            },
+            {
+                rotate: '180deg',
+            }
+        ], {
+            duration: 300,
+            easing: 'linear',
+            fill: 'forwards'
+        });
+    }
 }
 
 class Walker {
@@ -175,6 +343,22 @@ class Walker {
             }
         ], {
             duration: duration,
+            easing: 'linear',
+            fill: 'forwards'
+        });
+        this.skin.style.left = x + 'px';
+    }
+
+    tomber() {
+        this.skin.animate([
+            {
+                top: this.skin.style.top,
+            },
+            {
+                top: document.body.clientHeight + 'px',
+            }
+        ], {
+            duration: 300,
             easing: 'linear',
             fill: 'forwards'
         });

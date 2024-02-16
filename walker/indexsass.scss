@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Bowlby+One+SC');
+
+.doublePoint{
+	position: fixed;
+	top: 25%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+    font-family: 'Bowlby One SC', cursive;
+	text-transform: uppercase;
+	font-size: 3rem;
+	background: -webkit-linear-gradient(to right, #ec2929, #2c4695);
+	background: linear-gradient(to right, #ec2929, #2c4695);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	&::before{
+		content: "";
+		display: block;
+		position: absolute;
+		width: 25%;
+		height: 100%;
+		left: -10%;
+		background: -webkit-radial-gradient( rgba(255,255,255,0.3), rgba(255,255,255,0) ); 
+		background: radial-gradient( rgba(255,255,255,0.3) , rgba(255,255,255,0) ); 
+		-webkit-animation:  linear 0.5s normal 2 horizontalScan;
+		animation:  linear 0.5s normal 2 horizontalScan;
+	}
+}
+@keyframes horizontalScan{
+	0% { left: 0%; }
+	50% { left: 50%; }
+	100% { left: 80%; }
+}
+
+@-webkit-keyframes horizontalScan{
+	0% { left: 0%; }
+	50% { left: 50%; }
+	100% { left: 80%; }
+}
