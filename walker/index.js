@@ -45,20 +45,20 @@ function initPonts(wall, walls) {
     let interval;
     let onclick = true;
     document.addEventListener('mousedown', (e) => {
-        if (onclick) {
+        if (onclick && e.which === 1) {
             interval = setInterval(() => {
                 pont.aggrandir();
             }, 1);
         }
     });
     document.addEventListener('mouseup', (e) => {
-        if (onclick) {
+        if (onclick && parseInt(pont.pont.style.height) > 0) {
             clearInterval(interval);
             onclick = false;
             pont.tomber();
             setTimeout(() => {
                 const firstTiming = ((pont.pont.height + parseInt(pont.pont.style.left) - 25) - parseInt(walker.skin.style.left)) * 2;
-                walker.walk(pont.pont.height + parseInt(pont.pont.style.left) - 25, firstTiming);
+                let avancement = pont.pont.height + parseInt(pont.pont.style.left) - 25;
                 let continuer = false;
                 let doublePoint = false;
                 walls.forEach(theWall => {
@@ -72,8 +72,12 @@ function initPonts(wall, walls) {
                             doublePointAnimation();
                             doublePoint = true;
                         }
+                        if (avancement > wall.x + wall.w - 31) {
+                            avancement = wall.x + wall.w - 31;
+                        }
                     }
                 });
+                walker.walk(avancement, firstTiming);
                 setTimeout(() => {
                     if (continuer) {
                         let timing = 0;
@@ -111,8 +115,8 @@ function initPonts(wall, walls) {
                             return;
                         }, timing);
                     } else {
-                        pont.breakDown();
                         walker.tomber();
+                        pont.breakDown();
                         restart();
                     }
                 }, firstTiming);
@@ -180,35 +184,63 @@ function doublePointAnimation() {
 }
 
 function restart() {
-    const restart = document.createElement('div');
-    restart.style.position = 'fixed';
-    restart.innerHTML = '<span class="material-symbols-outlined">replay</span>';
-    restart.style.color = 'white';
-    restart.style.backgroundColor = '#2c4695';
-    restart.style.borderRadius = '50%';
-    restart.style.top = '40%';
-    restart.style.left = '50%';
-    restart.style.transform = 'translate(-50%, -50%)';
-    restart.style.cursor = 'pointer';
-    restart.style.display = 'flex';
-    restart.style.padding = '10px';
-    restart.querySelector('span').style.fontSize = '30px';
-    restart.id = 'restart';
-    restart.onclick = () => {
-        while (document.body.firstChild) {
-            document.body.removeChild(document.body.firstChild);
-        }
-        document.body.style.width = '0';
-        location.reload();
-    };
-    document.body.appendChild(restart);
-    document.getElementById('score').style.top = '32%';
-    document.getElementById('score').style.right = '50%';
-    document.getElementById('score').style.transform = 'translate(50%, -50%)';
-    document.getElementById('score').style.fontSize = '40px';
-    document.getElementById('score').innerHTML = 'Score: ' + document.getElementById('score').innerHTML;
-    document.getElementById('score').style.color = '#2c4695';
-    document.getElementById('score').style.textShadow = '2px 2px 2px white';
+    setTimeout(() => {
+        const restart = document.createElement('div');
+        restart.style.position = 'fixed';
+        restart.innerHTML = '<span class="material-symbols-outlined">replay</span>';
+        restart.style.color = 'white';
+        restart.style.backgroundColor = '#2c4695';
+        restart.style.borderRadius = '50%';
+        restart.style.top = '40%';
+        restart.style.left = '50%';
+        restart.style.transform = 'translate(-50%, -50%)';
+        restart.style.cursor = 'pointer';
+        restart.style.display = 'flex';
+        restart.style.padding = '10px';
+        restart.style.opacity = '0';
+        restart.querySelector('span').style.fontSize = '30px';
+        restart.id = 'restart';
+        restart.onclick = () => {
+            document.body.style.display = 'none';
+            location.reload();
+        };
+        document.body.appendChild(restart);
+        document.getElementById('score').style.top = '32%';
+        document.getElementById('score').style.right = '50%';
+        document.getElementById('score').style.transform = 'translate(50%, -50%)';
+        document.getElementById('score').style.fontSize = '40px';
+        document.getElementById('score').innerHTML = 'Score: ' + document.getElementById('score').innerHTML;
+        document.getElementById('score').style.color = '#2c4695';
+        document.getElementById('score').style.textShadow = '2px 2px 2px white';
+        document.getElementById('score').style.fontWeight = 'bold';
+        document.getElementById('score').style.opacity = '0';
+        setTimeout(() => {
+            restart.animate([
+                {
+                    opacity: 0,
+                },
+                {
+                    opacity: 1,
+                }
+            ], {
+                duration: 500,
+                easing: 'linear',
+                fill: 'forwards'
+            });
+            document.getElementById('score').animate([
+                {
+                    opacity: 0,
+                },
+                {
+                    opacity: 1,
+                }
+            ], {
+                duration: 500,
+                easing: 'linear',
+                fill: 'forwards'
+            });
+        }, 50);
+    }, 300);
 }
 
 /*********/
@@ -314,7 +346,7 @@ class Pont {
                 rotate: '180deg',
             }
         ], {
-            duration: 300,
+            duration: 350,
             easing: 'linear',
             fill: 'forwards'
         });
@@ -334,19 +366,21 @@ class Walker {
     }
 
     walk(x, duration) {
-        this.skin.animate([
-            {
-                left: this.skin.style.left,
-            },
-            {
-                left: x + 'px',
-            }
-        ], {
-            duration: duration,
-            easing: 'linear',
-            fill: 'forwards'
-        });
-        this.skin.style.left = x + 'px';
+        if (duration > 0) {
+            this.skin.animate([
+                {
+                    left: this.skin.style.left,
+                },
+                {
+                    left: x + 'px',
+                }
+            ], {
+                duration: duration,
+                easing: 'linear',
+                fill: 'forwards'
+            });
+            this.skin.style.left = x + 'px';
+        }
     }
 
     tomber() {
@@ -358,7 +392,7 @@ class Walker {
                 top: document.body.clientHeight + 'px',
             }
         ], {
-            duration: 300,
+            duration: 350,
             easing: 'linear',
             fill: 'forwards'
         });
