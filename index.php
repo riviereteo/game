@@ -22,9 +22,11 @@ $query = $pdo->query($sql);
 <body>
     <div id="carrouselNews">
     </div>
+    <div id="carrouselNavigator"></div>
     <div id="gameContainer">
         <?php
         $titles = [];
+        $img = [];
         foreach ($query as $row) {
             echo "<div class='game' data-type='" . $row['type'] . "' onclick='start(\"" . $row['link'] . "\")'>" .
                 "<img class='imgGame' src='" . $row['img'] . "'></img>" .
@@ -34,8 +36,10 @@ $query = $pdo->query($sql);
                 "</div>" .
                 "</div>";
             array_push($titles, $row['titre']);
+            $img[] = $row['img'];
         }
         echo "<script>const titles = " . json_encode($titles) . ";</script>";
+        echo "<script>const img = " . json_encode($img) . ";</script>";
         ?>
     </div>
     <script src="index.js"></script>

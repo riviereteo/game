@@ -1,3 +1,81 @@
+function start(url) {
+    let href = window.location.href;
+    href = href.substring(0, href.lastIndexOf('/'));
+    window.location.href = href + '/' + url;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    let page = 0;
+    const apiUrl = `https://api.github.com/repos/riviereteo/game/commits`;
+    const carrouselNews = document.getElementById('carrouselNews');
+    const carrouselNavigator = document.getElementById('carrouselNavigator');
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            while (page < 10) {
+                const words = data[page].commit.message.split(" ");
+                for (let i = 0; i < words.length; i++) {
+                    if (titles.includes(words[i])) {
+                        let index = titles.indexOf(words[i]);
+                        const carrouselFrame = document.createElement('div');
+                        carrouselFrame.className = 'carrouselFrame';
+                        carrouselFrame.style.backgroundImage = `url(${img[index]})`;
+                        carrouselNews.childNodes.length === 1 ? carrouselFrame.classList.add('carrouselFrameHere') : carrouselFrame.classList.add('carrouselFrameNotHere');
+                        const messageText = document.createElement('p');
+                        messageText.innerHTML = data[page].commit.message;
+                        messageText.className = 'messageText';
+                        const dateText = document.createElement('p');
+                        dateText.className = 'dateText';
+                        const date = data[page].commit.author.date;
+                        dateText.innerHTML = date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4)
+                        carrouselFrame.appendChild(messageText);
+                        carrouselFrame.appendChild(dateText);
+                        carrouselNews.appendChild(carrouselFrame);
+                        const carrouselDot = document.createElement('div');
+                        carrouselDot.className = 'carrouselDot';
+                        carrouselNews.childNodes.length === 2 ? carrouselDot.classList.add('carrouselDotHere') : carrouselDot.classList.add('carrouselDotNotHere');
+                        carrouselDot.addEventListener('click', () => {
+                            carrouselNavigator.childNodes.forEach(dot => {
+                                dot.classList.remove('carrouselDotHere');
+                                dot.classList.add('carrouselDotNotHere');
+                            });
+                            let ancienhere = document.querySelector('.carrouselFrameHere');
+                            ancienhere.classList.remove('carrouselFrameHere');
+                            ancienhere.classList.add('carrouselFrameNotHere');
+                            carrouselFrame.classList.remove('carrouselFrameNotHere');
+                            carrouselFrame.classList.add('carrouselFrameHere');
+                            carrouselDot.classList.remove('carrouselDotNotHere');
+                            carrouselDot.classList.add('carrouselDotHere');
+                        });
+                        carrouselNavigator.appendChild(carrouselDot);
+                        break;
+                    }
+                }
+                page++;
+            }
+        });
+    setInterval(() => {
+        let ancienhere = document.querySelector('.carrouselFrameHere');
+        ancienhere.classList.remove('carrouselFrameHere');
+        ancienhere.classList.add('carrouselFrameNotHere');
+        let suivant = ancienhere.nextElementSibling;
+        if (suivant === null) {
+            suivant = carrouselNews.firstElementChild;
+        }
+        suivant.classList.remove('carrouselFrameNotHere');
+        suivant.classList.add('carrouselFrameHere');
+        let ancienhereDot = document.querySelector('.carrouselDotHere');
+        ancienhereDot.classList.remove('carrouselDotHere');
+        ancienhereDot.classList.add('carrouselDotNotHere');
+        let suivantDot = ancienhereDot.nextElementSibling;
+        if (suivantDot === null) {
+            suivantDot = carrouselNavigator.firstElementChild;
+        }
+        suivantDot.classList.remove('carrouselDotNotHere');
+        suivantDot.classList.add('carrouselDotHere');
+    }, 5000);
+});
+
 /*let params = {
     mode: 'game',
 }
@@ -268,38 +346,3 @@ function searchNews(value) {
         }
     }
 }*/
-
-function start(url) {
-    let href = window.location.href;
-    href = href.substring(0, href.lastIndexOf('/'));
-    window.location.href = href + '/' + url;
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    let page = 0;
-    const apiUrl = `https://api.github.com/repos/riviereteo/game/commits`;
-    const carrouselNews = document.getElementById('carrouselNews');
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            while (page < 10) {
-                const words = data[page].commit.message.split(" ");
-                let display = false;
-                for (let i = 0; i < words.length; i++) {
-                    if (titles.includes(words[i])) {
-                        display = true;
-                    }
-                }
-                if (display) {
-                    const messageText = document.createElement('p');
-                    messageText.innerHTML = data[page].commit.message;
-                    const dateText = document.createElement('p');
-                    const date = data[page].commit.author.date;
-                    dateText.innerHTML = date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4)
-                    carrouselNews.appendChild(messageText);
-                    carrouselNews.appendChild(dateText);
-                }
-                page++;
-            }
-        });
-});
