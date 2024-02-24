@@ -1,4 +1,4 @@
-let params = {
+/*let params = {
     mode: 'game',
 }
 
@@ -57,12 +57,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     make();
 });
-
-function start(url) {
-    let href = window.location.href;
-    href = href.substring(0, href.lastIndexOf('/'));
-    window.location.href = href + '/' + url;
-}
 
 function make() {
     const gameBigparent = document.createElement('div');
@@ -273,4 +267,10 @@ function searchNews(value) {
             games[i].style.display = 'none';
         }
     }
+}*/
+
+function start(url) {
+    let href = window.location.href;
+    href = href.substring(0, href.lastIndexOf('/'));
+    window.location.href = href + '/' + url;
 }

@@ -4,21 +4,14 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
+    top: 0;
+    left: 0;
+    display: flex;
     background-color: #1a1a1a;
 }
 
-#gameBigparent {
-    width: 85%;
-    height: 100%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-}
-
 #gameContainer {
-    width: 100%;
+    width: 80%;
     height: fit-content;
     display: flex;
     flex-direction: row;
@@ -26,7 +19,7 @@ body {
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 100px;
+    margin: 100px auto 0 auto;
 }
 
 .game {
@@ -43,11 +36,11 @@ body {
     cursor: pointer;
 }
 
-.game:hover>.parentGameOnLeftImg>.titreGame {
+.game:hover>.parentGameOnRightImg>.titreGame {
     color: black;
 }
 
-.game:hover>.parentGameOnLeftImg>.dateGame {
+.game:hover>.parentGameOnRightImg>.dateGame {
     color: black;
 }
 
@@ -71,126 +64,10 @@ body {
     border: 1px solid white;
 }
 
-.commit {
-    color: white;
-    font-size: 1.2rem;
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-}
-
-.menu {
-    width: fit-content;
-    height: fit-content;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.itemMenu {
-    color: white;
-    padding: 3px 6px;
-    border-radius: 5px;
-    border: 1px solid white;
-    cursor: pointer;
-}
-
-.itemMenu>span {
-    font-size: 1.7rem;
-}
-
-.itemMenu:hover {
-    background-color: white;
-    color: black;
-}
-
-.parentGameOnLeftImg {
-    display: flex;
-    flex-direction: column;
-}
-
 .dateGame {
     color: white;
     font-size: 0.8rem;
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-}
-
-.commitparent {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: center;
-    padding: 3px 6px;
-    border-radius: 5px;
-    border: 1px solid white;
-}
-
-#menuRight {
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    top: 10px;
-    right: 7.5%;
-    justify-content: right;
-}
-
-#searchButton {
-    outline: none;
-    border: none;
-    background-color: transparent;
-    padding: 0;
-    height: fit-content;
-    display: flex;
-    margin-bottom: -3px;
-}
-
-#searchButton>span {
-    font-size: 1.8rem;
-    color: white;
-    cursor: pointer;
-}
-
-#searchBar {
-    border: none;
-    border-bottom: 1px solid white;
-    background-color: transparent;
-    animation: searchbarspawn 0.5s ease-in-out;
-    outline: none;
-    color: white;
-    font-size: 0.8rem;
-    font-family: 'Roboto', sans-serif;
-    padding: 5px 2px;
-}
-
-
-@keyframes searchBarDisappear {
-    0% {
-        width: 100%;
-    }
-
-    100% {
-        width: 0%;
-    }
-}
-
-@keyframes searchbarspawn {
-    0% {
-        width: 0%;
-    }
-
-    100% {
-        width: 100%;
-    }
-}
-
-.highlight {
-    background-color: white;
-    color: black;
 }
