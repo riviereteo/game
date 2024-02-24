@@ -291,7 +291,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }
                 if (display) {
-                    const ok="ok";
                     const messageText = document.createElement('p');
                     messageText.innerHTML = data[page].commit.message;
                     const dateText = document.createElement('p');
