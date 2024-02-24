@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 page++;
             }
         });
-        const ok ="ok";
+        const lol ="push";
     setInterval(() => {
         let ancienhere = document.querySelector('.carrouselFrameHere');
         ancienhere.classList.remove('carrouselFrameHere');
