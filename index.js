@@ -274,3 +274,32 @@ function start(url) {
     href = href.substring(0, href.lastIndexOf('/'));
     window.location.href = href + '/' + url;
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    let page = 0;
+    const apiUrl = `https://api.github.com/repos/riviereteo/game/commits`;
+    const carrouselNews = document.getElementById('carrouselNews');
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            while (page < 10) {
+                const words = data[page].commit.message.split(" ");
+                let display = false;
+                for (let i = 0; i < words.length; i++) {
+                    if (titles.includes(words[i])) {
+                        display = true;
+                    }
+                }
+                if (display) {
+                    const messageText = document.createElement('p');
+                    messageText.innerHTML = data[page].commit.message;
+                    const dateText = document.createElement('p');
+                    const date = data[page].commit.author.date;
+                    dateText.innerHTML = date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4)
+                    carrouselNews.appendChild(messageText);
+                    carrouselNews.appendChild(dateText);
+                }
+                page++;
+            }
+        });
+});

@@ -6,8 +6,12 @@ body {
     padding: 0;
     top: 0;
     left: 0;
+}
+
+body{
     display: flex;
     background-color: #1a1a1a;
+    flex-direction: column;
 }
 
 #gameContainer {
