@@ -4,6 +4,8 @@ function start(url) {
     window.location.href = href + '/' + url;
 }
 
+let intervalOfCarouselSlide;
+
 document.addEventListener("DOMContentLoaded", function () {
     let page = 0;
     const apiUrl = `https://api.github.com/repos/riviereteo/game/commits`;
@@ -19,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         let index = titles.indexOf(words[i]);
                         const carrouselFrame = document.createElement('div');
                         carrouselFrame.className = 'carrouselFrame';
+                        carrouselFrame.onclick = () => start(link[index]);
                         carrouselFrame.style.backgroundImage = `url(${img[index]})`;
                         carrouselNews.childNodes.length === 1 ? carrouselFrame.classList.add('carrouselFrameHere') : carrouselFrame.classList.add('carrouselFrameNotHere');
                         const messageText = document.createElement('p');
@@ -28,13 +31,19 @@ document.addEventListener("DOMContentLoaded", function () {
                         dateText.className = 'dateText';
                         const date = data[page].commit.author.date;
                         dateText.innerHTML = date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4)
+                        const version = document.createElement('p');
+                        version.className = 'version';
+                        version.innerHTML = versions[index];
                         carrouselFrame.appendChild(messageText);
                         carrouselFrame.appendChild(dateText);
+                        carrouselFrame.appendChild(version);
                         carrouselNews.appendChild(carrouselFrame);
                         const carrouselDot = document.createElement('div');
                         carrouselDot.className = 'carrouselDot';
                         carrouselNews.childNodes.length === 2 ? carrouselDot.classList.add('carrouselDotHere') : carrouselDot.classList.add('carrouselDotNotHere');
                         carrouselDot.addEventListener('click', () => {
+                            clearInterval(intervalOfCarouselSlide);
+                            intervalOfCarouselSlide = setInterval(slideAuto, 5000);
                             carrouselNavigator.childNodes.forEach(dot => {
                                 dot.classList.remove('carrouselDotHere');
                                 dot.classList.add('carrouselDotNotHere');
@@ -54,27 +63,31 @@ document.addEventListener("DOMContentLoaded", function () {
                 page++;
             }
         });
-    setInterval(() => {
-        let ancienhere = document.querySelector('.carrouselFrameHere');
-        ancienhere.classList.remove('carrouselFrameHere');
-        ancienhere.classList.add('carrouselFrameNotHere');
-        let suivant = ancienhere.nextElementSibling;
-        if (suivant === null) {
-            suivant = carrouselNews.firstElementChild;
-        }
-        suivant.classList.remove('carrouselFrameNotHere');
-        suivant.classList.add('carrouselFrameHere');
-        let ancienhereDot = document.querySelector('.carrouselDotHere');
-        ancienhereDot.classList.remove('carrouselDotHere');
-        ancienhereDot.classList.add('carrouselDotNotHere');
-        let suivantDot = ancienhereDot.nextElementSibling;
-        if (suivantDot === null) {
-            suivantDot = carrouselNavigator.firstElementChild;
-        }
-        suivantDot.classList.remove('carrouselDotNotHere');
-        suivantDot.classList.add('carrouselDotHere');
-    }, 5000);
+    intervalOfCarouselSlide = setInterval(slideAuto, 5000);
 });
+
+function slideAuto() {
+    let ancienhere = document.querySelector('.carrouselFrameHere');
+    let carrouselNews = document.getElementById('carrouselNews');
+    let carrouselNavigator = document.getElementById('carrouselNavigator');
+    let suivant = ancienhere.nextElementSibling;
+    if (suivant === null) {
+        suivant = carrouselNews.firstElementChild;
+    }
+    suivant.classList.remove('carrouselFrameNotHere');
+    suivant.classList.add('carrouselFrameHere');
+    let ancienhereDot = document.querySelector('.carrouselDotHere');
+    ancienhereDot.classList.remove('carrouselDotHere');
+    ancienhereDot.classList.add('carrouselDotNotHere');
+    let suivantDot = ancienhereDot.nextElementSibling;
+    if (suivantDot === null) {
+        suivantDot = carrouselNavigator.firstElementChild;
+    }
+    suivantDot.classList.remove('carrouselDotNotHere');
+    suivantDot.classList.add('carrouselDotHere');
+    ancienhere.classList.remove('carrouselFrameHere');
+    ancienhere.classList.add('carrouselFrameNotHere');
+}
 
 /*let params = {
     mode: 'game',

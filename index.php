@@ -17,6 +17,7 @@ $query = $pdo->query($sql);
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="cursor.css">
 </head>
 
 <body>
@@ -27,22 +28,31 @@ $query = $pdo->query($sql);
         <?php
         $titles = [];
         $img = [];
+        $link = [];
+        $versions = [];
         foreach ($query as $row) {
             echo "<div class='game' data-type='" . $row['type'] . "' onclick='start(\"" . $row['link'] . "\")'>" .
                 "<img class='imgGame' src='" . $row['img'] . "'></img>" .
                 "<div class='parentGameOnRightImg'>" .
                 "<p class='titreGame'>" . $row['titre'] . "</p>" .
                 "<p class='dateGame'>" . $row['Date'] . "</p>" .
+                "<p class='versionGame'>" . $row['Version'] . "</p>" .
                 "</div>" .
                 "</div>";
-            array_push($titles, $row['titre']);
+            $titles[] = $row['titre'];
             $img[] = $row['img'];
+            $link[] = $row['link'];
+            $versions[] = $row['Version'];
         }
-        echo "<script>const titles = " . json_encode($titles) . ";</script>";
-        echo "<script>const img = " . json_encode($img) . ";</script>";
+        echo "<script>const titles = " . json_encode($titles) . ";";
+        echo "const img = " . json_encode($img) . ";";
+        echo "const link = " . json_encode($link) . ";";
+        echo "const versions = " . json_encode($versions) . ";</script>";
         ?>
     </div>
+    <div class="cursor"></div>
     <script src="index.js"></script>
+    <script type="module" src="cursor.js"></script>
     <!-- php -S 127.0.0.1:8080 -->
 </body>
 
