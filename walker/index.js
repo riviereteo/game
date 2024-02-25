@@ -149,7 +149,7 @@ function initScore() {
     let score = document.createElement('p');
     score.style.position = 'fixed';
     score.style.top = '15px';
-    score.style.right = '20px';
+    score.style.right = '70px';
     score.style.color = 'white';
     score.style.fontSize = '28px';
     score.style.textShadow = '1px 1px 1px black';
@@ -157,6 +157,22 @@ function initScore() {
     score.innerHTML = '0';
     score.id = 'score';
     document.body.appendChild(score);
+    let backToHome = document.createElement('div');
+    backToHome.style.position = 'fixed';
+    backToHome.style.top = '14px';
+    backToHome.style.right = '10px';
+    backToHome.style.color = 'white';
+    backToHome.style.fontSize = '28px';
+    backToHome.innerHTML = '<span class="material-symbols-outlined">home</span>';
+    backToHome.style.cursor = 'pointer';
+    backToHome.style.display = 'flex';
+    backToHome.style.padding = '5px 10px';
+    backToHome.style.borderRadius = '10px';
+    backToHome.style.backgroundColor = '#2c4695';
+    backToHome.onclick = () => {
+        location.href = '../game';
+    }
+    document.body.appendChild(backToHome);
 }
 
 function doublePointAnimation() {
