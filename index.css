@@ -73,7 +73,7 @@ body {
 }
 
 .dateGame,
-.versionGame{
+.versionGame {
     color: white;
     font-size: 0.8rem;
     font-family: 'Roboto', sans-serif;
@@ -87,16 +87,17 @@ body {
     align-items: center;
     margin: 0 auto;
     overflow: hidden;
-    margin-top: 50px;
-    box-shadow: 4px 4px 0 -2px white;
+    margin-top: 15px;
     border-radius: 10px;
+    border: 1px solid white;
+    background-color: midnightblue;
 }
 
-.carrouselFrameHere{
+.carrouselFrameHere {
     display: flex;
 }
 
-.carrouselFrameNotHere{
+.carrouselFrameNotHere {
     display: none;
 }
 
@@ -139,17 +140,17 @@ body {
 .dateText {
     font-size: 1rem;
     margin: 0 0 2px 10px;
-    text-shadow: 2px 2px 4px black;
+    text-shadow: 1px 1px 2px black;
 }
 
-.version{
+.version {
     font-size: 0.8rem;
     margin: 0 0 10px 10px;
     text-shadow: 2px 2px 4px black;
 
 }
 
-#carrouselNavigator{
+#carrouselNavigator {
     width: fit-content;
     height: fit-content;
     display: flex;
@@ -161,7 +162,7 @@ body {
     z-index: 2;
 }
 
-.carrouselDot{
+.carrouselDot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
@@ -170,18 +171,101 @@ body {
     transition: 0.2s ease-in-out;
 }
 
-.carrouselDot:hover{
+.carrouselDot:hover {
     background-color: white;
     border-radius: 6px;
     width: 12px;
 }
 
-.carrouselDotHere{
+.carrouselDotHere {
     background-color: white;
     border-radius: 6px;
     width: 12px;
 }
 
-.carrouselDotNotHere{
+.carrouselDotNotHere {
     background-color: rgb(150, 150, 150);
+}
+
+#menu {
+    width: 80%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px auto 0 auto;
+}
+
+#menuLeft,
+#menuRight {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    backdrop-filter: blur(20px);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.separator {
+    height: 1rem;
+    width: 1px;
+    background-color: white;
+    margin: 0 10px;
+}
+
+.menuButton {
+    color: white;
+    cursor: pointer;
+    display: flex;
+    padding: 5px;
+    border-radius: 5px;
+    transition: 0.1s ease-in-out;
+}
+
+.menuButton>span {
+    font-size: 1.7rem;
+}
+
+.menuButton:hover {
+    color: royalblue;
+    background-color: rgb(232, 239, 255);
+}
+
+.menuButton:hover>.activeDot {
+    background-color: red;
+}
+
+.arrowdown {
+    margin-left: -6px;
+}
+
+#closeCarrousel {
+    position: absolute;
+    display: flex;
+    cursor: pointer;
+    padding: 1px;
+    border-radius: 50%;
+}
+
+#closeCarrousel>span {
+    color: white;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+#closeCarrousel:hover {
+    background-color: rgba(255, 213, 213, 0.4);
+}
+
+#closeCarrousel:hover>span {
+    color: rgb(181, 0, 0);
+}
+
+.activeDot {
+    background-color: rgb(0, 255, 0);
+    border-radius: 50%;
+    width: 5px;
+    height: 5px;
 }

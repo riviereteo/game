@@ -11,6 +11,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const apiUrl = `https://api.github.com/repos/riviereteo/game/commits`;
     const carrouselNews = document.getElementById('carrouselNews');
     const carrouselNavigator = document.getElementById('carrouselNavigator');
+    const close = document.createElement('div');
+    close.id = 'closeCarrousel';
+    close.innerHTML = '<span class="material-symbols-outlined">close</span>';
+    close.addEventListener('click', () => {
+        clearInterval(intervalOfCarouselSlide);
+        carrouselNews.style.display = 'none';
+        close.style.display = 'none';
+        carrouselNavigator.style.display = 'none';
+    });
+    close.style.top = carrouselNews.offsetTop + 4 + 'px';
+    close.style.right = carrouselNews.offsetLeft + 4 + 'px';
+    document.body.appendChild(close);
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {

@@ -21,6 +21,65 @@ $query = $pdo->query($sql);
 </head>
 
 <body>
+    <div id="menu">
+        <div id="menuLeft">
+            <div class="menuButton activeMenu">
+                <span class="material-symbols-outlined">title</span>
+            </div>
+            <div class="menuButton">
+                <span class="material-symbols-outlined">schedule</span>
+            </div>
+            <div class="menuButton activeMenu">
+                <span class="material-symbols-outlined">deployed_code</span>
+            </div>
+            <div class="separator"></div>
+            <div class="menuButton activeMenu">
+                <span class="material-symbols-outlined">stadia_controller</span>
+            </div>
+            <div class="menuButton activeMenu">
+                <span class="material-symbols-outlined">experiment</span>
+            </div>
+            <div class="menuButton activeMenu">
+                <span class="material-symbols-outlined">newspaper</span>
+            </div>
+            <div class="separator"></div>
+            <div class="menuButton">
+                <span class="material-symbols-outlined">search</span>
+            </div>
+        </div>
+        <div id="menuRight">
+            <div class="menuButton activeMenu">
+                <span class="material-symbols-outlined">sort</span>
+            </div>
+            <div class="menuButton">
+                <span class="material-symbols-outlined">grid_on</span>
+            </div>
+            <div class="separator"></div>
+            <div class="menuButton">
+                <span class="material-symbols-outlined">filter_alt</span>
+                <span class="material-symbols-outlined arrowdown">
+                    arrow_drop_down
+                </span>
+            </div>
+        </div>
+    </div>
+    <script>
+        const activeMenus = document.querySelectorAll('.activeMenu');
+        activeMenus.forEach((menu) => {
+            const active = document.createElement('div');
+            active.classList.add('activeDot');
+            menu.appendChild(active);
+            menu.addEventListener('click', () => {
+                if (menu.classList.contains('activeMenu')) {
+                    menu.classList.remove('activeMenu');
+                    active.style.display = 'none';
+                } else {
+                    menu.classList.add('activeMenu');
+                    active.style.display = 'block';
+                }
+            });
+        });
+    </script>
     <div id="carrouselNews">
     </div>
     <div id="carrouselNavigator"></div>
