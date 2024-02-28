@@ -23,23 +23,23 @@ $query = $pdo->query($sql);
 <body>
     <div id="menu">
         <div id="menuLeft">
-            <div class="menuButton activeMenu">
+            <div class="menuButton activeMenu" id="menuTitle">
                 <span class="material-symbols-outlined">title</span>
             </div>
-            <div class="menuButton">
+            <div class="menuButton" id="menuDate">
                 <span class="material-symbols-outlined">schedule</span>
             </div>
-            <div class="menuButton activeMenu">
+            <div class="menuButton activeMenu" id="menuVersion">
                 <span class="material-symbols-outlined">deployed_code</span>
             </div>
             <div class="separator"></div>
-            <div class="menuButton activeMenu">
+            <div class="menuButton activeMenu" id="menuGame">
                 <span class="material-symbols-outlined">stadia_controller</span>
             </div>
-            <div class="menuButton activeMenu">
+            <div class="menuButton activeMenu" id="menuExp">
                 <span class="material-symbols-outlined">experiment</span>
             </div>
-            <div class="menuButton activeMenu">
+            <div class="menuButton activeMenu" id="menuNews">
                 <span class="material-symbols-outlined">newspaper</span>
             </div>
             <div class="separator"></div>
@@ -48,10 +48,10 @@ $query = $pdo->query($sql);
             </div>
         </div>
         <div id="menuRight">
-            <div class="menuButton activeMenu">
+            <div class="menuButton activeMenu" id="menuList">
                 <span class="material-symbols-outlined">sort</span>
             </div>
-            <div class="menuButton">
+            <div class="menuButton" id="menuGrid">
                 <span class="material-symbols-outlined">grid_on</span>
             </div>
             <div class="separator"></div>
@@ -63,23 +63,6 @@ $query = $pdo->query($sql);
             </div>
         </div>
     </div>
-    <script>
-        const activeMenus = document.querySelectorAll('.activeMenu');
-        activeMenus.forEach((menu) => {
-            const active = document.createElement('div');
-            active.classList.add('activeDot');
-            menu.appendChild(active);
-            menu.addEventListener('click', () => {
-                if (menu.classList.contains('activeMenu')) {
-                    menu.classList.remove('activeMenu');
-                    active.style.display = 'none';
-                } else {
-                    menu.classList.add('activeMenu');
-                    active.style.display = 'block';
-                }
-            });
-        });
-    </script>
     <div id="carrouselNews">
     </div>
     <div id="carrouselNavigator"></div>
@@ -90,14 +73,14 @@ $query = $pdo->query($sql);
         $link = [];
         $versions = [];
         foreach ($query as $row) {
-            echo "<div class='game' data-type='" . $row['type'] . "' onclick='start(\"" . $row['link'] . "\")'>" .
-                "<img class='imgGame' src='" . $row['img'] . "'></img>" .
-                "<div class='parentGameOnRightImg'>" .
-                "<p class='titreGame'>" . $row['titre'] . "</p>" .
-                "<p class='dateGame'>" . $row['Date'] . "</p>" .
-                "<p class='versionGame'>" . $row['Version'] . "</p>" .
-                "</div>" .
-                "</div>";
+            echo "<div class='game' data-type='" . $row['type'] . "' onclick='start(\"" . $row['link'] . "\", \"game\")'>";
+            echo "<img class='imgGame' src='" . $row['img'] . "'></img>";
+            echo "<div class='parentGameOnRightImg'>";
+            echo "<p class='titreGame'>" . $row['titre'] . "</p>";
+            echo "<p class='dateGame'>" . $row['Date'] . "</p>";
+            echo "<p class='versionGame'>" . $row['Version'] . "</p>";
+            echo "</div>";
+            echo "</div>";
             $titles[] = $row['titre'];
             $img[] = $row['img'];
             $link[] = $row['link'];

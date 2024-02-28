@@ -12,6 +12,7 @@ body {
     display: flex;
     background-color: #1a1a1a;
     flex-direction: column;
+    cursor: none;
 }
 
 #gameContainer {
@@ -27,7 +28,7 @@ body {
 }
 
 .game {
-    padding: 5px 10px;
+    padding: 6px 10px;
     border-radius: 10px;
     display: flex;
     flex-direction: row;
@@ -53,7 +54,7 @@ body {
 }
 
 .game:hover>.imgGame {
-    border: 1px solid black;
+    box-shadow: 0 0 4px 0 rgb(103, 103, 103);
 }
 
 .titreGame {
@@ -244,19 +245,18 @@ body {
     position: absolute;
     display: flex;
     cursor: pointer;
-    padding: 1px;
     border-radius: 50%;
 }
 
 #closeCarrousel>span {
     color: white;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     cursor: pointer;
     transition: 0.2s ease-in-out;
 }
 
 #closeCarrousel:hover {
-    background-color: rgba(255, 213, 213, 0.4);
+    background-color: rgba(255, 213, 213, 0.3);
 }
 
 #closeCarrousel:hover>span {

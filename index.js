@@ -1,7 +1,28 @@
-function start(url) {
-    let href = window.location.href;
-    href = href.substring(0, href.lastIndexOf('/'));
-    window.location.href = href + '/' + url;
+function start(url, type) {
+    let wait = 0;
+    if (type === "game") {
+        let index = link.indexOf(url);
+        const imgs = document.querySelectorAll('.imgGame');
+        imgs.forEach(imga => {
+            if (imga.src === img[index]) {
+                imga.style.boxShadow = '3px 3px 4px 0 rgb(103, 103, 103)';
+                imga.parentElement.animate([
+                    { transform: 'translateX(0) translateY(0)' },
+                    { transform: 'translateX(1px) translateY(3px)' },
+                    { transform: 'translateX(0) translateY(0)' }
+                ], {
+                    duration: 300,
+                    iterations: 1,
+                });
+                wait = 300;
+            }
+        });
+    }
+    setTimeout(() => {
+        let href = window.location.href;
+        href = href.substring(0, href.lastIndexOf('/'));
+        window.location.href = href + '/' + url;
+    }, wait);
 }
 
 let intervalOfCarouselSlide;
@@ -15,10 +36,8 @@ document.addEventListener("DOMContentLoaded", function () {
     close.id = 'closeCarrousel';
     close.innerHTML = '<span class="material-symbols-outlined">close</span>';
     close.addEventListener('click', () => {
-        clearInterval(intervalOfCarouselSlide);
-        carrouselNews.style.display = 'none';
-        close.style.display = 'none';
-        carrouselNavigator.style.display = 'none';
+        const menuNews = document.getElementById('menuNews');
+        menuNews.click();
     });
     close.style.top = carrouselNews.offsetTop + 4 + 'px';
     close.style.right = carrouselNews.offsetLeft + 4 + 'px';
@@ -33,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         let index = titles.indexOf(words[i]);
                         const carrouselFrame = document.createElement('div');
                         carrouselFrame.className = 'carrouselFrame';
-                        carrouselFrame.onclick = () => start(link[index]);
+                        carrouselFrame.onclick = () => start(link[index], "carrouselFrame");
                         carrouselFrame.style.backgroundImage = `url(${img[index]})`;
                         carrouselNews.childNodes.length === 1 ? carrouselFrame.classList.add('carrouselFrameHere') : carrouselFrame.classList.add('carrouselFrameNotHere');
                         const messageText = document.createElement('p');
@@ -76,6 +95,202 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     intervalOfCarouselSlide = setInterval(slideAuto, 5000);
+
+    const menus = document.querySelectorAll('.menuButton');
+    menus.forEach((menu) => {
+        const active = document.createElement('div');
+        active.classList.add('activeDot');
+        menu.appendChild(active);
+        menu.classList.contains('activeMenu') ? active.style.display = 'block' : active.style.display = 'none';
+        menu.addEventListener('click', () => {
+            if (menu.classList.contains('activeMenu')) {
+                menu.classList.remove('activeMenu');
+                active.style.display = 'none';
+                menu.animate([
+                    { backgroundColor: 'rgb(232, 239, 255)', color: 'royalblue', transform: 'translateX(0) translateY(0)' },
+                    { backgroundColor: 'rgb(195, 55, 55)', color: 'rgba(255, 213, 213, 0.8)', transform: 'translateX(1px) translateY(3px)' },
+                    { backgroundColor: 'rgb(232, 239, 255)', color: 'royalblue', transform: 'translateX(0) translateY(0)' }
+                ], {
+                    duration: 400,
+                    iterations: 1,
+                });
+            } else {
+                menu.classList.add('activeMenu');
+                active.style.display = 'block';
+                menu.animate([
+                    { backgroundColor: 'rgb(232, 239, 255)', color: 'royalblue', transform: 'translateX(0) translateY(0)' },
+                    { backgroundColor: 'rgba(48, 255, 72, 0.8)', color: 'rgb(191, 245, 191)', transform: 'translateX(1px) translateY(3px)' },
+                    { backgroundColor: 'rgb(232, 239, 255)', color: 'royalblue', transform: 'translateX(0) translateY(0)' }
+                ], {
+                    duration: 400,
+                    iterations: 1,
+                });
+            }
+        });
+    });
+
+    const menuTitle = document.getElementById('menuTitle');
+    if (!menuTitle.classList.contains('activeMenu')) {
+        const titres = document.querySelectorAll('.titreGame');
+        for (let i = 0; i < titres.length; i++) {
+            titres[i].style.display = 'none';
+        }
+    }
+    menuTitle.addEventListener('click', () => {
+        const titres = document.querySelectorAll('.titreGame');
+        if (!menuTitle.classList.contains('activeMenu')) {
+            for (let i = 0; i < titres.length; i++)
+                titres[i].style.display = 'none';
+        } else {
+            for (let i = 0; i < titres.length; i++)
+                titres[i].style.display = 'block';
+        }
+    });
+    const menuDate = document.getElementById('menuDate');
+    if (!menuDate.classList.contains('activeMenu')) {
+        const dates = document.querySelectorAll('.dateGame');
+        for (let i = 0; i < dates.length; i++) {
+            dates[i].style.display = 'none';
+        }
+    }
+    menuDate.addEventListener('click', () => {
+        const dates = document.querySelectorAll('.dateGame');
+        if (!menuDate.classList.contains('activeMenu')) {
+            for (let i = 0; i < dates.length; i++)
+                dates[i].style.display = 'none';
+        } else {
+            for (let i = 0; i < dates.length; i++)
+                dates[i].style.display = 'block';
+        }
+    });
+    const menuVersion = document.getElementById('menuVersion');
+    if (!menuVersion.classList.contains('activeMenu')) {
+        const versions = document.querySelectorAll('.version');
+        for (let i = 0; i < versions.length; i++) {
+            versions[i].style.display = 'none';
+        }
+    }
+    menuVersion.addEventListener('click', () => {
+        const versions = document.querySelectorAll('.versionGame');
+        if (!menuVersion.classList.contains('activeMenu')) {
+            for (let i = 0; i < versions.length; i++)
+                versions[i].style.display = 'none';
+        } else {
+            for (let i = 0; i < versions.length; i++)
+                versions[i].style.display = 'block';
+        }
+    });
+
+    const games = document.getElementsByClassName('game');
+    for (let i = 0; i < games.length; i++) {
+        games[i].addEventListener('mouseover', () => {
+            if (!menuTitle.classList.contains('activeMenu') && !menuDate.classList.contains('activeMenu') && !menuVersion.classList.contains('activeMenu')) {
+                games[i].style.backgroundColor = 'transparent';
+                const play = document.createElement('div');
+                play.className = 'play';
+                play.style.pointerEvents = 'none';
+                play.style.height = '75px';
+                play.style.alignItems = 'center';
+                play.style.justifyContent = 'center';
+                play.style.display = 'flex';
+                play.style.width = '75px';
+                play.style.position = 'absolute';
+                play.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
+                play.style.color = "rgba(255, 255, 255, 0.8)";
+                games[i].appendChild(play);
+                play.querySelector('.material-symbols-outlined').style.fontSize = '50px';
+                play.querySelector('.material-symbols-outlined').style.textShadow = '3px 3px 4px rgba(0, 0, 0, 0.5)';
+                play.animate([
+                    { top: play.offsetTop - 30 + 'px', opacity: 0 },
+                    { top: play.offsetTop + 0 + 'px', opacity: 0.8 }
+                ], {
+                    duration: 400,
+                    iterations: 1,
+                    easing: 'linear(0 0%, 0 2.27%, 0.02 4.53%, 0.04 6.8%, 0.06 9.07%, 0.1 11.33%, 0.14 13.6%, 0.25 18.15%, 0.39 22.7%, 0.56 27.25%, 0.77 31.8%, 1 36.35%, 0.89 40.9%, 0.85 43.18%, 0.81 45.45%, 0.79 47.72%, 0.77 50%, 0.75 52.27%, 0.75 54.55%, 0.75 56.82%, 0.77 59.1%, 0.79 61.38%, 0.81 63.65%, 0.85 65.93%, 0.89 68.2%, 1 72.7%, 0.97 74.98%, 0.95 77.25%, 0.94 79.53%, 0.94 81.8%, 0.94 84.08%, 0.95 86.35%, 0.97 88.63%, 1 90.9%, 0.99 93.18%, 0.98 95.45%, 0.99 97.73%, 1 100%)'
+                });
+            } else {
+                games[i].style.backgroundColor = 'white';
+            }
+        });
+        games[i].addEventListener('mouseout', () => {
+            games[i].style.backgroundColor = 'transparent';
+            const play = games[i].querySelector('.play');
+            if (play !== null) {
+                play.remove();
+            }
+        });
+    }
+
+    const menuGame = document.getElementById('menuGame');
+    const allgames = document.getElementsByClassName('game');
+    let justgames = [];
+    for (let i = 0; i < allgames.length; i++) {
+        if (allgames[i].dataset.type === "game") {
+            justgames.push(allgames[i]);
+        }
+    }
+    if (!menuGame.classList.contains('activeMenu')) {
+        for (let i = 0; i < justgames.length; i++) {
+            justgames[i].style.display = 'none';
+        }
+    }
+    menuGame.addEventListener('click', () => {
+        if (!menuGame.classList.contains('activeMenu')) {
+            for (let i = 0; i < justgames.length; i++) {
+                justgames[i].style.display = 'none';
+            }
+        } else {
+            for (let i = 0; i < justgames.length; i++) {
+                justgames[i].style.display = 'flex';
+            }
+        }
+    });
+
+    const menuExp = document.getElementById('menuExp');
+    let justexp = [];
+    for (let i = 0; i < allgames.length; i++) {
+        if (allgames[i].dataset.type === "exp") {
+            justexp.push(allgames[i]);
+        }
+    }
+    if (!menuExp.classList.contains('activeMenu')) {
+        for (let i = 0; i < justexp.length; i++) {
+            justexp[i].style.display = 'none';
+        }
+    }
+    menuExp.addEventListener('click', () => {
+        if (!menuExp.classList.contains('activeMenu')) {
+            for (let i = 0; i < justexp.length; i++) {
+                justexp[i].style.display = 'none';
+            }
+        } else {
+            for (let i = 0; i < justexp.length; i++) {
+                justexp[i].style.display = 'flex';
+            }
+        }
+    });
+
+    const menuNews = document.getElementById('menuNews');
+    const gameContainer = document.getElementById('gameContainer');
+    if (!menuNews.classList.contains('activeMenu')) {
+        carrouselNews.style.display = 'none';
+        close.style.display = 'none';
+        carrouselNavigator.style.display = 'none';
+        gameContainer.style.margin = "20px auto 0 auto"
+    }
+    menuNews.addEventListener('click', () => {
+        if (menuNews.classList.contains('activeMenu')) {
+            carrouselNews.style.display = 'flex';
+            close.style.display = 'block';
+            carrouselNavigator.style.display = 'flex';
+            gameContainer.style.margin = "50px auto 0 auto"
+        } else {
+            carrouselNews.style.display = 'none';
+            close.style.display = 'none';
+            carrouselNavigator.style.display = 'none';
+            gameContainer.style.margin = "20px auto 0 auto"
+        }
+    });
 });
 
 function slideAuto() {
@@ -100,274 +315,3 @@ function slideAuto() {
     ancienhere.classList.remove('carrouselFrameHere');
     ancienhere.classList.add('carrouselFrameNotHere');
 }
-
-/*let params = {
-    mode: 'game',
-}
-
-let search = () => { };
-
-document.addEventListener("DOMContentLoaded", function () {
-    const username = 'riviereteo';
-    const repository = 'game';
-    let allCommits = [];
-    let page = 1;
-
-    function fetchAllCommits() {
-        const apiUrl = `https://api.github.com/repos/${username}/${repository}/commits?page=${page}`;
-
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('La requête a échoué');
-                }
-                return response.json();
-            })
-            .then(commits => {
-                if (commits.length > 0) {
-                    allCommits = allCommits.concat(commits);
-                    page++;
-                    fetchAllCommits();
-                } else {
-                    displayCommits(allCommits);
-                }
-            })
-            .catch(error => console.error('Erreur lors de la récupération des commits:', error));
-    }
-
-    function displayCommits(commits) {
-        const commitsContainer = document.getElementById('gameContainer');
-        commits.forEach(commit => {
-            const commitparent = document.createElement('div');
-            commitparent.className = 'commitparent';
-            const listItem = document.createElement('p');
-            listItem.textContent = commit.commit.message;
-            listItem.className = 'commit';
-            commitparent.dataset.type = 'commit';
-            const date = document.createElement('p');
-            let thedate = commit.commit.author.date;
-            thedate = thedate.substring(8, 10) + '/' + thedate.substring(5, 7) + '/' + thedate.substring(0, 4);
-            date.textContent = thedate;
-            date.className = 'dateGame';
-            commitparent.appendChild(listItem);
-            commitparent.appendChild(date);
-            commitsContainer.appendChild(commitparent);
-        });
-        checkup();
-    }
-
-    fetchAllCommits();
-
-    make();
-});
-
-function make() {
-    const gameBigparent = document.createElement('div');
-    gameBigparent.id = 'gameBigparent';
-    document.body.appendChild(gameBigparent);
-    const menuRight = document.createElement('div');
-    menuRight.id = 'menuRight';
-    const searchButton = document.createElement('button');
-    searchButton.id = 'searchButton';
-    searchButton.innerHTML = '<span class="material-symbols-outlined">search</span>';
-    searchButton.addEventListener('click', () => {
-        if (!document.getElementById('searchBar')) {
-            const searchBar = document.createElement('input');
-            searchBar.id = 'searchBar';
-            searchBar.type = 'text';
-            searchBar.placeholder = 'Search';
-            search = () => {
-                switch (params.mode) {
-                    case 'game':
-                        searchGame(searchBar.value);
-                        break;
-                    case 'exp':
-                        searchExp(searchBar.value);
-                        break;
-                    case 'news':
-                        searchNews(searchBar.value);
-                        break;
-                }
-            }
-            searchBar.addEventListener('input', search);
-            menuRight.insertBefore(searchBar, searchButton);
-            searchBar.focus();
-        } else {
-            document.getElementById('searchBar').style.animation = 'searchBarDisappear 0.5s ease-in-out forwards';
-            setTimeout(() => {
-                document.getElementById('searchBar').remove();
-            }, 500);
-            document.getElementById('searchBar').value = '';
-            search();
-            search = () => { };
-        }
-    });
-    menuRight.appendChild(searchButton);
-    const menu = document.createElement('div');
-    menu.className = 'menu';
-    const itemMenuGame = document.createElement('div');
-    itemMenuGame.className = 'itemMenu';
-    itemMenuGame.innerHTML = '<span class="material-symbols-outlined">stadia_controller</span>';
-    const itemMenuExp = document.createElement('div');
-    itemMenuExp.className = 'itemMenu';
-    itemMenuExp.innerHTML = '<span class="material-symbols-outlined">experiment</span>';
-    const itemMenuNews = document.createElement('div');
-    itemMenuNews.className = 'itemMenu';
-    itemMenuNews.innerHTML = '<span class="material-symbols-outlined">newspaper</span>';
-    itemMenuGame.addEventListener('click', () => {
-        params.mode = 'game';
-        checkup();
-        search();
-    });
-    itemMenuExp.addEventListener('click', () => {
-        params.mode = 'exp';
-        checkup();
-        search();
-    });
-    itemMenuNews.addEventListener('click', () => {
-        params.mode = 'news';
-        checkup();
-        search();
-    });
-    menu.appendChild(itemMenuGame);
-    menu.appendChild(itemMenuExp);
-    menu.appendChild(itemMenuNews);
-    document.getElementById('gameBigparent').appendChild(menu);
-    document.getElementById('gameBigparent').appendChild(menuRight);
-    const gameContainer = document.createElement('div');
-    gameContainer.id = 'gameContainer';
-    document.getElementById('gameBigparent').appendChild(gameContainer);
-    Object.values(games).forEach(game => {
-        const jeux = document.createElement('div');
-        jeux.className = 'game';
-        const img = document.createElement('img');
-        img.src = game.img;
-        img.alt = game.titre;
-        img.className = 'imgGame';
-        const parentGameOnLeftImg = document.createElement('div');
-        parentGameOnLeftImg.className = 'parentGameOnLeftImg';
-        const name = document.createElement('p');
-        name.textContent = game.titre;
-        name.className = 'titreGame';
-        const date = document.createElement('p');
-        date.textContent = game.Date;
-        date.className = 'dateGame';
-        jeux.appendChild(img);
-        parentGameOnLeftImg.appendChild(name);
-        parentGameOnLeftImg.appendChild(date);
-        jeux.appendChild(parentGameOnLeftImg);
-        jeux.addEventListener('click', () => start(game.link));
-        jeux.dataset.type = game.type;
-        document.getElementById('gameContainer').appendChild(jeux);
-    });
-}
-
-function checkup() {
-    const games = document.getElementsByClassName('game');
-    const commits = document.getElementsByClassName('commitparent');
-    let gamepluscommits = [];
-    for (let i = 0; i < games.length; i++) {
-        gamepluscommits.push(games[i]);
-    }
-    for (let i = 0; i < commits.length; i++) {
-        gamepluscommits.push(commits[i]);
-    }
-    switch (params.mode) {
-        case 'game':
-            document.getElementsByClassName('itemMenu')[0].style.backgroundColor = '#fff';
-            document.getElementsByClassName('itemMenu')[0].style.color = '#000';
-            document.getElementsByClassName('itemMenu')[1].style.backgroundColor = 'transparent';
-            document.getElementsByClassName('itemMenu')[1].style.color = '#fff';
-            document.getElementsByClassName('itemMenu')[2].style.backgroundColor = 'transparent';
-            document.getElementsByClassName('itemMenu')[2].style.color = '#fff';
-            gamepluscommits.forEach(game => {
-                if (game.dataset.type === 'game') {
-                    game.style.display = 'flex';
-                } else {
-                    game.style.display = 'none';
-                }
-            });
-            break;
-        case 'exp':
-            document.getElementsByClassName('itemMenu')[0].style.backgroundColor = 'transparent';
-            document.getElementsByClassName('itemMenu')[0].style.color = '#fff';
-            document.getElementsByClassName('itemMenu')[1].style.backgroundColor = '#fff';
-            document.getElementsByClassName('itemMenu')[1].style.color = '#000';
-            document.getElementsByClassName('itemMenu')[2].style.backgroundColor = 'transparent';
-            document.getElementsByClassName('itemMenu')[2].style.color = '#fff';
-            gamepluscommits.forEach(game => {
-                if (game.dataset.type === 'exp') {
-                    game.style.display = 'flex';
-                } else {
-                    game.style.display = 'none';
-                }
-            });
-            break;
-        case 'news':
-            document.getElementsByClassName('itemMenu')[0].style.backgroundColor = 'transparent';
-            document.getElementsByClassName('itemMenu')[0].style.color = '#fff';
-            document.getElementsByClassName('itemMenu')[1].style.backgroundColor = 'transparent';
-            document.getElementsByClassName('itemMenu')[1].style.color = '#fff';
-            document.getElementsByClassName('itemMenu')[2].style.backgroundColor = '#fff';
-            document.getElementsByClassName('itemMenu')[2].style.color = '#000';
-            gamepluscommits.forEach(game => {
-                if (game.dataset.type === 'commit') {
-                    game.style.display = 'flex';
-                } else {
-                    game.style.display = 'none';
-                }
-            });
-            break;
-    }
-}
-
-function searchGame(value) {
-    const games = document.getElementsByClassName('game');
-    for (let i = 0; i < games.length; i++) {
-        if (games[i].children[1].children[0].textContent.toLowerCase().includes(value.toLowerCase()) && games[i].dataset.type === 'game') {
-            games[i].style.display = 'flex';
-            games[i].querySelectorAll('.titreGame').forEach(titre => {
-                titre.innerHTML = titre.textContent;
-            });
-            games[i].querySelectorAll('.titreGame').forEach(titre => {
-                titre.innerHTML = titre.textContent.replace(new RegExp(value, 'gi'), (match) => `<span class="highlight">${match}</span>`);
-            });
-        } else {
-            games[i].style.display = 'none';
-        }
-    }
-}
-
-function searchExp(value) {
-    const games = document.getElementsByClassName('game');
-    for (let i = 0; i < games.length; i++) {
-        if (games[i].children[1].children[0].textContent.toLowerCase().includes(value.toLowerCase()) && games[i].dataset.type === 'exp') {
-            games[i].style.display = 'flex';
-            games[i].querySelectorAll('.titreGame').forEach(titre => {
-                titre.innerHTML = titre.textContent;
-            });
-            games[i].querySelectorAll('.titreGame').forEach(titre => {
-                titre.innerHTML = titre.textContent.replace(new RegExp(value, 'gi'), (match) => `<span class="highlight">${match}</span>`);
-            });
-        } else {
-            games[i].style.display = 'none';
-        }
-    }
-}
-
-function searchNews(value) {
-    const games = document.getElementsByClassName('commitparent');
-    for (let i = 0; i < games.length; i++) {
-        if (games[i].children[0].textContent.toLowerCase().includes(value.toLowerCase()) && games[i].dataset.type === 'commit') {
-            games[i].style.display = 'flex';
-            games[i].querySelectorAll('.commit').forEach(titre => {
-                titre.innerHTML = titre.textContent;
-            });
-            games[i].querySelectorAll('.commit').forEach(titre => {
-                titre.innerHTML = titre.textContent.replace(new RegExp(value, 'gi'), (match) => `<span class="highlight">${match}</span>`);
-            });
-        } else {
-            games[i].style.display = 'none';
-        }
-    }
-}*/
