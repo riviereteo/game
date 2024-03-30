@@ -129,6 +129,95 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    let searchClicked = false;
+    let searchBarClicked = false;
+    document.getElementById('searchButton').addEventListener('click', () => {
+        if (document.getElementById('searchButton')) {
+            const search = document.createElement('input');
+            search.id = 'searchBar';
+            search.type = 'text';
+            search.placeholder = 'Search...';
+            search.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    searchh();
+                }
+            });
+            document.getElementById('searchButton').insertAdjacentElement('beforebegin', search);
+            document.getElementById('searchButton').id = 'searchButtonActive';
+            search.addEventListener('click', () => {
+                searchBarClicked = true;
+            });
+            search.focus();
+            const games = document.getElementsByClassName('game');
+            let allsearch = true;
+            for (let i = 0; i < games.length; i++) {
+                if (games[i].style.display != 'none') allsearch = false;
+            }
+            if (allsearch) {
+                for (let i = 0; i < games.length; i++) {
+                    games[i].style.display = 'flex';
+                }
+            }
+        }
+        else {
+            searchClicked = true;
+            searchh();
+        }
+    });
+
+    function searchh() {
+        const search = document.getElementById('searchBar');
+        const games = document.getElementsByClassName('game');
+        const searchValue = search.value;
+        for (let i = 0; i < games.length; i++) {
+            games[i].style.display = 'none';
+            games[i].querySelector('.parentGameOnRightImg>.titreGame').innerHTML = titles[i];
+        }
+        if (search.value === '') {
+            for (let i = 0; i < games.length; i++) {
+                games[i].style.display = 'flex';
+            }
+        } else {
+            const searchValue = search.value.toLowerCase();
+            for (let i = 0; i < games.length; i++) {
+                const titre = games[i].querySelector('.titreGame').innerHTML.toLowerCase();
+                const date = games[i].querySelector('.dateGame').innerHTML.toLowerCase();
+                const version = games[i].querySelector('.versionGame').innerHTML.toLowerCase();
+                if (titre.includes(searchValue) || date.includes(searchValue) || version.includes(searchValue)) {
+                    games[i].style.display = 'flex';
+                    const titre = games[i].querySelector('.parentGameOnRightImg>.titreGame').innerHTML;
+                    const index = titre.toLowerCase().indexOf(searchValue);
+                    if (index !== -1) {
+                        const debut = titre.substring(0, index);
+                        const fin = titre.substring(index + searchValue.length);
+                        games[i].querySelector('.titreGame').innerHTML = debut + '<span style="background-color: rgba(255, 255, 255, 0.9); color: rgb(0,0,0); border-radius: 4px; padding:2px 1px;">' + titre.substring(index, index + searchValue.length) + '</span>' + fin;
+                    }
+                }
+            }
+            search.value = '';
+        }
+    }
+
+    document.addEventListener('click', (e) => {
+        if (document.getElementById('searchButtonActive') && document.getElementById('searchBar')) {
+            if (document.getElementById('searchBar').offsetWidth === 190 && searchClicked === false && searchBarClicked === false) {
+                document.getElementById('searchBar').animate([
+                    { width: '190px' },
+                    { width: '0px' }
+                ], {
+                    duration: 200,
+                    iterations: 1,
+                });
+                setTimeout(() => {
+                    document.getElementById('searchBar').remove();
+                    document.getElementById('searchButtonActive').id = 'searchButton';
+                }, 200);
+            }
+        }
+        searchClicked = false;
+        searchBarClicked = false;
+    });
+
     const menuTitle = document.getElementById('menuTitle');
     if (!menuTitle.classList.contains('activeMenu')) {
         const titres = document.querySelectorAll('.titreGame');

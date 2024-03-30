@@ -43,7 +43,7 @@ $query = $pdo->query($sql);
                 <span class="material-symbols-outlined">newspaper</span>
             </div>
             <div class="separator"></div>
-            <div class="menuButton">
+            <div id="searchButton">
                 <span class="material-symbols-outlined">search</span>
             </div>
         </div>

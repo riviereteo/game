@@ -206,6 +206,7 @@ body {
     backdrop-filter: blur(20px);
     padding: 10px;
     border-radius: 10px;
+    cursor: default;
 }
 
 .separator {
@@ -215,7 +216,8 @@ body {
     margin: 0 10px;
 }
 
-.menuButton {
+.menuButton,
+#searchButton {
     color: white;
     cursor: pointer;
     display: flex;
@@ -224,11 +226,13 @@ body {
     transition: 0.1s ease-in-out;
 }
 
-.menuButton>span {
+.menuButton>span,
+#searchButton>span {
     font-size: 1.7rem;
 }
 
-.menuButton:hover {
+.menuButton:hover,
+#searchButton:hover {
     color: royalblue;
     background-color: rgb(232, 239, 255);
 }
@@ -268,4 +272,42 @@ body {
     border-radius: 50%;
     width: 5px;
     height: 5px;
+}
+
+#searchBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 0px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid white;
+    background-color: transparent;
+    color: #ffffff;
+    margin : -3px -5px 3px 5px;
+    font-size: 0.9rem;
+    animation: searchDeploy forwards cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s;
+    font-family: 'Roboto', sans-serif;
+}
+
+@keyframes searchDeploy {
+    from {
+        width: 0;
+    }
+    to {
+        width: 190px;
+    }
+}
+
+#searchButtonActive {
+    color: white;
+    cursor: pointer;
+    display: flex;
+    padding: 5px;
+    border-radius: 5px;
+    transition: 0.1s ease-in-out;
+}
+
+#searchButtonActive>span {
+    font-size: 1.7rem;
 }
