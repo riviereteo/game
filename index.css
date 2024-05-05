@@ -80,6 +80,8 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
+    display: flex;
+    align-items:center;
 }
 
 #carrouselNews {
@@ -284,7 +286,7 @@ body {
     border-bottom: 1px solid white;
     background-color: transparent;
     color: #ffffff;
-    margin : -3px -5px 3px 5px;
+    margin: -3px -5px 3px 5px;
     font-size: 0.9rem;
     animation: searchDeploy forwards cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s;
     font-family: 'Roboto', sans-serif;
@@ -294,6 +296,7 @@ body {
     from {
         width: 0;
     }
+
     to {
         width: 190px;
     }
@@ -310,4 +313,9 @@ body {
 
 #searchButtonActive>span {
     font-size: 1.7rem;
+}
+
+.versionGame>span {
+    margin-left: 5px;
+    font-size: 1.3rem;
 }

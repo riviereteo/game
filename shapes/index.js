@@ -10,7 +10,7 @@ function dessinerTriangle(ctx, x, y, rotation) {
     let y3 = y;
     rotation ? y3 += height : y3 -= height;
 
-    const positionString = `${x},${y},${rotation}`;
+    const positionString = `${x},${y},${rotation},{true},{true},{true}`;
     drawnPositions.push(positionString);
 
     ctx.beginPath();
@@ -19,8 +19,8 @@ function dessinerTriangle(ctx, x, y, rotation) {
     ctx.lineTo(x3, y3);
     ctx.closePath();
     ctx.stroke();
-    
-    trouverPositionSuivant(ctx, x, y, rotation, height);
+
+    trouverPositionSuivant(ctx);
 }
 
 window.onload = () => {
@@ -35,9 +35,11 @@ window.onload = () => {
     dessinerTriangle(ctx, x, y, rotation);
 }
 
-function trouverPositionSuivant(ctx, x, y, rotation, height) {
-    const randomFace = Math.floor(Math.random() * 3);
-    switch (randomFace) {
+function trouverPositionSuivant(ctx) {
+    const randomTriangle = Math.floor(Math.random() * drawnPositions.length);
+    const [x, y, rotation] = drawnPositions[randomTriangle].split(',');
+    const face = Math.floor(Math.random() * 3);
+    switch (face) {
         case 0:
             dessinerTriangle(ctx, x, y, !rotation);
             break;

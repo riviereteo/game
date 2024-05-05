@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const active = document.createElement('div');
         active.classList.add('activeDot');
         menu.appendChild(active);
-        menu.classList.contains('activeMenu') ? active.style.display = 'block' : active.style.display = 'none';
+        menu.classList.contains('activeMenu') ? active.style.display = 'flex' : active.style.display = 'none';
         menu.addEventListener('click', () => {
             if (menu.classList.contains('activeMenu')) {
                 menu.classList.remove('activeMenu');
@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             } else {
                 menu.classList.add('activeMenu');
-                active.style.display = 'block';
+                active.style.display = 'flex';
                 menu.animate([
                     { backgroundColor: 'rgb(232, 239, 255)', color: 'royalblue', transform: 'translateX(0) translateY(0)' },
                     { backgroundColor: 'rgba(48, 255, 72, 0.8)', color: 'rgb(191, 245, 191)', transform: 'translateX(1px) translateY(3px)' },
@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 titres[i].style.display = 'none';
         } else {
             for (let i = 0; i < titres.length; i++)
-                titres[i].style.display = 'block';
+                titres[i].style.display = 'flex';
         }
     });
     const menuDate = document.getElementById('menuDate');
@@ -249,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 dates[i].style.display = 'none';
         } else {
             for (let i = 0; i < dates.length; i++)
-                dates[i].style.display = 'block';
+                dates[i].style.display = 'flex';
         }
     });
     const menuVersion = document.getElementById('menuVersion');
@@ -266,7 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 versions[i].style.display = 'none';
         } else {
             for (let i = 0; i < versions.length; i++)
-                versions[i].style.display = 'block';
+                versions[i].style.display = 'flex';
         }
     });
 
@@ -370,7 +370,7 @@ document.addEventListener("DOMContentLoaded", function () {
     menuNews.addEventListener('click', () => {
         if (menuNews.classList.contains('activeMenu')) {
             carrouselNews.style.display = 'flex';
-            close.style.display = 'block';
+            close.style.display = 'flex';
             carrouselNavigator.style.display = 'flex';
             gameContainer.style.margin = "50px auto 0 auto"
         } else {

@@ -72,13 +72,19 @@ $query = $pdo->query($sql);
         $img = [];
         $link = [];
         $versions = [];
+        $symb = "";
         foreach ($query as $row) {
+            if ($row['type'] == "game"){
+                $symb = "stadia_controller";
+            }else{
+                $symb = "experiment";
+            }
             echo "<div class='game' data-type='" . $row['type'] . "' onclick='start(\"" . $row['link'] . "\", \"game\")'>";
             echo "<img class='imgGame' src='" . $row['img'] . "'></img>";
             echo "<div class='parentGameOnRightImg'>";
             echo "<p class='titreGame'>" . $row['titre'] . "</p>";
             echo "<p class='dateGame'>" . $row['Date'] . "</p>";
-            echo "<p class='versionGame'>" . $row['Version'] . "</p>";
+            echo "<p class='versionGame'>" . $row['Version'] . "<span class=\"material-symbols-outlined\">$symb</span></p>";
             echo "</div>";
             echo "</div>";
             $titles[] = $row['titre'];
