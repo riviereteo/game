@@ -28,7 +28,7 @@ function start(url, type) {
 let intervalOfCarouselSlide;
 
 document.addEventListener("DOMContentLoaded", function () {
-    let page = 0;
+    let gameUpdatesFound = 0; // Variable pour suivre le nombre de mises à jour de jeu trouvées
     const apiUrl = `https://api.github.com/repos/riviereteo/game/commits`;
     const carrouselNews = document.getElementById('carrouselNews');
     const carrouselNavigator = document.getElementById('carrouselNavigator');
@@ -45,10 +45,10 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            while (page < 10) {
+            for (let page = 0; page < data.length; page++) { // Parcourir toutes les mises à jour
                 const words = data[page].commit.message.split(" ");
                 for (let i = 0; i < words.length; i++) {
-                    if (titles.includes(words[i])) {
+                    if (gameUpdatesFound < 5 && titles.includes(words[i])) { // Vérifier si nous avons trouvé moins de 5 mises à jour de jeu
                         let index = titles.indexOf(words[i]);
                         const carrouselFrame = document.createElement('div');
                         carrouselFrame.className = 'carrouselFrame';
@@ -88,10 +88,12 @@ document.addEventListener("DOMContentLoaded", function () {
                             carrouselDot.classList.add('carrouselDotHere');
                         });
                         carrouselNavigator.appendChild(carrouselDot);
+                        gameUpdatesFound++; // Incrémenter le nombre de mises à jour de jeu trouvées
                         break;
                     }
                 }
-                page++;
+                if (gameUpdatesFound >= 5) // Si nous avons trouvé 5 mises à jour de jeu, sortir de la boucle
+                    break;
             }
         });
     intervalOfCarouselSlide = setInterval(slideAuto, 5000);
