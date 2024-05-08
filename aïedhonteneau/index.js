@@ -53,3 +53,7 @@ function getRandomHeight(i, numberOfBoxes) {
     return adjustedHeight;
 }
 
+const backtohome = document.getElementById('backtohome');
+backtohome.addEventListener('click', () => {
+    document.location.href = '../index.php';
+});

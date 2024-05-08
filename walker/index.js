@@ -170,7 +170,7 @@ function initScore() {
     backToHome.style.borderRadius = '10px';
     backToHome.style.backgroundColor = '#2c4695';
     backToHome.onclick = () => {
-        location.href = '../game';
+        location.href = '../index.php';
     }
     document.body.appendChild(backToHome);
 }

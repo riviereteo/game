@@ -6,3 +6,8 @@ valueBar.addEventListener('input', (e) => {
     document.body.style.backgroundSize = `${zoomLevel}px ${zoomLevel}px`;
     document.body.style.backgroundPosition = `${centerX}px ${centerY}px`;
 });
+
+const backtohome = document.getElementById('backtohome');
+backtohome.addEventListener('click', () => {
+    document.location.href = '../index.php';
+});
