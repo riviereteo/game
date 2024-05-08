@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Briem+Hand:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 html,
 body {
     height: 100%;
@@ -6,6 +8,7 @@ body {
     padding: 0;
     top: 0;
     left: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -79,7 +82,7 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    align-items:center;
+    align-items: center;
 }
 
 #carrouselNews {
@@ -92,6 +95,7 @@ body {
     border-radius: 10px;
     border: 1px solid white;
     background-color: midnightblue;
+    cursor: pointer;
 }
 
 .carrouselFrameHere {
@@ -111,7 +115,6 @@ body {
     position: relative;
     background-position: center;
     background-size: 40%;
-    cursor: url("windows-start-button-logo.png"), auto;
 }
 
 .carrouselFrame::before {
@@ -330,7 +333,8 @@ body .footer {
     grid-area: footer;
     min-height: 12rem;
     bottom: -12rem;
-    width: 100%;}
+    width: 100%;
+}
 
 body .footer .bubbles {
     position: absolute;
@@ -444,5 +448,30 @@ body .footer .content>div .image {
 
     100% {
         bottom: var(--distance, 10rem);
+    }
+}
+
+#playText {
+    position: absolute;
+    display: none;
+    font-family: 'Briem Hand', cursive;
+    animation: fontweight 2s infinite;
+    font-size: 1.8rem;
+}
+
+@keyframes fontweight {
+    0% {
+        font-weight: 300;
+        color: royalblue;
+    }
+
+    50% {
+        font-weight: 900;
+        color: rgb(204, 63, 53);
+    }
+
+    100% {
+        font-weight: 300;
+        color: royalblue;
     }
 }

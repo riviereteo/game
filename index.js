@@ -412,6 +412,19 @@ document.getElementById('menuRandom').addEventListener('click', () => {
     games[random].click();
 });
 
-document.getElementById('carrouselNews').mouseover = () => {
-    clearInterval(intervalOfCarouselSlide);
-}
+document.addEventListener("DOMContentLoaded", function () {
+    var carrouselNews = document.getElementById("carrouselNews");
+    var playText = document.getElementById("playText");
+
+    carrouselNews.addEventListener("mousemove", function (event) {
+        var x = event.clientX - 100;
+        var y = event.clientY - 50;
+        playText.style.display = "block";
+        playText.style.left = x + 'px';
+        playText.style.top = y + 'px';
+    });
+
+    carrouselNews.addEventListener("mouseleave", function () {
+        playText.style.display = "none";
+    });
+});

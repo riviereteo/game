@@ -88,6 +88,7 @@ $query = $pdo->query($sql);
         ?>
     </div>
     <div class="cursor"></div>
+    <div id="playText">play</div>
     <div class="main"></div>
     <div class="footer">
         <div class="bubbles">
