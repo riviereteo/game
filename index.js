@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (index !== -1) {
                         const debut = titre.substring(0, index);
                         const fin = titre.substring(index + searchValue.length);
-                        games[i].querySelector('.titreGame').innerHTML = debut + '<span style="background-color: rgba(255, 255, 255, 0.9); color: rgb(0,0,0); border-radius: 4px; padding:2px 1px;">' + titre.substring(index, index + searchValue.length) + '</span>' + fin;
+                        games[i].querySelector('.titreGame').innerHTML = debut + '<span style="background-color: rgba(255, 255, 255, 0.9); color: rgb(0,0,0); border-radius: 4px; padding:2px 1px; border:1px solid black;">' + titre.substring(index, index + searchValue.length) + '</span>' + fin;
                     }
                 }
             }
@@ -276,7 +276,6 @@ document.addEventListener("DOMContentLoaded", function () {
     for (let i = 0; i < games.length; i++) {
         games[i].addEventListener('mouseover', () => {
             if (!menuTitle.classList.contains('activeMenu') && !menuDate.classList.contains('activeMenu') && !menuVersion.classList.contains('activeMenu')) {
-                games[i].style.backgroundColor = 'transparent';
                 const play = document.createElement('div');
                 play.className = 'play';
                 play.style.pointerEvents = 'none';
@@ -299,12 +298,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     iterations: 1,
                     easing: 'linear(0 0%, 0 2.27%, 0.02 4.53%, 0.04 6.8%, 0.06 9.07%, 0.1 11.33%, 0.14 13.6%, 0.25 18.15%, 0.39 22.7%, 0.56 27.25%, 0.77 31.8%, 1 36.35%, 0.89 40.9%, 0.85 43.18%, 0.81 45.45%, 0.79 47.72%, 0.77 50%, 0.75 52.27%, 0.75 54.55%, 0.75 56.82%, 0.77 59.1%, 0.79 61.38%, 0.81 63.65%, 0.85 65.93%, 0.89 68.2%, 1 72.7%, 0.97 74.98%, 0.95 77.25%, 0.94 79.53%, 0.94 81.8%, 0.94 84.08%, 0.95 86.35%, 0.97 88.63%, 1 90.9%, 0.99 93.18%, 0.98 95.45%, 0.99 97.73%, 1 100%)'
                 });
-            } else {
-                games[i].style.backgroundColor = 'white';
             }
         });
         games[i].addEventListener('mouseout', () => {
-            games[i].style.backgroundColor = 'transparent';
             const play = games[i].querySelector('.play');
             if (play !== null) {
                 play.remove();
@@ -405,4 +401,17 @@ function slideAuto() {
     suivantDot.classList.add('carrouselDotHere');
     ancienhere.classList.remove('carrouselFrameHere');
     ancienhere.classList.add('carrouselFrameNotHere');
+}
+
+document.getElementById('menuRandom').addEventListener('click', () => {
+    const games = document.getElementsByClassName('game');
+    let random = Math.floor(Math.random() * games.length);
+    while (games[random].style.display === 'none') {
+        random = Math.floor(Math.random() * games.length);
+    }
+    games[random].click();
+});
+
+document.getElementById('carrouselNews').mouseover = () => {
+    clearInterval(intervalOfCarouselSlide);
 }
