@@ -4,4 +4,6 @@ __**[][x]**__
 
 - [x] ajout d'un robots.txt
 
-- [ ] Nouveau jeu débloqué : 2048
+- [x] Nouveau jeu débloqué : 2048
+
+- [X] Nouvelle expérience débloquée : Shapes
