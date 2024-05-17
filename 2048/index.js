@@ -56,6 +56,8 @@ class Grid {
                                     this.remove(y, newx - 1);
                                     this.remove(y, x);
                                     new Case(y, newx - 1, this.grid[y][newx - 1], this.grid);
+                                    const parentImg = document.getElementById(`case-${y}-${newx - 1}`);
+                                    parentImg.querySelector('img').classList += "spawn";
                                     maxX = newx - 1;
                                     newx = x;
                                     moveormerge1 = true;
@@ -92,6 +94,8 @@ class Grid {
                                     this.remove(newy - 1, x);
                                     this.remove(y, x);
                                     new Case(newy - 1, x, this.grid[newy - 1][x], this.grid);
+                                    const parentImg = document.getElementById(`case-${newy - 1}-${x}`);
+                                    parentImg.querySelector('img').classList += "spawn";
                                     maxY = newy - 1;
                                     newy = y;
                                     moveormerge3 = true;
@@ -128,6 +132,8 @@ class Grid {
                                     this.remove(y, newx + 1);
                                     this.remove(y, x);
                                     new Case(y, newx + 1, this.grid[y][newx + 1], this.grid);
+                                    const parentImg = document.getElementById(`case-${y}-${newx + 1}`);
+                                    parentImg.querySelector('img').classList += "spawn";
                                     maxX = newx + 1;
                                     newx = x;
                                     moveormerge2 = true;
@@ -164,6 +170,8 @@ class Grid {
                                     this.remove(newy + 1, x);
                                     this.remove(y, x);
                                     new Case(newy + 1, x, this.grid[newy + 1][x], this.grid);
+                                    const parentImg = document.getElementById(`case-${newy + 1}-${x}`);
+                                    parentImg.querySelector('img').classList += "spawn";
                                     maxY = newy + 1;
                                     newy = y;
                                     moveormerge4 = true;
