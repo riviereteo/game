@@ -1,0 +1,51 @@
+html,
+body {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #fbf8f1;
+}
+
+#grid {
+    display: grid;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    grid-template-columns: repeat(auto-fill, minmax(15vh, 1fr));
+    width: 66vh;
+    gap: 2vh;
+    background-color: #bcaea3;
+    padding: 2vh;
+    border-radius: 10px;
+}
+
+.case {
+    width: 15vh;
+    height: 15vh;
+    background-color: #cfc1b4;
+    border-radius: 10px;
+}
+
+.case>img {
+    width: 15vh;
+    height: 15vh;
+    border-radius: 10px;
+}
+
+.spawn {
+    animation: forwards spawnCase 0.2s ease-out;
+}
+
+@keyframes spawnCase {
+    0% {
+        scale: 0;
+    }
+
+    100% {
+        scale: 1;
+    }
+}

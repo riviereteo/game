@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 html,
 body,
 canvas {
@@ -6,4 +8,150 @@ canvas {
     padding: 0;
     margin: 0;
     overflow: hidden;
+}
+
+#settingsForm {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    background-color: rgba(0, 0, 139, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 25px 35px;
+    border-radius: 10px;
+    border: 1px solid darkblue;
+    align-items: center;
+}
+
+#settingsForm>label,
+#settingsForm>div>label {
+    font-size: 1rem;
+    font-family: 'Roboto';
+    margin-bottom: 5px;
+    cursor: pointer;
+    color: darkblue;
+    text-shadow: -1px -1px 1px rgb(255, 255, 255);
+}
+
+#settingsForm>div>label {
+    margin-bottom: 0;
+    text-align: center;
+    cursor: default;
+}
+
+#settingsForm>div {
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#settingsForm>div>div {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+#settingsForm>div>div>input {
+    border-radius: 5px;
+    border: 1px solid darkblue;
+    cursor: pointer;
+}
+
+#settingsForm>input {
+    font-size: 0.8rem;
+    font-family: 'Roboto';
+    margin-bottom: 12px;
+    padding: 4px 6px;
+    border-radius: 1rem;
+    border: 1px solid darkblue;
+    width: fit-content;
+    outline: none;
+    color: darkblue;
+    background-color: rgb(189, 189, 236);
+}
+
+#settingsForm>input:focus {
+    border: 2px solid darkblue;
+    margin-bottom: 10px;
+}
+
+#toolsbar {
+    position: absolute;
+    margin: 8px;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#tools,
+#refresh,
+#home,
+#download {
+    background-color: rgba(0, 0, 139, 0.15);
+    width: fit-content;
+    display: flex;
+    padding: 5px;
+    border-radius: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#tools:hover,
+#refresh:hover,
+#home:hover,
+#download:hover {
+    background-color: rgba(0, 0, 139, 0.28);
+    border-radius: 1.3rem;
+}
+
+#tools>span,
+#refresh>span,
+#home>span,
+#download>span {
+    font-size: 2rem;
+    color: darkblue;
+}
+
+#refresh:active,
+#home:active,
+#download:active {
+    scale: 1.1;
+}
+
+#settingsSubmit {
+    cursor: pointer;
+    background-color: rgb(189, 189, 236);
+    border: 1px solid darkblue;
+    border-radius: 8px;
+    color: darkblue;
+    padding: 5px 8px;
+    font-size: 0.9rem;
+    transition: all ease-in-out 0.2s;
+    font-family: 'Roboto';
+}
+
+#settingsSubmit:hover {
+    background-color: darkblue;
+    color: rgb(189, 189, 236);
+    border: 1px solid rgb(189, 189, 236);
+}
+
+#settingsForm>select:hover {
+    scale: 1.1;
+}
+
+#settingsForm>select {
+    background-color: rgb(189, 189, 236);
+    color: darkblue;
+    border: 1px solid darkblue;
+    padding: 5px 8px;
+    border-radius: 8px;
+    font-family: 'Roboto';
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    cursor: pointer;
+    outline: none;
+    transition: all ease-in-out 0.2s;
+    text-align: center;
 }
