@@ -9,3 +9,5 @@ __**[][x]**__
 - [x] Nouvelle expérience débloquée : Shapes
 
 - [x] backgrouns shapes switch color + modif logo
+
+- [x] Update 2048 : ajout d'un bouton back to home

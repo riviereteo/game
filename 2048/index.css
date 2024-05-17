@@ -49,3 +49,32 @@ body {
         scale: 1;
     }
 }
+
+#backtohome {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: fit-content;
+    height: fit-content;
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 100;
+    cursor: pointer;
+    border: 2px solid #bcaea3;
+    transition: all 0.3s ease-in-out;
+}
+
+#backtohome>span {
+    color: #bcaea3;
+    font-size: 2.5rem;
+}
+
+#backtohome:hover {
+    background-color: #bcaea3;
+    border: 2px solid #92877f;
+}
+
+#backtohome:hover>span {
+    color: #ffeada;
+}

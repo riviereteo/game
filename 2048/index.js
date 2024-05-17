@@ -3,6 +3,10 @@ let thegrid;
 window.onload = () => {
     thegrid = new Grid();
     document.addEventListener("keydown", handleKeyDown);
+    const backtohome = document.getElementById('backtohome');
+    backtohome.addEventListener('click', () => {
+        document.location.href = '../index.php';
+    });
 }
 
 function handleKeyDown(event) {
