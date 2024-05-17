@@ -75,43 +75,6 @@ body {
     animation: alternate-reverse backcolorswitch 20s infinite;
 }
 
-@keyframes backcolorswitch {
-    0% {
-        background-color: rgb(228, 46, 46);
-    }
-
-    10%{
-        background-color: rgb(228, 198, 46);
-    }
-    20%{
-        background-color: rgb(46, 228, 46);
-    }
-    30%{
-        background-color: rgb(46, 228, 198);
-    }
-    40%{
-        background-color: rgb(46, 46, 228);
-    }
-    50%{
-        background-color: rgb(198, 46, 228);
-    }
-    60%{
-        background-color: rgb(228, 46, 46);
-    }
-    70%{
-        background-color: rgb(228, 198, 46);
-    }
-    80%{
-        background-color: rgb(46, 228, 46);
-    }
-    90%{
-        background-color: rgb(46, 228, 198);
-    }
-    100%{
-        background-color: rgb(46, 46, 228);
-    }
-}
-
 .dateGame,
 .versionGame {
     color: white;
