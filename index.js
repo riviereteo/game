@@ -275,6 +275,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const games = document.getElementsByClassName('game');
     for (let i = 0; i < games.length; i++) {
         games[i].addEventListener('mouseover', () => {
+            const imgGame = games[i].querySelector('.imgGame');
+            //modifier la source pour quelle est après img/ : gif/
+            imgGame.src = imgGame.src.substring(0, imgGame.src.lastIndexOf('/') + 1) + 'gif/' + imgGame.src.substring(imgGame.src.lastIndexOf('/') + 1);
+            imgGame.src = imgGame.src.substring(0, imgGame.src.lastIndexOf('.')) + '.gif';
             if (!menuTitle.classList.contains('activeMenu') && !menuDate.classList.contains('activeMenu') && !menuVersion.classList.contains('activeMenu')) {
                 const play = document.createElement('div');
                 play.className = 'play';

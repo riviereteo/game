@@ -12,4 +12,4 @@ __**[][x]**__
 
 - [x] Update 2048 : ajout d'un bouton back to home
 
-- [x] Update 2048 : transition merge;
+- [x] Update 2048 : transition merge
