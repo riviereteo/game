@@ -6,4 +6,6 @@ __**[][x]**__
 
 - [x] Nouveau jeu débloqué : 2048
 
-- [X] Nouvelle expérience débloquée : Shapes
+- [x] Nouvelle expérience débloquée : Shapes
+
+- [x] backgrouns shapes switch color + modif logo
