@@ -327,7 +327,7 @@ body {
 
 body .footer {
     z-index: 0;
-    --footer-background: linear-gradient(180deg, #5ebac938 0%, #5ebac938 10%, #FF490138 50%, #FF490138 100%);
+    --footer-background: linear-gradient(180deg, rgba(255, 255, 255, 0.264) 0%, #FF490138 15%, #5ebac938 85%, #5ebac938 100%);
     backdrop-filter: blur(10px) saturate(1.5);
     display: grid;
     position: fixed;
