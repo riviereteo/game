@@ -276,9 +276,11 @@ document.addEventListener("DOMContentLoaded", function () {
     for (let i = 0; i < games.length; i++) {
         games[i].addEventListener('mouseover', () => {
             const imgGame = games[i].querySelector('.imgGame');
-            //modifier la source pour quelle est après img/ : gif/
-            imgGame.src = imgGame.src.substring(0, imgGame.src.lastIndexOf('/') + 1) + 'gif/' + imgGame.src.substring(imgGame.src.lastIndexOf('/') + 1);
-            imgGame.src = imgGame.src.substring(0, imgGame.src.lastIndexOf('.')) + '.gif';
+            if (!imgGame.src.includes('/gif')) {
+                imgGame.dataset.oldsrc = imgGame.src;
+                imgGame.src = imgGame.src.substring(0, imgGame.src.lastIndexOf('/') + 1) + 'gif/' + imgGame.src.substring(imgGame.src.lastIndexOf('/') + 1);
+                imgGame.src = imgGame.src.substring(0, imgGame.src.lastIndexOf('.')) + '.gif';
+            }
             if (!menuTitle.classList.contains('activeMenu') && !menuDate.classList.contains('activeMenu') && !menuVersion.classList.contains('activeMenu')) {
                 const play = document.createElement('div');
                 play.className = 'play';
@@ -305,6 +307,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
         games[i].addEventListener('mouseout', () => {
+            const imgGame = games[i].querySelector('.imgGame');
+            if (imgGame.src.includes('/gif')) {
+                imgGame.src = imgGame.dataset.oldsrc;
+            }
             const play = games[i].querySelector('.play');
             if (play !== null) {
                 play.remove();
