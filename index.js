@@ -29,7 +29,7 @@ let intervalOfCarouselSlide;
 
 document.addEventListener("DOMContentLoaded", function () {
     let gameUpdatesFound = 0; // Variable pour suivre le nombre de mises à jour de jeu trouvées
-    const apiUrl = `https://api.github.com/repos/riviereteo/game/commits`;
+    const apiUrl = `https://api.github.com/repos/riviereteo/game/commits?page=1&per_page=100`;
     const carrouselNews = document.getElementById('carrouselNews');
     const carrouselNavigator = document.getElementById('carrouselNavigator');
     const close = document.createElement('div');
@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
     close.style.top = carrouselNews.offsetTop + 4 + 'px';
     close.style.right = carrouselNews.offsetLeft + 4 + 'px';
     document.body.appendChild(close);
+    let jeux_déjà_vus = [];
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
@@ -49,46 +50,82 @@ document.addEventListener("DOMContentLoaded", function () {
                 const words = data[page].commit.message.split(" ");
                 for (let i = 0; i < words.length; i++) {
                     if (gameUpdatesFound < 5 && titles.includes(words[i])) { // Vérifier si nous avons trouvé moins de 5 mises à jour de jeu
-                        let index = titles.indexOf(words[i]);
-                        const carrouselFrame = document.createElement('div');
-                        carrouselFrame.className = 'carrouselFrame';
-                        carrouselFrame.onclick = () => start(link[index], "carrouselFrame");
-                        carrouselFrame.style.backgroundImage = `url(${img[index]})`;
-                        carrouselNews.childNodes.length === 1 ? carrouselFrame.classList.add('carrouselFrameHere') : carrouselFrame.classList.add('carrouselFrameNotHere');
-                        const messageText = document.createElement('p');
-                        messageText.innerHTML = data[page].commit.message;
-                        messageText.className = 'messageText';
-                        const dateText = document.createElement('p');
-                        dateText.className = 'dateText';
-                        const date = data[page].commit.author.date;
-                        dateText.innerHTML = date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4)
-                        const version = document.createElement('p');
-                        version.className = 'version';
-                        version.innerHTML = versions[index];
-                        carrouselFrame.appendChild(messageText);
-                        carrouselFrame.appendChild(dateText);
-                        carrouselFrame.appendChild(version);
-                        carrouselNews.appendChild(carrouselFrame);
-                        const carrouselDot = document.createElement('div');
-                        carrouselDot.className = 'carrouselDot';
-                        carrouselNews.childNodes.length === 2 ? carrouselDot.classList.add('carrouselDotHere') : carrouselDot.classList.add('carrouselDotNotHere');
-                        carrouselDot.addEventListener('click', () => {
-                            clearInterval(intervalOfCarouselSlide);
-                            intervalOfCarouselSlide = setInterval(slideAuto, 5000);
-                            carrouselNavigator.childNodes.forEach(dot => {
-                                dot.classList.remove('carrouselDotHere');
-                                dot.classList.add('carrouselDotNotHere');
+                        if (jeux_déjà_vus.includes(words[i])) {
+                            document.querySelectorAll('.messageText').forEach(message => {
+                                if (message.innerHTML.includes(words[i])) {
+                                    let parent = message.parentElement;
+                                    let titre1 = document.getElementById('messageText' + titles.indexOf(words[i])).innerHTML;
+                                    let date1 = document.getElementById('dateText' + titles.indexOf(words[i])).innerHTML;
+                                    parent.innerHTML = '';
+                                    const ul = document.createElement('ul');
+                                    ul.className = 'titreGameList';
+                                    parent.appendChild(ul);
+                                    const li = document.createElement('li');
+                                    li.innerHTML = '<p>' + titre1 + '</p><p class="datelist">' + date1 + '</p>';
+                                    ul.appendChild(li);
+                                    const li2 = document.createElement('li');
+                                    li2.innerHTML = '<p>' + data[page].commit.message + '</p><p class="datelist">' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</p>';
+                                    ul.appendChild(li2);
+                                    li2.addEventListener('click', () => {
+                                        start(link[titles.indexOf(words[i])], "game");
+                                    });
+                                }
                             });
-                            let ancienhere = document.querySelector('.carrouselFrameHere');
-                            ancienhere.classList.remove('carrouselFrameHere');
-                            ancienhere.classList.add('carrouselFrameNotHere');
-                            carrouselFrame.classList.remove('carrouselFrameNotHere');
-                            carrouselFrame.classList.add('carrouselFrameHere');
-                            carrouselDot.classList.remove('carrouselDotNotHere');
-                            carrouselDot.classList.add('carrouselDotHere');
-                        });
-                        carrouselNavigator.appendChild(carrouselDot);
-                        gameUpdatesFound++; // Incrémenter le nombre de mises à jour de jeu trouvées
+                            document.querySelectorAll('.titreGameList').forEach(titre => {
+                                if (titre.innerHTML.includes(words[i])) {
+                                    const li = document.createElement('li');
+                                    li.innerHTML = '<p>' + data[page].commit.message + '</p><p class="datelist">' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</p>';
+                                    titre.appendChild(li);
+                                    li.addEventListener('click', () => {
+                                        start(link[titles.indexOf(words[i])], "game");
+                                    });
+                                }
+                            });
+                        } else {
+                            jeux_déjà_vus.push(words[i]);
+                            let index = titles.indexOf(words[i]);
+                            const carrouselFrame = document.createElement('div');
+                            carrouselFrame.className = 'carrouselFrame';
+                            carrouselFrame.onclick = () => start(link[index], "carrouselFrame");
+                            carrouselFrame.style.backgroundImage = `url(${img[index]})`;
+                            carrouselNews.childNodes.length === 1 ? carrouselFrame.classList.add('carrouselFrameHere') : carrouselFrame.classList.add('carrouselFrameNotHere');
+                            const messageText = document.createElement('p');
+                            messageText.id = 'messageText' + index;
+                            messageText.innerHTML = data[page].commit.message;
+                            messageText.className = 'messageText';
+                            const dateText = document.createElement('p');
+                            dateText.id = 'dateText' + index;
+                            dateText.className = 'dateText';
+                            const date = data[page].commit.author.date;
+                            dateText.innerHTML = date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4)
+                            const version = document.createElement('p');
+                            version.className = 'version';
+                            version.innerHTML = versions[index];
+                            carrouselFrame.appendChild(messageText);
+                            carrouselFrame.appendChild(dateText);
+                            carrouselFrame.appendChild(version);
+                            carrouselNews.appendChild(carrouselFrame);
+                            const carrouselDot = document.createElement('div');
+                            carrouselDot.className = 'carrouselDot';
+                            carrouselNews.childNodes.length === 2 ? carrouselDot.classList.add('carrouselDotHere') : carrouselDot.classList.add('carrouselDotNotHere');
+                            carrouselDot.addEventListener('click', () => {
+                                clearInterval(intervalOfCarouselSlide);
+                                intervalOfCarouselSlide = setInterval(slideAuto, 5000);
+                                carrouselNavigator.childNodes.forEach(dot => {
+                                    dot.classList.remove('carrouselDotHere');
+                                    dot.classList.add('carrouselDotNotHere');
+                                });
+                                let ancienhere = document.querySelector('.carrouselFrameHere');
+                                ancienhere.classList.remove('carrouselFrameHere');
+                                ancienhere.classList.add('carrouselFrameNotHere');
+                                carrouselFrame.classList.remove('carrouselFrameNotHere');
+                                carrouselFrame.classList.add('carrouselFrameHere');
+                                carrouselDot.classList.remove('carrouselDotNotHere');
+                                carrouselDot.classList.add('carrouselDotHere');
+                            });
+                            carrouselNavigator.appendChild(carrouselDot);
+                            gameUpdatesFound++; // Incrémenter le nombre de mises à jour de jeu trouvées
+                        }
                         break;
                     }
                 }
