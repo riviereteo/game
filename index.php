@@ -29,11 +29,11 @@ $query = $pdo->query($sql);
             <div class="menuButton activeMenu" id="menuTitle">
                 <span class="material-symbols-outlined">title</span>
             </div>
-            <div class="menuButton" id="menuDate">
-                <span class="material-symbols-outlined">schedule</span>
-            </div>
             <div class="menuButton activeMenu" id="menuVersion">
                 <span class="material-symbols-outlined">deployed_code</span>
+            </div>
+            <div class="menuButton" id="menuDate">
+                <span class="material-symbols-outlined">schedule</span>
             </div>
             <div class="separator"></div>
             <div class="menuButton activeMenu" id="menuGame">
@@ -76,8 +76,8 @@ $query = $pdo->query($sql);
             echo "<img class='imgGame' src='" . $row['img'] . "'></img>";
             echo "<div class='parentGameOnRightImg'>";
             echo "<p class='titreGame'>" . $row['titre'] . "</p>";
-            echo "<p class='dateGame'>" . $row['Date'] . "</p>";
             echo "<p class='versionGame'>" . $row['Version'] . "<span class=\"material-symbols-outlined\">$symb</span></p>";
+            echo "<p class='dateGame'>" . $row['Date'] . "</p>";
             echo "</div>";
             echo "</div>";
             $titles[] = $row['titre'];

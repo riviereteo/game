@@ -55,16 +55,18 @@ document.addEventListener("DOMContentLoaded", function () {
                                 if (message.innerHTML.includes(words[i])) {
                                     let parent = message.parentElement;
                                     let titre1 = document.getElementById('messageText' + titles.indexOf(words[i])).innerHTML;
-                                    let date1 = document.getElementById('dateText' + titles.indexOf(words[i])).innerHTML;
+                                    let dateTextElement = document.getElementById('dateText' + titles.indexOf(words[i]));
+                                    let dateText = dateTextElement.innerHTML;
+                                    let date1 = dateText.substring(dateText.length - 10, dateText.length);
                                     parent.innerHTML = '';
                                     const ul = document.createElement('ul');
                                     ul.className = 'titreGameList';
                                     parent.appendChild(ul);
                                     const li = document.createElement('li');
-                                    li.innerHTML = '<p>' + titre1 + '</p><p class="datelist">' + date1 + '</p>';
+                                    li.innerHTML = '<p>' + titre1 + ' | depuis le ' + date1 + '</p>';
                                     ul.appendChild(li);
                                     const li2 = document.createElement('li');
-                                    li2.innerHTML = '<p>' + data[page].commit.message + '</p><p class="datelist">' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</p>';
+                                    li2.innerHTML = '<p>' + data[page].commit.message + ' | depuis le ' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</p>';
                                     ul.appendChild(li2);
                                     li2.addEventListener('click', () => {
                                         start(link[titles.indexOf(words[i])], "game");
@@ -74,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             document.querySelectorAll('.titreGameList').forEach(titre => {
                                 if (titre.innerHTML.includes(words[i])) {
                                     const li = document.createElement('li');
-                                    li.innerHTML = '<p>' + data[page].commit.message + '</p><p class="datelist">' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</p>';
+                                    li.innerHTML = '<p>' + data[page].commit.message + ' | depuis le ' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</p>';
                                     titre.appendChild(li);
                                     li.addEventListener('click', () => {
                                         start(link[titles.indexOf(words[i])], "game");
@@ -91,19 +93,26 @@ document.addEventListener("DOMContentLoaded", function () {
                             carrouselNews.childNodes.length === 1 ? carrouselFrame.classList.add('carrouselFrameHere') : carrouselFrame.classList.add('carrouselFrameNotHere');
                             const messageText = document.createElement('p');
                             messageText.id = 'messageText' + index;
-                            messageText.innerHTML = data[page].commit.message;
+                            let msg = data[page].commit.message;
+                            if (msg.length > 100) {
+                                msg = msg.substring(0, 100) + '...';
+                            }
+                            //trouver le titre du jeu et le mettre dans un span
+                            let wordsssss = msg.split(" ");
+                            for (let i = 0; i < wordsssss.length; i++) {
+                                if (titles.includes(wordsssss[i])) {
+                                    msg = msg.replace(wordsssss[i], '<span class="messageText_span">' + wordsssss[i] + '</span>');
+                                }
+                            }
+                            messageText.innerHTML = msg;
                             messageText.className = 'messageText';
-                            const dateText = document.createElement('p');
-                            dateText.id = 'dateText' + index;
-                            dateText.className = 'dateText';
+                            const dateTextversion = document.createElement('p');
+                            dateTextversion.id = 'dateText' + index;
+                            dateTextversion.className = 'dateText_version';
                             const date = data[page].commit.author.date;
-                            dateText.innerHTML = date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4)
-                            const version = document.createElement('p');
-                            version.className = 'version';
-                            version.innerHTML = versions[index];
+                            dateTextversion.innerHTML = "La " + versions[index] + " est disponnible depuis le " + date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4)
                             carrouselFrame.appendChild(messageText);
-                            carrouselFrame.appendChild(dateText);
-                            carrouselFrame.appendChild(version);
+                            carrouselFrame.appendChild(dateTextversion);
                             carrouselNews.appendChild(carrouselFrame);
                             const carrouselDot = document.createElement('div');
                             carrouselDot.className = 'carrouselDot';
@@ -207,7 +216,6 @@ document.addEventListener("DOMContentLoaded", function () {
     function searchh() {
         const search = document.getElementById('searchBar');
         const games = document.getElementsByClassName('game');
-        const searchValue = search.value;
         for (let i = 0; i < games.length; i++) {
             games[i].style.display = 'none';
             games[i].querySelector('.parentGameOnRightImg>.titreGame').innerHTML = titles[i];
@@ -223,6 +231,34 @@ document.addEventListener("DOMContentLoaded", function () {
                 const date = games[i].querySelector('.dateGame').innerHTML.toLowerCase();
                 const version = games[i].querySelector('.versionGame').innerHTML.toLowerCase();
                 if (titre.includes(searchValue) || date.includes(searchValue) || version.includes(searchValue)) {
+                    if (!document.getElementById('menuExp').classList.contains('activeMenu')) {
+                        document.getElementById('menuExp').classList.add('activeMenu');
+                        const active = document.getElementById('menuExp').querySelector('.activeDot');
+                        active.classList.add('activeDot');
+                        active.style.display = 'flex';
+                        document.getElementById('menuExp').animate([
+                            { backgroundColor: 'rgb(232, 239, 255)', color: 'royalblue', transform: 'translateX(0) translateY(0)' },
+                            { backgroundColor: 'rgba(48, 255, 72, 0.8)', color: 'rgb(191, 245, 191)', transform: 'translateX(1px) translateY(3px)' },
+                            { backgroundColor: 'rgb(232, 239, 255)', color: 'royalblue', transform: 'translateX(0) translateY(0)' }
+                        ], {
+                            duration: 400,
+                            iterations: 1,
+                        });
+                    }
+                    if (!document.getElementById('menuGame').classList.contains('activeMenu')) {
+                        document.getElementById('menuGame').classList.add('activeMenu');
+                        const active = document.getElementById('menuGame').querySelector('.activeDot');
+                        active.classList.add('activeDot');
+                        active.style.display = 'flex';
+                        document.getElementById('menuGame').animate([
+                            { backgroundColor: 'rgb(232, 239, 255)', color: 'royalblue', transform: 'translateX(0) translateY(0)' },
+                            { backgroundColor: 'rgba(48, 255, 72, 0.8)', color: 'rgb(191, 245, 191)', transform: 'translateX(1px) translateY(3px)' },
+                            { backgroundColor: 'rgb(232, 239, 255)', color: 'royalblue', transform: 'translateX(0) translateY(0)' }
+                        ], {
+                            duration: 400,
+                            iterations: 1,
+                        });
+                    }
                     games[i].style.display = 'flex';
                     const titre = games[i].querySelector('.parentGameOnRightImg>.titreGame').innerHTML;
                     const index = titre.toLowerCase().indexOf(searchValue);
@@ -464,7 +500,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var playText = document.getElementById("playText");
 
     carrouselNews.addEventListener("mousemove", function (event) {
-        var x = event.clientX - 100;
+        var x = event.clientX - 35;
         var y = event.clientY - 50;
         playText.style.display = "block";
         playText.style.left = x + 'px';
