@@ -1,0 +1,1 @@
+adjust size of disc commits list & pointer sur tout le carnav pour améliorer la fluidité de la navigation & keyframes disc scale

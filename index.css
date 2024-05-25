@@ -188,13 +188,13 @@ body {
     gap: 4px;
     margin: -16px auto 0 auto;
     z-index: 2;
+    cursor: pointer;
 }
 
 .carrouselDot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    cursor: pointer;
     box-shadow: black 1px 1px 1px 0;
     transition: 0.2s ease-in-out;
 }
@@ -531,11 +531,22 @@ body .footer .content>div .image {
 
 .titreGameList>li::before {
     content: '';
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     background-color: #8B0000;
     border-radius: 50%;
     position: absolute;
     margin-left: -15px;
     border: 1px solid white;
+    animation: 2.5s infinite alternate dot;
+}
+
+@keyframes dot {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.2);
+    }
 }
