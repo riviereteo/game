@@ -382,7 +382,9 @@ body {
     margin: -3px -5px 3px 5px;
     font-size: 0.9rem;
     animation: searchDeploy forwards cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Major Mono Display", monospace;
+    font-weight: 400;
+    font-style: normal;
 }
 
 @keyframes searchDeploy {
