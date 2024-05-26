@@ -92,7 +92,12 @@ $query = $pdo->query($sql);
         ?>
     </div>
     <div class="cursor"></div>
-    <div id="playText">play</div>
+    <div id="playText">
+        <span id="playText1">p</span>
+        <span id="playText2">l</span>
+        <span id="playText3">a</span>
+        <span id="playText4">y</span>
+    </div>
     <div class="main"></div>
     <div class="footer">
         <div class="bubbles">
