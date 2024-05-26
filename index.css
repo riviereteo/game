@@ -39,8 +39,9 @@ body {
     flex-direction: row;
     align-items: end;
     gap: 10px;
-    transition: all 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
     width: fit-content;
+    height: fit-content;
 }
 
 .game:hover {

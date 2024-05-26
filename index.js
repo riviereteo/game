@@ -302,12 +302,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     menuTitle.addEventListener('click', () => {
         const titres = document.querySelectorAll('.titreGame');
+        const games = document.querySelectorAll('.game');
         if (!menuTitle.classList.contains('activeMenu')) {
             for (let i = 0; i < titres.length; i++)
                 titres[i].style.display = 'none';
         } else {
-            for (let i = 0; i < titres.length; i++)
+            for (let i = 0; i < titres.length; i++) {
                 titres[i].style.display = 'flex';
+                games[i].style.padding = '6px 10px';
+                games[i].style.gap = "10px";
+                games[i].style.margin = '0';
+            }
         }
     });
     const menuDate = document.getElementById('menuDate');
@@ -319,12 +324,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     menuDate.addEventListener('click', () => {
         const dates = document.querySelectorAll('.dateGame');
+        const games = document.querySelectorAll('.game');
         if (!menuDate.classList.contains('activeMenu')) {
             for (let i = 0; i < dates.length; i++)
                 dates[i].style.display = 'none';
         } else {
-            for (let i = 0; i < dates.length; i++)
+            for (let i = 0; i < dates.length; i++){
                 dates[i].style.display = 'flex';
+                games[i].style.padding = '6px 10px';
+                games[i].style.gap = "10px";
+                games[i].style.margin = '0';
+            }
         }
     });
     const menuVersion = document.getElementById('menuVersion');
@@ -336,12 +346,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     menuVersion.addEventListener('click', () => {
         const versions = document.querySelectorAll('.versionGame');
+        const games = document.querySelectorAll('.game');
         if (!menuVersion.classList.contains('activeMenu')) {
             for (let i = 0; i < versions.length; i++)
                 versions[i].style.display = 'none';
         } else {
-            for (let i = 0; i < versions.length; i++)
+            for (let i = 0; i < versions.length; i++){
                 versions[i].style.display = 'flex';
+                games[i].style.padding = '6px 10px';
+                games[i].style.gap = "10px";
+                games[i].style.margin = '0';
+            }
         }
     });
 
@@ -367,6 +382,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 play.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
                 play.style.color = "rgba(255, 255, 255, 0.8)";
                 games[i].appendChild(play);
+                games[i].style.padding = '0';
+                games[i].style.gap = "0";
+                games[i].style.margin = '6px 10px';
                 play.querySelector('.material-symbols-outlined').style.fontSize = '50px';
                 play.querySelector('.material-symbols-outlined').style.textShadow = '3px 3px 4px rgba(0, 0, 0, 0.5)';
                 play.animate([
