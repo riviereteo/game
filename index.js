@@ -63,10 +63,10 @@ document.addEventListener("DOMContentLoaded", function () {
                                     ul.className = 'titreGameList';
                                     parent.appendChild(ul);
                                     const li = document.createElement('li');
-                                    li.innerHTML = '<p>' + titre1 + ' | depuis le ' + date1 + '</p>';
+                                    li.innerHTML = '<p>' + titre1 + ' | <span>depuis le ' + date1 + '</span></p>';
                                     ul.appendChild(li);
                                     const li2 = document.createElement('li');
-                                    li2.innerHTML = '<p>' + data[page].commit.message + ' | depuis le ' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</p>';
+                                    li2.innerHTML = '<p>' + data[page].commit.message + ' | <span>depuis le ' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</span></p>';
                                     ul.appendChild(li2);
                                     li2.addEventListener('click', () => {
                                         start(link[titles.indexOf(words[i])], "game");
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             document.querySelectorAll('.titreGameList').forEach(titre => {
                                 if (titre.innerHTML.includes(words[i])) {
                                     const li = document.createElement('li');
-                                    li.innerHTML = '<p>' + data[page].commit.message + ' | depuis le ' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</p>';
+                                    li.innerHTML = '<p>' + data[page].commit.message + ' | <span>depuis le ' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</span></p>';
                                     titre.appendChild(li);
                                     li.addEventListener('click', () => {
                                         start(link[titles.indexOf(words[i])], "game");

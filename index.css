@@ -717,7 +717,11 @@ body .footer .content>div .image {
     text-shadow: 1px 1px 3px #000000;
 }
 
-.titreGameList>li>p>span {
+.titreGameList>li>p>span{
+    font-size: 1.1rem;
+}
+
+.titreGameList>li>p>.messageText_span {
     font-size: 1.5rem;
 }
 
