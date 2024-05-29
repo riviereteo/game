@@ -42,6 +42,7 @@ body {
     transition: background-color 0.3s ease-in-out;
     width: fit-content;
     height: fit-content;
+    opacity: 0;
 }
 
 .game:hover {
@@ -157,10 +158,24 @@ body {
     margin: 0 auto;
     overflow: hidden;
     margin-top: 15px;
-    border-radius: 10px;
-    border: 1px solid white;
+    border-radius: 15px;
     background-color: midnightblue;
     cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.722);
+    animation: spawn_carrousel 0.7s ease-out forwards 0.3s;
+    opacity: 0;
+}
+
+@keyframes spawn_carrousel {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .carrouselFrameHere {
@@ -202,6 +217,7 @@ body {
     width: 100%;
     height: 100%;
     backdrop-filter: blur(30px) saturate(1.5);
+    box-shadow: inset 0px -100px 250px 0px rgba(0, 0, 0, 0.3);
 }
 
 .carrouselFrame p {
@@ -259,6 +275,7 @@ body {
     height: 8px;
     border-radius: 50%;
     transition: 0.2s ease-in;
+    opacity: 0;
 }
 
 .carrouselDot:hover {
@@ -288,6 +305,19 @@ body {
     align-items: center;
     justify-content: space-between;
     margin: 15px auto 0 auto;
+    animation: spawn_menu 0.8s ease-in-out forwards 0.0s;
+}
+
+@keyframes spawn_menu {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 #menuLeft,
@@ -345,6 +375,7 @@ body {
     display: flex;
     cursor: pointer;
     border-radius: 50%;
+    opacity: 0;
 }
 
 #closeCarrousel>span {

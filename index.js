@@ -42,6 +42,16 @@ document.addEventListener("DOMContentLoaded", function () {
     close.style.top = carrouselNews.offsetTop + 4 + 'px';
     close.style.right = carrouselNews.offsetLeft + 4 + 'px';
     document.body.appendChild(close);
+    close.animate([
+        { opacity: 0, scale: 0.5 },
+        { opacity: 1, scale: 1 }
+    ], {
+        duration: 200,
+        iterations: 1,
+        delay: 950,
+        easing: 'linear',
+        fill: 'forwards'
+    });
     let jeux_déjà_vus = [];
     fetch(apiUrl)
         .then(response => response.json())
@@ -133,6 +143,16 @@ document.addEventListener("DOMContentLoaded", function () {
                                 carrouselDot.classList.add('carrouselDotHere');
                             });
                             carrouselNavigator.appendChild(carrouselDot);
+                            carrouselDot.animate([
+                                { opacity: 0, scale: 0 },
+                                { opacity: 1, scale: 1 }
+                            ], {
+                                duration: 400,
+                                iterations: 1,
+                                delay: 900 + gameUpdatesFound * 100,
+                                easing: 'linear',
+                                fill: 'forwards'
+                            });
                             gameUpdatesFound++; // Incrémenter le nombre de mises à jour de jeu trouvées
                         }
                         break;
@@ -329,7 +349,7 @@ document.addEventListener("DOMContentLoaded", function () {
             for (let i = 0; i < dates.length; i++)
                 dates[i].style.display = 'none';
         } else {
-            for (let i = 0; i < dates.length; i++){
+            for (let i = 0; i < dates.length; i++) {
                 dates[i].style.display = 'flex';
                 games[i].style.padding = '6px 10px';
                 games[i].style.gap = "10px";
@@ -351,7 +371,7 @@ document.addEventListener("DOMContentLoaded", function () {
             for (let i = 0; i < versions.length; i++)
                 versions[i].style.display = 'none';
         } else {
-            for (let i = 0; i < versions.length; i++){
+            for (let i = 0; i < versions.length; i++) {
                 versions[i].style.display = 'flex';
                 games[i].style.padding = '6px 10px';
                 games[i].style.gap = "10px";
@@ -529,3 +549,21 @@ document.addEventListener("DOMContentLoaded", function () {
         playText.style.display = "none";
     });
 });
+
+window.onload = function () {
+    const games = document.getElementsByClassName('game');
+    for (let i = 0; i < games.length; i++) {
+
+        games[i].animate([
+            { opacity: 0 },
+            { opacity: 1 }
+        ], {
+            duration: 600,
+            iterations: 1,
+            delay: i * 100 + 900,
+            easing: 'linear',
+            fill: 'forwards'
+        });
+    }
+
+}
