@@ -65,6 +65,12 @@ document.addEventListener("DOMContentLoaded", function () {
                                 if (message.innerHTML.includes(words[i])) {
                                     let parent = message.parentElement;
                                     let titre1 = document.getElementById('messageText' + titles.indexOf(words[i])).innerHTML;
+                                    let wordss = titre1.split(" ");
+                                    for (let i = 0; i < wordss.length; i++) {
+                                        if (titles.includes(wordss[i])) {
+                                            titre1 = titre1.replace(wordss[i], '<span class="messageText_span">' + wordss[i] + '</span>');
+                                        }
+                                    }
                                     let dateTextElement = document.getElementById('dateText' + titles.indexOf(words[i]));
                                     let dateText = dateTextElement.innerHTML;
                                     let date1 = dateText.substring(dateText.length - 10, dateText.length);
@@ -73,10 +79,17 @@ document.addEventListener("DOMContentLoaded", function () {
                                     ul.className = 'titreGameList';
                                     parent.appendChild(ul);
                                     const li = document.createElement('li');
-                                    li.innerHTML = '<p>' + titre1 + ' | <span>depuis le ' + date1 + '</span></p>';
+                                    li.innerHTML = '<p>' + titre1 + '<span class="daaaaaaate"> | depuis le ' + date1 + '</span></p>';
                                     ul.appendChild(li);
                                     const li2 = document.createElement('li');
-                                    li2.innerHTML = '<p>' + data[page].commit.message + ' | <span>depuis le ' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</span></p>';
+                                    let commit = data[page].commit.message;
+                                    let wordssss = commit.split(" ");
+                                    for (let i = 0; i < wordssss.length; i++) {
+                                        if (titles.includes(wordssss[i])) {
+                                            commit = commit.replace(wordssss[i], '<span class="messageText_span">' + wordssss[i] + '</span>');
+                                        }
+                                    }
+                                    li2.innerHTML = '<p>' + commit + '<span class="daaaaaaate"> | depuis le ' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</span></p>';
                                     ul.appendChild(li2);
                                     li2.addEventListener('click', () => {
                                         start(link[titles.indexOf(words[i])], "game");
@@ -86,7 +99,14 @@ document.addEventListener("DOMContentLoaded", function () {
                             document.querySelectorAll('.titreGameList').forEach(titre => {
                                 if (titre.innerHTML.includes(words[i])) {
                                     const li = document.createElement('li');
-                                    li.innerHTML = '<p>' + data[page].commit.message + ' | <span>depuis le ' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</span></p>';
+                                    let commit = data[page].commit.message;
+                                    let wordssss = commit.split(" ");
+                                    for (let i = 0; i < wordssss.length; i++) {
+                                        if (titles.includes(wordssss[i])) {
+                                            commit = commit.replace(wordssss[i], '<span class="messageText_span">' + wordssss[i] + '</span>');
+                                        }
+                                    }
+                                    li.innerHTML = '<p>' + commit + '<span> | depuis le ' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</span></p>';
                                     titre.appendChild(li);
                                     li.addEventListener('click', () => {
                                         start(link[titles.indexOf(words[i])], "game");
@@ -555,13 +575,19 @@ window.onload = function () {
     for (let i = 0; i < games.length; i++) {
 
         games[i].animate([
-            { opacity: 0 },
-            { opacity: 1 }
+            { opacity: 0,
+                scale: 0,
+                marginLeft: '-200px'
+            },
+            { opacity: 1,
+                scale: 1,
+                marginLeft: '0px'
+            }
         ], {
             duration: 600,
             iterations: 1,
-            delay: i * 100 + 900,
-            easing: 'linear',
+            delay: i * 50 + 700,
+            easing: 'ease-out',
             fill: 'forwards'
         });
     }

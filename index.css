@@ -162,18 +162,22 @@ body {
     background-color: midnightblue;
     cursor: pointer;
     border: 1px solid rgba(255, 255, 255, 0.722);
-    animation: spawn_carrousel 0.7s ease-out forwards 0.3s;
+    animation: spawn_carrousel 0.6s ease-out forwards 0.3s;
     opacity: 0;
 }
 
 @keyframes spawn_carrousel {
-    from {
-        transform: scale(0.5);
+    0% {
+        transform: translateY(-40%) scale(0.4); 
         opacity: 0;
     }
 
-    to {
-        transform: scale(1);
+    50%{
+        transform: translateY(-10%) scale(0.8);
+        opacity: 0.3;}
+
+    100% {
+        transform: translateY(0);
         opacity: 1;
     }
 }
@@ -748,7 +752,7 @@ body .footer .content>div .image {
     text-shadow: 1px 1px 3px #000000;
 }
 
-.titreGameList>li>p>span{
+.daaaaaaate{
     font-size: 1.1rem;
 }
 
