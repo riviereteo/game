@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
         menuNews.click();
     });
     close.style.top = carrouselNews.offsetTop + 4 + 'px';
-    close.style.right = carrouselNews.offsetLeft + 4 + 'px';
     document.body.appendChild(close);
     close.animate([
         { opacity: 0, scale: 0.5 },

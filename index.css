@@ -168,13 +168,14 @@ body {
 
 @keyframes spawn_carrousel {
     0% {
-        transform: translateY(-40%) scale(0.4); 
+        transform: translateY(-40%) scale(0.4);
         opacity: 0;
     }
 
-    50%{
+    50% {
         transform: translateY(-10%) scale(0.8);
-        opacity: 0.3;}
+        opacity: 0.3;
+    }
 
     100% {
         transform: translateY(0);
@@ -380,6 +381,7 @@ body {
     cursor: pointer;
     border-radius: 50%;
     opacity: 0;
+    right: calc(10vw + 4px);
 }
 
 #closeCarrousel>span {
@@ -752,7 +754,7 @@ body .footer .content>div .image {
     text-shadow: 1px 1px 3px #000000;
 }
 
-.daaaaaaate{
+.daaaaaaate {
     font-size: 1.1rem;
 }
 
