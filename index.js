@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             if (titles.includes(trouverJeuDansCommit(commit))) {
                                 commit = commit.replace(trouverJeuDansCommit(commit), '<span class="messageText_span">' + trouverJeuDansCommit(commit) + '</span>');
                             }
-                            li.innerHTML = '<p>' + commit + '<span> | depuis le ' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</span></p>';
+                            li.innerHTML = '<p>' + commit + '<span class="daaaaaaate"> | depuis le ' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</span></p>';
                             titre.appendChild(li);
                             li.addEventListener('click', () => {
                                 start(link[titles.indexOf(jeuTrouvé)], "game");
