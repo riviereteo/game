@@ -54,134 +54,124 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     let jeux_déjà_vus = [];
     fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            for (let page = 0; page < data.length; page++) { // Parcourir toutes les mises à jour
-                const words = data[page].commit.message.split(" ");
-                for (let i = 0; i < words.length; i++) {
-                    if (gameUpdatesFound < 5 && titles.includes(words[i])) { // Vérifier si nous avons trouvé moins de 5 mises à jour de jeu
-                        if (jeux_déjà_vus.includes(words[i])) {
-                            document.querySelectorAll('.messageText').forEach(message => {
-                                if (message.innerHTML.includes(words[i])) {
-                                    let parent = message.parentElement;
-                                    let titre1 = document.getElementById('messageText' + titles.indexOf(words[i])).innerHTML;
-                                    let wordss = titre1.split(" ");
-                                    for (let i = 0; i < wordss.length; i++) {
-                                        if (titles.includes(wordss[i])) {
-                                            titre1 = titre1.replace(wordss[i], '<span class="messageText_span">' + wordss[i] + '</span>');
-                                        }
-                                    }
-                                    let dateTextElement = document.getElementById('dateText' + titles.indexOf(words[i]));
-                                    let dateText = dateTextElement.innerHTML;
-                                    let date1 = dateText.substring(dateText.length - 10, dateText.length);
-                                    parent.innerHTML = '';
-                                    const ul = document.createElement('ul');
-                                    ul.className = 'titreGameList';
-                                    parent.appendChild(ul);
-                                    const li = document.createElement('li');
-                                    li.innerHTML = '<p>' + titre1 + '<span class="daaaaaaate"> | depuis le ' + date1 + '</span></p>';
-                                    ul.appendChild(li);
-                                    const li2 = document.createElement('li');
-                                    let commit = data[page].commit.message;
-                                    let wordssss = commit.split(" ");
-                                    for (let i = 0; i < wordssss.length; i++) {
-                                        if (titles.includes(wordssss[i])) {
-                                            commit = commit.replace(wordssss[i], '<span class="messageText_span">' + wordssss[i] + '</span>');
-                                        }
-                                    }
-                                    li2.innerHTML = '<p>' + commit + '<span class="daaaaaaate"> | depuis le ' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</span></p>';
-                                    ul.appendChild(li2);
-                                    li2.addEventListener('click', () => {
-                                        start(link[titles.indexOf(words[i])], "game");
-                                    });
-                                }
-                            });
-                            document.querySelectorAll('.titreGameList').forEach(titre => {
-                                if (titre.innerHTML.includes(words[i])) {
-                                    const li = document.createElement('li');
-                                    let commit = data[page].commit.message;
-                                    let wordssss = commit.split(" ");
-                                    for (let i = 0; i < wordssss.length; i++) {
-                                        if (titles.includes(wordssss[i])) {
-                                            commit = commit.replace(wordssss[i], '<span class="messageText_span">' + wordssss[i] + '</span>');
-                                        }
-                                    }
-                                    li.innerHTML = '<p>' + commit + '<span> | depuis le ' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</span></p>';
-                                    titre.appendChild(li);
-                                    li.addEventListener('click', () => {
-                                        start(link[titles.indexOf(words[i])], "game");
-                                    });
-                                }
-                            });
-                        } else {
-                            jeux_déjà_vus.push(words[i]);
-                            let index = titles.indexOf(words[i]);
-                            const carrouselFrame = document.createElement('div');
-                            carrouselFrame.className = 'carrouselFrame';
-                            carrouselFrame.onclick = () => start(link[index], "carrouselFrame");
-                            carrouselFrame.style.backgroundImage = `url(${img[index]})`;
-                            carrouselNews.childNodes.length === 1 ? carrouselFrame.classList.add('carrouselFrameHere') : carrouselFrame.classList.add('carrouselFrameNotHere');
-                            const messageText = document.createElement('p');
-                            messageText.id = 'messageText' + index;
-                            let msg = data[page].commit.message;
-                            if (msg.length > 100) {
-                                msg = msg.substring(0, 100) + '...';
+    .then(response => response.json())
+    .then(data => {
+        for (let page = 0; page < data.length; page++) {
+            // Trouver le jeu dans le commit
+            let jeuTrouvé = trouverJeuDansCommit(data[page].commit.message);
+            if (gameUpdatesFound < 5 && titles.includes(jeuTrouvé)) {
+                // Si le jeu est déjà dans la liste des jeux vus
+                if (jeux_déjà_vus.includes(jeuTrouvé)) {
+                    document.querySelectorAll('.messageText').forEach(message => {
+                        if (message.innerHTML.includes(jeuTrouvé)) {
+                            // Code pour ajouter des commits supplémentaires dans l'interface
+                            let parent = message.parentElement;
+                            let titre1 = document.getElementById('messageText' + titles.indexOf(jeuTrouvé)).innerHTML;
+                            if (titles.includes(trouverJeuDansCommit(titre1.innerHTML))) {
+                                titre1 = titre1.replace(trouverJeuDansCommit(titre1.innerHTML), '<span class="messageText_span">' + trouverJeuDansCommit(titre1.innerHTML) + '</span>');
                             }
-                            //trouver le titre du jeu et le mettre dans un span
-                            let wordsssss = msg.split(" ");
-                            for (let i = 0; i < wordsssss.length; i++) {
-                                if (titles.includes(wordsssss[i])) {
-                                    msg = msg.replace(wordsssss[i], '<span class="messageText_span">' + wordsssss[i] + '</span>');
-                                }
+                            let dateTextElement = document.getElementById('dateText' + titles.indexOf(jeuTrouvé));
+                            let dateText = dateTextElement.innerHTML;
+                            let date1 = dateText.substring(dateText.length - 10, dateText.length);
+                            parent.innerHTML = '';
+                            const ul = document.createElement('ul');
+                            ul.className = 'titreGameList';
+                            parent.appendChild(ul);
+                            const li = document.createElement('li');
+                            li.innerHTML = '<p>' + titre1 + '<span class="daaaaaaate"> | depuis le ' + date1 + '</span></p>';
+                            ul.appendChild(li);
+                            const li2 = document.createElement('li');
+                            let commit = data[page].commit.message;
+                            if (titles.includes(trouverJeuDansCommit(commit))) {
+                                commit = commit.replace(trouverJeuDansCommit(commit), '<span class="messageText_span">' + trouverJeuDansCommit(commit) + '</span>');
                             }
-                            messageText.innerHTML = msg;
-                            messageText.className = 'messageText';
-                            const dateTextversion = document.createElement('p');
-                            dateTextversion.id = 'dateText' + index;
-                            dateTextversion.className = 'dateText_version';
-                            const date = data[page].commit.author.date;
-                            dateTextversion.innerHTML = "La " + versions[index] + " est disponnible depuis le " + date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4)
-                            carrouselFrame.appendChild(messageText);
-                            carrouselFrame.appendChild(dateTextversion);
-                            carrouselNews.appendChild(carrouselFrame);
-                            const carrouselDot = document.createElement('div');
-                            carrouselDot.className = 'carrouselDot';
-                            carrouselNews.childNodes.length === 2 ? carrouselDot.classList.add('carrouselDotHere') : carrouselDot.classList.add('carrouselDotNotHere');
-                            carrouselDot.addEventListener('click', () => {
-                                clearInterval(intervalOfCarouselSlide);
-                                intervalOfCarouselSlide = setInterval(slideAuto, 5000);
-                                carrouselNavigator.childNodes.forEach(dot => {
-                                    dot.classList.remove('carrouselDotHere');
-                                    dot.classList.add('carrouselDotNotHere');
-                                });
-                                let ancienhere = document.querySelector('.carrouselFrameHere');
-                                ancienhere.classList.remove('carrouselFrameHere');
-                                ancienhere.classList.add('carrouselFrameNotHere');
-                                carrouselFrame.classList.remove('carrouselFrameNotHere');
-                                carrouselFrame.classList.add('carrouselFrameHere');
-                                carrouselDot.classList.remove('carrouselDotNotHere');
-                                carrouselDot.classList.add('carrouselDotHere');
+                            li2.innerHTML = '<p>' + commit + '<span class="daaaaaaate"> | depuis le ' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</span></p>';
+                            ul.appendChild(li2);
+                            li2.addEventListener('click', () => {
+                                start(link[titles.indexOf(jeuTrouvé)], "game");
                             });
-                            carrouselNavigator.appendChild(carrouselDot);
-                            carrouselDot.animate([
-                                { opacity: 0, scale: 0 },
-                                { opacity: 1, scale: 1 }
-                            ], {
-                                duration: 400,
-                                iterations: 1,
-                                delay: 900 + gameUpdatesFound * 100,
-                                easing: 'linear',
-                                fill: 'forwards'
-                            });
-                            gameUpdatesFound++; // Incrémenter le nombre de mises à jour de jeu trouvées
                         }
-                        break;
+                    });
+                    document.querySelectorAll('.titreGameList').forEach(titre => {
+                        if (titre.innerHTML.includes(jeuTrouvé)) {
+                            const li = document.createElement('li');
+                            let commit = data[page].commit.message;
+                            if (titles.includes(trouverJeuDansCommit(commit))) {
+                                commit = commit.replace(trouverJeuDansCommit(commit), '<span class="messageText_span">' + trouverJeuDansCommit(commit) + '</span>');
+                            }
+                            li.innerHTML = '<p>' + commit + '<span> | depuis le ' + data[page].commit.author.date.substring(8, 10) + '/' + data[page].commit.author.date.substring(5, 7) + '/' + data[page].commit.author.date.substring(0, 4) + '</span></p>';
+                            titre.appendChild(li);
+                            li.addEventListener('click', () => {
+                                start(link[titles.indexOf(jeuTrouvé)], "game");
+                            });
+                        }
+                    });
+                } else {
+                    // Si le jeu n'est pas encore vu, ajoutez-le
+                    jeux_déjà_vus.push(jeuTrouvé);
+                    let index = titles.indexOf(jeuTrouvé);
+                    const carrouselFrame = document.createElement('div');
+                    carrouselFrame.className = 'carrouselFrame';
+                    carrouselFrame.onclick = () => start(link[index], "carrouselFrame");
+                    carrouselFrame.style.backgroundImage = `url(${img[index]})`;
+                    carrouselNews.childNodes.length === 1 ? carrouselFrame.classList.add('carrouselFrameHere') : carrouselFrame.classList.add('carrouselFrameNotHere');
+                    const messageText = document.createElement('p');
+                    messageText.id = 'messageText' + index;
+                    let msg = data[page].commit.message;
+                    if (msg.length > 100) {
+                        msg = msg.substring(0, 100) + '...';
                     }
+                    if (titles.includes(trouverJeuDansCommit(msg))) {
+                        msg = msg.replace(trouverJeuDansCommit(msg), '<span class="messageText_span">' + trouverJeuDansCommit(msg) + '</span>');
+                    }
+                    messageText.innerHTML = msg;
+                    messageText.className = 'messageText';
+                    const dateTextversion = document.createElement('p');
+                    dateTextversion.id = 'dateText' + index;
+                    dateTextversion.className = 'dateText_version';
+                    const date = data[page].commit.author.date;
+                    dateTextversion.innerHTML = "La " + versions[index] + " est disponible depuis le " + date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4);
+                    carrouselFrame.appendChild(messageText);
+                    carrouselFrame.appendChild(dateTextversion);
+                    carrouselNews.appendChild(carrouselFrame);
+                    const carrouselDot = document.createElement('div');
+                    carrouselDot.className = 'carrouselDot';
+                    carrouselNews.childNodes.length === 2 ? carrouselDot.classList.add('carrouselDotHere') : carrouselDot.classList.add('carrouselDotNotHere');
+                    carrouselDot.addEventListener('click', () => {
+                        clearInterval(intervalOfCarouselSlide);
+                        intervalOfCarouselSlide = setInterval(slideAuto, 5000);
+                        carrouselNavigator.childNodes.forEach(dot => {
+                            dot.classList.remove('carrouselDotHere');
+                            dot.classList.add('carrouselDotNotHere');
+                        });
+                        let ancienhere = document.querySelector('.carrouselFrameHere');
+                        ancienhere.classList.remove('carrouselFrameHere');
+                        ancienhere.classList.add('carrouselFrameNotHere');
+                        carrouselFrame.classList.remove('carrouselFrameNotHere');
+                        carrouselFrame.classList.add('carrouselFrameHere');
+                        carrouselDot.classList.remove('carrouselDotNotHere');
+                        carrouselDot.classList.add('carrouselDotHere');
+                    });
+                    carrouselNavigator.appendChild(carrouselDot);
+                    carrouselDot.animate([
+                        { opacity: 0, scale: 0 },
+                        { opacity: 1, scale: 1 }
+                    ], {
+                        duration: 400,
+                        iterations: 1,
+                        delay: 900 + gameUpdatesFound * 100,
+                        easing: 'linear',
+                        fill: 'forwards'
+                    });
+                    gameUpdatesFound++; // Incrémenter après l'ajout du nouveau jeu
                 }
-                if (gameUpdatesFound >= 5) // Si nous avons trouvé 5 mises à jour de jeu, sortir de la boucle
-                    break;
             }
-        });
+            if (gameUpdatesFound >= 5) {
+                break; // Sortir de la boucle si nous avons trouvé 5 mises à jour de jeu
+            }
+        }
+    });
+
     intervalOfCarouselSlide = setInterval(slideAuto, 5000);
 
     const menus = document.querySelectorAll('.menuButton');
@@ -575,11 +565,13 @@ window.onload = function () {
     for (let i = 0; i < games.length; i++) {
 
         games[i].animate([
-            { opacity: 0,
+            {
+                opacity: 0,
                 scale: 0,
                 marginLeft: '-200px'
             },
-            { opacity: 1,
+            {
+                opacity: 1,
                 scale: 1,
                 marginLeft: '0px'
             }
@@ -592,4 +584,16 @@ window.onload = function () {
         });
     }
 
+}
+
+function trouverJeuDansCommit(commit) {
+    let jeuTrouvé = null;
+    for (let title of titles) {
+        const regexTitle = new RegExp(`\\b${title}\\b`, "i");
+        if (regexTitle.test(commit)) {
+            jeuTrouvé = title;
+            break;
+        }
+    }
+    return jeuTrouvé;
 }
